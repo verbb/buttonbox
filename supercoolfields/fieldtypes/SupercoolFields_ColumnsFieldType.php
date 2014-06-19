@@ -15,7 +15,7 @@ class SupercoolFields_ColumnsFieldType extends BaseFieldType
 
   public function getName()
   {
-    return Craft::t('SupercoolFields Columns');
+    return Craft::t('Columns');
   }
 
   public function getInputHtml($name, $value)

@@ -15,7 +15,7 @@ class SupercoolFields_StarsFieldType extends BaseFieldType
 
   public function getName()
   {
-    return Craft::t('SupercoolFields Stars');
+    return Craft::t('Stars');
   }
 
   public function getInputHtml($name, $value)
