@@ -1,0 +1,12 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.textField({
+  label: "Number of Columns"|t,
+  id: 'numColumns',
+  name: 'numColumns',
+  value: settings.numColumns,
+  errors: settings.getErrors('numColumns'),
+  required: true,
+  size : 2
+}) }}
+

@@ -1,0 +1,12 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.textField({
+  label: "Number of Stars"|t,
+  id: 'numStars',
+  name: 'numStars',
+  value: settings.numStars,
+  errors: settings.getErrors('numStars'),
+  required: true,
+  size : 2
+}) }}
+

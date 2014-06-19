@@ -1,0 +1,6 @@
+<div class="supercoolfields-columns">
+  {% for num in numColumns..1 %}
+    <input type="radio" id="{{ name ~ num }}" name="{{ name }}" value="{{ num }}"{% if value == num %} checked="checked"{% endif %} /><label for="{{ name ~ num }}">{{ num }} Columns</label>
+  {% endfor %}
+</div>
+<div class="clear"></div>
