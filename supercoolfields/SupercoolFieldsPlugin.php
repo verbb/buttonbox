@@ -10,7 +10,7 @@ namespace Craft;
  * @link      http://www.supercooldesign.co.uk
  */
 
-class SupercoolFields extends BasePlugin
+class SupercoolFieldsPlugin extends BasePlugin
 {
 
   public function getName()
