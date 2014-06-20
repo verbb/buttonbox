@@ -25,7 +25,7 @@ class SupercoolFields_StarsFieldType extends BaseFieldType
 
     $settings = $this->getSettings();
 
-    return craft()->templates->render('starsupercoolfields/stars/field', array(
+    return craft()->templates->render('supercoolfields/stars/field', array(
       'name'  => $name,
       'value' => $value,
       'numStars' => $settings['numStars']

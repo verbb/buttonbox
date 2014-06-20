@@ -20,15 +20,16 @@ class SupercoolFields_ColumnsFieldType extends BaseFieldType
 
   public function getInputHtml($name, $value)
   {
-
     craft()->templates->includeCssResource('supercoolfields/columns.css');
+    craft()->templates->includeJsResource('supercoolfields/columns.js');
 
     $settings = $this->getSettings();
 
-    return craft()->templates->render('starsupercoolfields/columns/field', array(
+    return craft()->templates->render('supercoolfields/columns/field', array(
       'name'  => $name,
       'value' => $value,
-      'numColumns' => $settings['numColumns']
+      'gridSize' => $settings['gridSize'],
+      'totalColumns' => $settings['totalColumns']
     ));
   }
 
@@ -42,7 +43,8 @@ class SupercoolFields_ColumnsFieldType extends BaseFieldType
   protected function defineSettings()
   {
     return array(
-      'numColumns' => array(AttributeType::Number, 'min' => 2, 'default' => 5)
+      'gridSize' => array(AttributeType::Number, 'min' => 1, 'default' => 3),
+      'totalColumns' => array(AttributeType::Number, 'min' => 2, 'default' => 12)
     );
   }
 

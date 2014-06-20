@@ -1,6 +1,13 @@
-<div class="supercoolfields-columns">
-  {% for num in numColumns..1 %}
-    <input type="radio" id="{{ name ~ num }}" name="{{ name }}" value="{{ num }}"{% if value == num %} checked="checked"{% endif %} /><label for="{{ name ~ num }}">{{ num }} Columns</label>
-  {% endfor %}
+<div class="supercoolfields-columns-wrapper">
+  <div class="supercoolfields-columns">
+    {% set numColumns = totalColumns / gridSize %}
+    {% for num in 1..numColumns %}
+      {% set val = gridSize * num %}
+      <label>
+        <input type="radio" name="{{ name }}" value="{{ val }}"{% if value == val %} checked="checked"{% endif %} />
+        {{ val }} Columns
+      </label>
+    {% endfor %}
+  </div>
 </div>
 <div class="clear"></div>
