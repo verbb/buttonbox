@@ -10,7 +10,7 @@ namespace Craft;
  * @link      http://www.supercooldesign.co.uk
  */
 
-class SupercoolFields_OembedController extends BaseController
+class SupercoolFields_EmbedController extends BaseController
 {
 
   public function actionGet()
@@ -22,7 +22,7 @@ class SupercoolFields_OembedController extends BaseController
 
     $url = craft()->request->getPost('url');
 
-    if ( $html = craft()->supercoolFields_oembed->get($url, true, false) ) {
+    if ( $html = craft()->supercoolFields_embed->get($url, true, false) ) {
       $this->returnJson(array(
         'success' => true,
         'html' => $html

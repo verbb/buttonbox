@@ -16,7 +16,7 @@ class SupercoolFieldsVariable
   public function embed($url, $scripts = true, $twig = true)
   {
 
-    if ( $html = craft()->supercoolFields_oembed->get($url, $scripts, $twig) ) {
+    if ( $html = craft()->supercoolFields_embed->get($url, $scripts, $twig) ) {
       return $html;
     } else {
       return $url;

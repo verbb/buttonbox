@@ -10,7 +10,7 @@ namespace Craft;
  * @link      http://www.supercooldesign.co.uk
  */
 
-class SupercoolFields_OembedService extends BaseApplicationComponent
+class SupercoolFields_EmbedService extends BaseApplicationComponent
 {
 
   public function get($url, $scripts = true, $twig = true)
@@ -64,7 +64,7 @@ class SupercoolFields_OembedService extends BaseApplicationComponent
 
     // see if we have any html
     if ( isset($decodedJSON['html']) ) {
-      $output = '<div class="oembed  oembed--'.$provider.'">'.$decodedJSON['html'].'</div>';
+      $output = '<div class="embed  embed--'.$provider.'">'.$decodedJSON['html'].'</div>';
     }
 
 

@@ -7,16 +7,16 @@ var supercoolfieldsDelay = (function(){
 })();
 
 
-function supercoolfieldsOembedRefresh($input) {
+function supercoolfieldsEmbedRefresh($input) {
   var $spinner = $input.parent().find('.spinner'),
       $error = $input.parent().find('.error');
   $spinner.removeClass('hidden');
   $error.addClass('hidden');
 
   var url = $input.val(),
-      $target = $input.parent().find('.supercoolfields-oembed-preview'),
+      $target = $input.parent().find('.supercoolfields-embed-preview'),
       request = $.ajax({
-        url: '/actions/supercoolFields/oembed/get',
+        url: '/actions/supercoolFields/embed/get',
         type: 'POST',
         data: { url : url },
         dataType: 'json'
@@ -42,17 +42,17 @@ function supercoolfieldsOembedRefresh($input) {
 
 $(function(){
 
-  $('.supercoolfields-oembed input').on('keyup', function(e){
+  $('.supercoolfields-embed input').on('keyup', function(e){
     var $t = $(this);
     supercoolfieldsDelay(function(){
-      supercoolfieldsOembedRefresh($t);
+      supercoolfieldsEmbedRefresh($t);
     }, 1000 );
   });
 
   $(window).on('load', function(){
 
-    $('.supercoolfields-oembed input').each(function(i, elem){
-      supercoolfieldsOembedRefresh($(elem));
+    $('.supercoolfields-embed input').each(function(i, elem){
+      supercoolfieldsEmbedRefresh($(elem));
     });
 
   });

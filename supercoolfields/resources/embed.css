@@ -1,0 +1,42 @@
+.supercoolfields-embed {
+  position: relative;
+}
+.supercoolfields-embed .spinner {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.supercoolfields-embed .error {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+}
+
+.supercoolfields-embed-preview {
+  margin-top: 15px;
+}
+
+/* force the content to be fluid */
+.supercoolfields-embed-preview .embed > * {
+  display: block;
+  width: 100% !important;
+}
+
+/* tweets */
+.supercoolfields-embed-preview .embed--twitter > * {}
+
+/* videos, assume they are all 16:9 */
+.supercoolfields-embed-preview .embed--youtube,
+.supercoolfields-embed-preview .embed--vimeo {
+  position: relative;
+  padding-bottom: 56.25%; // 16:9
+  height: 0;
+}
+.supercoolfields-embed-preview .embed--youtube > *,
+.supercoolfields-embed-preview .embed--vimeo > * {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
