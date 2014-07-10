@@ -16,8 +16,8 @@ class SupercoolFields_EmbedService extends BaseApplicationComponent
   public function get($url, $scripts = true, $twig = true)
   {
 
-    // make api url
     $apiUrl = '';
+    $provider = '';
 
     if ( strpos($url, 'vimeo') !== false ) { // vimeo
 
@@ -45,7 +45,13 @@ class SupercoolFields_EmbedService extends BaseApplicationComponent
       $provider = 'flickr';
       $apiUrl = 'https://www.flickr.com/services/oembed?url='.$url.'&format=json';
 
+    } elseif ( strpos($url, 'soundcloud') !== false ) { // soundcloud
+
+      $provider = 'soundcloud';
+      $apiUrl = 'https://soundcloud.com/oembed?url='.$url.'&format=json';
+
     }
+
 
     // create curl resource
     $ch = curl_init();
