@@ -22,8 +22,17 @@
   width: 100% !important;
 }
 
+
 /* tweets */
 .supercoolfields-embed-preview .embed--twitter > * {}
+
+
+/* flickr */
+.supercoolfields-embed-preview .embed--flickr {
+  max-width: 100%;
+  height: auto !important;
+}
+
 
 /* videos, assume they are all 16:9 */
 .supercoolfields-embed-preview .embed--youtube,

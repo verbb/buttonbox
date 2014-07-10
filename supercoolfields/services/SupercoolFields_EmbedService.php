@@ -40,6 +40,10 @@ class SupercoolFields_EmbedService extends BaseApplicationComponent
 
       // add these params to the html after curling
       // &modestbranding=1&rel=0&showinfo=0&autoplay=0
+    } elseif ( strpos($url, 'flickr') !== false ) { // flickr
+
+      $provider = 'flickr';
+      $apiUrl = 'https://www.flickr.com/services/oembed?url='.$url.'&format=json';
 
     }
 
@@ -63,10 +67,15 @@ class SupercoolFields_EmbedService extends BaseApplicationComponent
     $decodedJSON = json_decode($output, true);
 
     // see if we have any html
-    if ( isset($decodedJSON['html']) ) {
-      $output = '<div class="embed  embed--'.$provider.'">'.$decodedJSON['html'].'</div>';
+    if ( $provider === 'flickr' ) {
+      if ( isset($decodedJSON['url']) && $decodedJSON['type'] == 'photo' ) {
+        $output = '<img src="'.$decodedJSON['url'].'" width="'.$decodedJSON['width'].'" height="'.$decodedJSON['height'].'" class="embed  embed--'.$provider.'">';
+      }
+    } else {
+      if ( isset($decodedJSON['html']) ) {
+        $output = '<div class="embed  embed--'.$provider.'">'.$decodedJSON['html'].'</div>';
+      }
     }
-
 
     // thanks to https://github.com/A-P/Embedder for this bit!
     // set the encode html to output properly in Twig
