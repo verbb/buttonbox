@@ -22,6 +22,7 @@ class SupercoolFields_StarsFieldType extends BaseFieldType
   {
 
     craft()->templates->includeCssResource('supercoolfields/stars.css');
+    craft()->templates->includeJsResource('supercoolfields/fields.js');
 
     $settings = $this->getSettings();
 

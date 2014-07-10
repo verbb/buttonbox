@@ -1,6 +1,9 @@
-<div class="supercoolfields-stars">
+<div class="supercoolfields-stars  supercoolfields-hovers">
   {% for num in numStars..1 %}
-    <input type="radio" id="{{ name ~ num }}" name="{{ name }}" value="{{ num }}"{% if value == num %} checked="checked"{% endif %} /><label for="{{ name ~ num }}">{{ num }} Stars</label>
+    <label>
+      <input type="radio" id="{{ name ~ num }}" name="{{ name }}" value="{{ num }}"{% if value == num %} checked="checked"{% endif %} />
+      {{ num }} Stars
+    </label>
   {% endfor %}
 </div>
 <div class="clear"></div>

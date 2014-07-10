@@ -1,18 +1,11 @@
-/* Props to http://lea.verou.me/2011/08/accessible-star-rating-widget-with-pure-css/ */
-
-.supercoolfields-stars {
-  float: left;
-  clear: both;
-}
-
-.supercoolfields-stars:not(:checked) > input {
+.supercoolfields-stars:not(:checked) input {
   position: absolute;
   left: -9999px;
   clip: rect(0,0,0,0);
 }
 
-.supercoolfields-stars:not(:checked) > label {
-  float: right;
+.supercoolfields-stars:not(:checked) label {
+  float: left;
   width: 1em;
   padding: 0 .1em;
   overflow: hidden;
@@ -20,20 +13,9 @@
   cursor: pointer;
   font-size: 1.5em;
   line-height: 1.2;
-  color: #ccc;
+  color: #ddd;
 }
+.supercoolfields-stars:not(:checked) label:before { content: '★ '; }
 
-.supercoolfields-stars:not(:checked) > label:before { content: '★ '; }
-
-.supercoolfields-stars > input:checked ~ label { color: #000; }
-
-.supercoolfields-stars:not(:checked) > label:hover,
-.supercoolfields-stars:not(:checked) > label:hover ~ label,
-.supercoolfields-stars > input:checked + label:hover,
-.supercoolfields-stars > input:checked + label:hover ~ label,
-.supercoolfields-stars > input:checked ~ label:hover,
-.supercoolfields-stars > input:checked ~ label:hover ~ label,
-.supercoolfields-stars > label:hover ~ input:checked ~ label { color: #00b007; }
-
-.supercoolfields-stars > label:active { position: relative; top: 2px; left: 2px; }
-
+.supercoolfields-stars label.supercoolfields-hovers-active { color: #6DA8D9; }
+.supercoolfields-stars label.supercoolfields-hovers-hover { color: #333; }

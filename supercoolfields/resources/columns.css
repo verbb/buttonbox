@@ -33,5 +33,5 @@
   border: 2px solid #bbb;
   border-radius: 3px;
 }
-.supercoolfields-columns label.supercoolfields-columns-active { border-color: #6DA8D9; }
-.supercoolfields-columns label.supercoolfields-columns-hover { border-color: #333; }
+.supercoolfields-columns label.supercoolfields-hovers-active { border-color: #6DA8D9; }
+.supercoolfields-columns label.supercoolfields-hovers-hover { border-color: #333; }
