@@ -13,7 +13,7 @@ namespace Craft;
 class SupercoolFields_OembedService extends BaseApplicationComponent
 {
 
-  public function get($url, $scripts = true)
+  public function get($url, $scripts = true, $twig = true)
   {
 
     // make api url
@@ -65,8 +65,6 @@ class SupercoolFields_OembedService extends BaseApplicationComponent
     // see if we have any html
     if ( isset($decodedJSON['html']) ) {
       $output = '<div class="oembed  oembed--'.$provider.'">'.$decodedJSON['html'].'</div>';
-    } else {
-      return false;
     }
 
 
@@ -76,8 +74,12 @@ class SupercoolFields_OembedService extends BaseApplicationComponent
     $twig_html = new \Twig_Markup($output, $charset);
     // end thanks
 
-    if ( $twig_html !== '' ) {
-      return $twig_html;
+    if ( $output && $output !== '' ) {
+      if ( $twig && $twig_html ) {
+        return $twig_html;
+      } else {
+        return $output;
+      }
     } else {
       return false;
     }

@@ -22,7 +22,7 @@ class SupercoolFields_OembedController extends BaseController
 
     $url = craft()->request->getPost('url');
 
-    if ( $html = craft()->supercoolFields_oembed->get($url) ) {
+    if ( $html = craft()->supercoolFields_oembed->get($url, true, false) ) {
       $this->returnJson(array(
         'success' => true,
         'html' => $html

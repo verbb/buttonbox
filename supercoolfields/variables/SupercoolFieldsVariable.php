@@ -13,10 +13,10 @@ namespace Craft;
 class SupercoolFieldsVariable
 {
 
-  public function embed($url, $scripts = true)
+  public function embed($url, $scripts = true, $twig = true)
   {
 
-    if ( $html = craft()->supercoolFields_oembed->get($url, $scripts) ) {
+    if ( $html = craft()->supercoolFields_oembed->get($url, $scripts, $twig) ) {
       return $html;
     } else {
       return $url;
