@@ -13,7 +13,7 @@ namespace Craft;
 class SupercoolFields_OembedService extends BaseApplicationComponent
 {
 
-  public function get($url)
+  public function get($url, $scripts = true)
   {
 
     // make api url
@@ -27,8 +27,11 @@ class SupercoolFields_OembedService extends BaseApplicationComponent
     } elseif ( strpos($url, 'twitter') !== false ) { // twitter
 
       $provider = 'twitter';
-      $apiUrl = 'https://api.twitter.com/1/statuses/oembed.json?url='.$url;
-      //.'&omit_script=true' - not sure why but when using this with twitter api seperate its not working
+      if ( $scripts ) {
+        $apiUrl = 'https://api.twitter.com/1/statuses/oembed.json?url='.$url;
+      } else {
+        $apiUrl = 'https://api.twitter.com/1/statuses/oembed.json?url='.$url.'&omit_script=true';
+      }
 
     } elseif ( strpos($url, 'youtu') !== false ) { // youtube
 
@@ -59,11 +62,22 @@ class SupercoolFields_OembedService extends BaseApplicationComponent
     // decode returned json
     $decodedJSON = json_decode($output, true);
 
-    // output the html part
-    $output = ( isset($decodedJSON['html']) ? $decodedJSON['html'] : '' );
+    // see if we have any html
+    if ( isset($decodedJSON['html']) ) {
+      $output = '<div class="oembed  oembed--'.$provider.'">'.$decodedJSON['html'].'</div>';
+    } else {
+      return false;
+    }
 
-    if ( $output !== '' ) {
-      return '<div class="oembed  oembed--'.$provider.'">'.$output.'</div>';
+
+    // thanks to https://github.com/A-P/Embedder for this bit!
+    // set the encode html to output properly in Twig
+    $charset = craft()->templates->getTwig()->getCharset();
+    $twig_html = new \Twig_Markup($output, $charset);
+    // end thanks
+
+    if ( $twig_html !== '' ) {
+      return $twig_html;
     } else {
       return false;
     }

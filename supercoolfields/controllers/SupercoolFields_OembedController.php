@@ -33,9 +33,6 @@ class SupercoolFields_OembedController extends BaseController
       ));
     }
 
-
-
-
   }
 
 }
