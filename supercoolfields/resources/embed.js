@@ -9,9 +9,11 @@ var supercoolfieldsDelay = (function(){
 
 function supercoolfieldsEmbedRefresh($input) {
   var $spinner = $input.parent().find('.spinner'),
-      $error = $input.parent().find('.error');
+      $error   = $input.parent().find('.error'),
+      $success = $input.parent().find('.success');
   $spinner.removeClass('hidden');
   $error.addClass('hidden');
+  $success.addClass('hidden');
 
   var url = $input.val(),
       $target = $input.parent().find('.supercoolfields-embed-preview'),
@@ -26,15 +28,19 @@ function supercoolfieldsEmbedRefresh($input) {
     if ( msg.success ) {
       $target.html(msg.html);
       $spinner.addClass('hidden');
+      $error.addClass('hidden');
+      $success.removeClass('hidden');
     } else {
       $spinner.addClass('hidden');
       $error.removeClass('hidden');
+      $success.addClass('hidden');
     }
   });
 
   request.fail(function(jqXHR, textStatus) {
     $spinner.addClass('hidden');
     $error.removeClass('hidden');
+    $success.addClass('hidden');
   });
 
 }

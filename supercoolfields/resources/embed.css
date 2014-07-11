@@ -6,7 +6,8 @@
   top: 0;
   right: 0;
 }
-.supercoolfields-embed .error {
+.supercoolfields-embed .error,
+.supercoolfields-embed .success {
   position: absolute;
   top: 6px;
   right: 6px;
