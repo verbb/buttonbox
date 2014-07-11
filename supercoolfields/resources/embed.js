@@ -42,7 +42,7 @@ function supercoolfieldsEmbedRefresh($input) {
 
 $(function(){
 
-  $('.supercoolfields-embed input').on('keyup', function(e){
+  $(document).on('keyup', '.supercoolfields-embed input', function(e){
     var $t = $(this);
     supercoolfieldsDelay(function(){
       supercoolfieldsEmbedRefresh($t);
