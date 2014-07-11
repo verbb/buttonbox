@@ -21,8 +21,9 @@ class SupercoolFields_EmbedController extends BaseController
 
 
     $url = craft()->request->getPost('url');
+    $html = craft()->supercoolFields_embed->get($url, true, false);
 
-    if ( $html = craft()->supercoolFields_embed->get($url, true, false) ) {
+    if ( $html ) {
       $this->returnJson(array(
         'success' => true,
         'html' => $html

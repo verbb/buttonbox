@@ -19,6 +19,8 @@ class SupercoolFields_EmbedService extends BaseApplicationComponent
     $apiUrl = '';
     $provider = '';
 
+
+    // switch on the provider
     if ( strpos($url, 'vimeo') !== false ) { // vimeo
 
       $provider = 'vimeo';
@@ -38,7 +40,7 @@ class SupercoolFields_EmbedService extends BaseApplicationComponent
       $provider = 'youtube';
       $apiUrl = 'https://www.youtube.com/oembed?url='.$url.'&format=json';
 
-      // add these params to the html after curling
+      // add these params to the html after curling ?
       // &modestbranding=1&rel=0&showinfo=0&autoplay=0
     } elseif ( strpos($url, 'flickr') !== false ) { // flickr
 
@@ -72,31 +74,40 @@ class SupercoolFields_EmbedService extends BaseApplicationComponent
     // decode returned json
     $decodedJSON = json_decode($output, true);
 
+
     // see if we have any html
     if ( $provider === 'flickr' ) {
+
       if ( isset($decodedJSON['url']) && $decodedJSON['type'] == 'photo' ) {
-        $output = '<img src="'.$decodedJSON['url'].'" width="'.$decodedJSON['width'].'" height="'.$decodedJSON['height'].'" class="embed  embed--'.$provider.'">';
+        $data = '<img src="'.$decodedJSON['url'].'" width="'.$decodedJSON['width'].'" height="'.$decodedJSON['height'].'" class="embed  embed--'.$provider.'">';
+      } else {
+        return false;
       }
+
     } else {
-      if ( isset($decodedJSON['html']) ) {
-        $output = '<div class="embed  embed--'.$provider.'">'.$decodedJSON['html'].'</div>';
+
+      if ( isset($decodedJSON['html']) && ( ctype_space($decodedJSON['html']) === false || $decodedJSON['html'] !== '' ) ) {
+        $data = '<div class="embed  embed--'.$provider.'">'.$decodedJSON['html'].'</div>';
       }
+
     }
+
 
     // thanks to https://github.com/A-P/Embedder for this bit!
     // set the encode html to output properly in Twig
     $charset = craft()->templates->getTwig()->getCharset();
     $twig_html = new \Twig_Markup($output, $charset);
-    // end thanks
 
-    if ( $output && $output !== '' ) {
+
+    // check we haven't any errors or 404 etc
+    if ( !isset($data) || strpos($data, '<html') !== false || isset($decodedJSON['errors']) || strpos($data, 'Not Found') !== false ) {
+      return false;
+    } else {
       if ( $twig && $twig_html ) {
         return $twig_html;
       } else {
-        return $output;
+        return $data;
       }
-    } else {
-      return false;
     }
 
   }
