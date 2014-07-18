@@ -47,6 +47,9 @@ class SupercoolFields_ColoursFieldType extends BaseOptionsFieldType
 	 */
 	public function getInputHtml($name, $value)
 	{
+		craft()->templates->includeJsResource('supercoolfields/colours.js');
+		craft()->templates->includeCssResource('supercoolfields/colours.css');
+
 		$options = $this->getTranslatedOptions();
 
 		// If this is a new entry, look for a default option

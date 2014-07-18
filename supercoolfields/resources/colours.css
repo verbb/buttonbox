@@ -1,0 +1,29 @@
+.supercoolfields-colours select { display: none; }
+
+.supercoolfields-colours--btn div,
+.supercoolfields-colours--option div {
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
+  border: 1px solid #d0d2d3;
+
+  display: inline-block;
+  *display: inline;
+  zoom: 1;
+  vertical-align: bottom;
+
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+
+
+
+.supercoolfields-colours--menu a:before {
+  margin-top: 5px !important;
+}
+
+.supercoolfields-colours--menu ul.padded {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}

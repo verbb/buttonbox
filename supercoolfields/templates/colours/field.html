@@ -1,1 +1,45 @@
-toot
+{%- set options = (options is defined ? options : []) %}
+{%- set value = (value is defined ? value : null) %}
+{%- set hasOptgroups = false -%}
+
+<div class="supercoolfields-colours">
+  <select
+    {%- if id is defined %} id="{{ id }}"{% endif %}
+    {%- if name is defined %} name="{{ name }}"{% endif %}>
+    {% for key, option in options %}
+      {% set optionLabel = (option.label is defined ? option.label : option) %}
+      {% set optionValue = (option.value is defined ? option.value : key) %}
+      {% set optionDisabled = (option.disabled is defined ? option.disabled : false) %}
+      <option value="{{ optionValue }}"{% if optionValue == value %} selected{% endif %}{% if optionDisabled %} disabled{% endif %}>{{ optionLabel }}</option>
+    {% endfor %}
+  </select>
+
+
+  {% for key, option in options %}
+    {% set optionLabel = (option.label is defined ? option.label : option) %}
+    {% set optionValue = (option.value is defined ? option.value : key) %}
+    {% if optionValue == value %}
+      <a class="supercoolfields-colours--btn" role="button">
+        <div style="background: {{ optionValue }};"></div>
+        {{ optionLabel }}
+      </a>
+    {% endif %}
+  {% endfor %}
+
+
+  <div class="menu  supercoolfields-colours--menu" data-align="right">
+    <ul class="padded">
+    {% for key, option in options %}
+      {% set optionLabel = (option.label is defined ? option.label : option) %}
+      {% set optionValue = (option.value is defined ? option.value : key) %}
+      <li>
+        <a class="{% if optionValue == value %}sel {% endif %}supercoolfields-colours--option" role="button" data-sc-value="{{ optionValue }}">
+          <div style="background:{{ optionValue }};"></div>
+          {{ optionLabel }}
+        </a>
+      </li>
+    {% endfor %}
+    </ul>
+  </div>
+
+</div>
