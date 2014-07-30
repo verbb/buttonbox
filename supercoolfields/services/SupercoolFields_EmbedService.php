@@ -77,7 +77,7 @@ class SupercoolFields_EmbedService extends BaseApplicationComponent
     } elseif ( strpos($url, 'pinterest') !== false && $embedlyApiKey ) { // pinterest
 
       $provider = 'pinterest';
-      $apiUrl = 'http://api.embed.ly/1/oembed?key='.$embedlyApiKey.'&url='.$url;
+      $apiUrl = 'https://api.embed.ly/1/oembed?key='.$embedlyApiKey.'&url='.$url;
 
     }
 
