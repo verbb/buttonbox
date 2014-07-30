@@ -52,7 +52,14 @@ class SupercoolFields_EmbedService extends BaseApplicationComponent
       $provider = 'soundcloud';
       $apiUrl = 'https://soundcloud.com/oembed?url='.$url.'&format=json';
 
+    } elseif ( strpos($url, 'instagr') !== false ) { // instagram
+
+      $provider = 'instagram';
+      $apiUrl = 'https://api.instagram.com/oembed?url='.$url;
+
     }
+
+    // die($url);
 
 
     // create curl resource
@@ -76,7 +83,7 @@ class SupercoolFields_EmbedService extends BaseApplicationComponent
 
 
     // see if we have any html
-    if ( $provider === 'flickr' ) {
+    if ( $provider === 'flickr' || $provider === 'instagram' ) {
 
       if ( isset($decodedJSON['url']) && $decodedJSON['type'] == 'photo' ) {
         $data = '<img src="'.$decodedJSON['url'].'" width="'.$decodedJSON['width'].'" height="'.$decodedJSON['height'].'" class="embed  embed--'.$provider.'">';
