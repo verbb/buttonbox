@@ -20,14 +20,16 @@ function supercoolfieldsHoversUpdateHover($e) {
 $(function(){
 
   // hovers
-  $('.supercoolfields-hovers label').on('mouseenter', function(){
+  $(document).on('mouseenter', '.supercoolfields-hovers label', function(){
     supercoolfieldsHoversUpdateHover($(this));
-  }).on('mouseleave', function(){
+  });
+
+  $(document).on('mouseleave', '.supercoolfields-hovers label', function(){
     supercoolfieldsHoversRemoveHover($(this).parent('.supercoolfields-hovers'));
   });
 
   // clicks
-  $('.supercoolfields-hovers').on('change', function(){
+  $(document).on('change', '.supercoolfields-hovers', function(){
     supercoolfieldsHoversUpdate($(this));
   });
 
