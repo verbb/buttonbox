@@ -13,11 +13,28 @@ namespace Craft;
 class SupercoolFields_EmbedService extends BaseApplicationComponent
 {
 
+  private $settings = '';
+
+
+  public function __construct()
+  {
+    // get plugin settings
+    $plugin = craft()->plugins->getPlugin('supercoolFields');
+    $this->settings = $plugin->getSettings();
+  }
+
+
   public function get($url, $scripts = true, $twig = true)
   {
 
     $apiUrl = '';
     $provider = '';
+
+    if ( $this->settings['embedlyApiKey'] != '' ) {
+      $embedlyApiKey = $this->settings['embedlyApiKey'];
+    } else {
+      $embedlyApiKey = false;
+    }
 
 
     // switch on the provider
@@ -57,9 +74,12 @@ class SupercoolFields_EmbedService extends BaseApplicationComponent
       $provider = 'instagram';
       $apiUrl = 'https://api.instagram.com/oembed?url='.$url;
 
-    }
+    } elseif ( strpos($url, 'pinterest') !== false && $embedlyApiKey ) { // pinterest
 
-    // die($url);
+      $provider = 'pinterest';
+      $apiUrl = 'http://api.embed.ly/1/oembed?key='.$embedlyApiKey.'&url='.$url;
+
+    }
 
 
     // create curl resource
@@ -83,7 +103,7 @@ class SupercoolFields_EmbedService extends BaseApplicationComponent
 
 
     // see if we have any html
-    if ( $provider === 'flickr' || $provider === 'instagram' ) {
+    if ( $provider === 'flickr' || $provider === 'instagram' || $provider === 'pinterest' ) {
 
       if ( isset($decodedJSON['url']) && $decodedJSON['type'] == 'photo' ) {
         $data = '<img src="'.$decodedJSON['url'].'" width="'.$decodedJSON['width'].'" height="'.$decodedJSON['height'].'" class="embed  embed--'.$provider.'">';

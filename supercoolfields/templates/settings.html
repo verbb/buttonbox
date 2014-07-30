@@ -1,0 +1,13 @@
+{% import "_includes/forms" as forms %}
+
+<div class="item" data-colspan="1">
+  {{ forms.textField({
+    label: 'Embedly API Key'|t,
+    id: 'embedlyApiKey',
+    name: 'embedlyApiKey',
+    instructions: "Embed.ly api key."|t,
+    value: settings.embedlyApiKey,
+    required: true,
+    errors: settings.getErrors('embedlyApiKey')
+  }) }}
+</div>

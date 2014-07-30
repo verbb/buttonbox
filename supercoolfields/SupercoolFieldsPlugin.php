@@ -33,4 +33,18 @@ class SupercoolFieldsPlugin extends BasePlugin
     return 'http://www.supercooldesign.co.uk';
   }
 
+  protected function defineSettings()
+  {
+    return array(
+      'embedlyApiKey' => array(AttributeType::String, 'required' => true)
+    );
+  }
+
+  public function getSettingsHtml()
+  {
+    return craft()->templates->render('supercoolFields/settings', array(
+      'settings' => $this->getSettings()
+    ));
+  }
+
 }
