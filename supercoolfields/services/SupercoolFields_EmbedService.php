@@ -123,7 +123,7 @@ class SupercoolFields_EmbedService extends BaseApplicationComponent
     // thanks to https://github.com/A-P/Embedder for this bit!
     // set the encode html to output properly in Twig
     $charset = craft()->templates->getTwig()->getCharset();
-    $twig_html = new \Twig_Markup($output, $charset);
+    $twig_html = new \Twig_Markup($data, $charset);
 
 
     // check we haven't any errors or 404 etc
