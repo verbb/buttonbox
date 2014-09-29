@@ -36,6 +36,8 @@ class SupercoolFields_EmbedService extends BaseApplicationComponent
       $embedlyApiKey = false;
     }
 
+    // clean up spaces, flipping users.
+    $url = trim($url);
 
     // switch on the provider
     if ( strpos($url, 'vimeo') !== false ) { // vimeo
