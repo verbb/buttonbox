@@ -21,7 +21,7 @@ class SupercoolFields_ColumnsFieldType extends BaseFieldType
   public function getInputHtml($name, $value)
   {
     craft()->templates->includeCssResource('supercoolfields/columns.css');
-    craft()->templates->includeJsResource('supercoolfields/fields.js');
+    craft()->templates->includeJsResource('supercoolfields/radio-hovers.js');
 
     $settings = $this->getSettings();
 
