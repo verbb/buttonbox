@@ -1,0 +1,33 @@
+.supercoolfields-width label {
+  cursor: pointer !important;
+}
+
+.supercoolfields-width label.supercoolfields-width--hover,
+.supercoolfields-width label.active {
+  background: #5286d9 !important;
+  background-image: -webkit-linear-gradient(#659cdc, #5286d9) !important;
+  background-image: -moz-linear-gradient(#659cdc, #5286d9) !important;
+  background-image: -ms-linear-gradient(#659cdc, #5286d9) !important;
+  background-image: -o-linear-gradient(#659cdc, #5286d9) !important;
+  background-image: linear-gradient(#659cdc, #5286d9) !important;
+
+
+  border-color: #5286d9 !important;
+  -webkit-box-shadow: 0 0 0 1px #2a4c75, 0 1px 2px -1px rgba(0, 0, 0, 0.1) !important;
+  -moz-box-shadow: 0 0 0 1px #2a4c75, 0 1px 2px -1px rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 0 0 1px #2a4c75, 0 1px 2px -1px rgba(0, 0, 0, 0.1) !important;
+}
+
+.supercoolfields-width input {
+  position: absolute;
+  left: -9999px;
+  clip: rect(0,0,0,0);
+}
+
+.supercoolfields-width__label {
+  white-space: nowrap;
+  color: transparent;
+  font-size: 0px;
+  width: 12px;
+  display: block;
+}

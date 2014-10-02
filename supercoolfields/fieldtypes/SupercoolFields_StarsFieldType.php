@@ -22,7 +22,7 @@ class SupercoolFields_StarsFieldType extends BaseFieldType
   {
 
     craft()->templates->includeCssResource('supercoolfields/stars.css');
-    craft()->templates->includeJsResource('supercoolfields/fields.js');
+    craft()->templates->includeJsResource('supercoolfields/radio-hovers.js');
 
     $settings = $this->getSettings();
 
