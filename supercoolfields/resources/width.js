@@ -34,12 +34,4 @@ $(function(){
     supercoolfieldsWidthUpdate($(this));
   });
 
-
-  // on load state
-  // $(window).on('load',function(){
-  //   $('.supercoolfields-width').each(function(){
-  //     supercoolfieldsWidthUpdate($(this));
-  //   });
-  // });
-
 });
