@@ -9,7 +9,7 @@
     {% set optionDisabled = (option.disabled is defined ? option.disabled : false) %}
     <label class="btn  big">
       <input type="radio" name="{{ name }}" value="{{ optionValue }}"{% if optionValue == value %} checked="checked"{% endif %}{% if optionDisabled %} disabled{% endif %}>
-      <span class="supercoolfields-width__value">{{ optionLabel }}</span>
+      <span class="supercoolfields-width__label">{{ optionLabel }}</span>
     </label>
   {% endfor %}
 

@@ -1,8 +1,3 @@
-.supercoolfields-width {
-
-}
-
-
 .supercoolfields-width label {
   cursor: pointer !important;
 }
@@ -23,31 +18,13 @@
   box-shadow: 0 0 0 1px #2a4c75, 0 1px 2px -1px rgba(0, 0, 0, 0.1) !important;
 }
 
-
-.btn,
-.btngroup {
-
-}
-
-
-.supercoolfields-width label:not(.active):hover {
-  /*background: #5286d9 !important;*/
-  /*#0d78f2*/
-  /*background-image: -webkit-linear-gradient(#e4e5e7, #eaebec) !important;*/
-  /*background-image: -moz-linear-gradient(#e4e5e7, #eaebec);
-  background-image: -ms-linear-gradient(#e4e5e7, #eaebec);
-  background-image: -o-linear-gradient(#e4e5e7, #eaebec);
-  background-image: linear-gradient(#e4e5e7, #eaebec);*/
-}
-
-
 .supercoolfields-width input {
   position: absolute;
   left: -9999px;
   clip: rect(0,0,0,0);
 }
 
-.supercoolfields-width__value {
+.supercoolfields-width__label {
   white-space: nowrap;
   color: transparent;
   font-size: 0px;
