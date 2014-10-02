@@ -1,0 +1,16 @@
+.supercoolfields-buttons input {
+  position: absolute;
+  left: -9999px;
+  clip: rect(0,0,0,0);
+}
+
+.supercoolfields-buttons__label {
+
+}
+
+
+
+.supercoolfields-buttons img {
+  vertical-align: inherit;
+  margin-top: -2px;
+}
