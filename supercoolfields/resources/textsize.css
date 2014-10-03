@@ -1,0 +1,41 @@
+.supercoolfields-textsize select { display: none; }
+
+.supercoolfields-textsize__btn {
+  display: inline-block;
+  *display: inline;
+  zoom: 1;
+  color: #C2C4C5;
+  line-height: 1;
+}
+.supercoolfields-textsize__btn:hover { text-decoration: none; }
+.supercoolfields-textsize__btn:hover .supercoolfields-textsize__label { color: #0d78f2; }
+
+.supercoolfields-textsize__label {
+  display: inline-block;
+  *display: inline;
+  zoom: 1;
+  padding: 3px 0;
+  font-size: 13px;
+}
+
+.supercoolfields-textsize__menu {
+  left: -24px;
+  top: 9px;
+}
+
+.supercoolfields-textsize__menu a {
+  position: relative;
+  line-height: 1;
+}
+
+.supercoolfields-textsize__menu a:before {
+  position: absolute;
+  top: 50%;
+  bottom: 0;
+  margin-top: -5px !important;
+}
+
+.supercoolfields-textsize__menu ul.padded {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
