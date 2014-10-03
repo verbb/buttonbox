@@ -9,8 +9,8 @@ function supercoolfieldsInitColours(selector) {
 
 
   // find and bind the trigger and menu
-  var $menu = $elem.find('.supercoolfields-colours--menu'),
-      $btn = $elem.find('.supercoolfields-colours--btn');
+  var $menu = $elem.find('.supercoolfields-colours__menu'),
+      $btn = $elem.find('.supercoolfields-colours__btn');
 
   $btn.on('click', function(e){
 
@@ -26,18 +26,18 @@ function supercoolfieldsInitColours(selector) {
 
 
   // bind the options inside the menu and click the appropriate option in the actual select
-  $elem.find('.supercoolfields-colours--option').on('click', function(e){
+  $elem.find('.supercoolfields-colours__option').on('click', function(e){
 
     $select.val($(this).data('sc-value'));
 
     $menu.hide();
 
     var $newSelectedOption = $elem.find('option:selected'),
-        btnInnerHtml = '<div style="background:'+$newSelectedOption.attr('value')+';"></div>'+$newSelectedOption.text();
+        btnInnerHtml = '<div class="supercoolfields-colours__block" style="background:'+$newSelectedOption.attr('value')+';"></div>'+$newSelectedOption.text();
 
     $btn.html(btnInnerHtml);
 
-    $elem.find('.supercoolfields-colours--option').removeClass('sel');
+    $elem.find('.supercoolfields-colours__option').removeClass('sel');
     $(this).addClass('sel');
 
   });
