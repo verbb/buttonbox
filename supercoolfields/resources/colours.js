@@ -17,13 +17,17 @@ function supercoolfieldsInitColours(selector) {
     e.preventDefault();
 
     if ( $menu.is(':visible') ) {
+
       $menu.hide();
+
     } else {
+
       var topVal = ($elem.find('.supercoolfields-colours__option.sel').parent('li').prevAll().length * -28) + 9;
-      console.log(topVal);
+
       $menu.css({
         top : topVal + 'px'
       }).show();
+
     }
 
   });
