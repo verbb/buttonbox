@@ -12,7 +12,7 @@ function supercoolfieldsInitColours(selector) {
   var $menu = $elem.find('.supercoolfields-colours--menu'),
       $btn = $elem.find('.supercoolfields-colours--btn');
 
-  $(document).on('click', '.supercoolfields-colours--btn', function(e){
+  $btn.on('click', function(e){
 
     e.preventDefault();
 
@@ -33,9 +33,9 @@ function supercoolfieldsInitColours(selector) {
     $menu.hide();
 
     var $newSelectedOption = $elem.find('option:selected'),
-        btnHtml = '<a class="supercoolfields-colours--btn" role="button"><div style="background:'+$newSelectedOption.attr('value')+';"></div>'+$newSelectedOption.text()+'</a>';
+        btnInnerHtml = '<div style="background:'+$newSelectedOption.attr('value')+';"></div>'+$newSelectedOption.text();
 
-    $elem.find('.supercoolfields-colours--btn').replaceWith(btnHtml);
+    $btn.html(btnInnerHtml);
 
     $elem.find('.supercoolfields-colours--option').removeClass('sel');
     $(this).addClass('sel');
