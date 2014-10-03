@@ -1,0 +1,41 @@
+{%- set options = (options is defined ? options : []) %}
+{%- set value = (value is defined ? value : null) %}
+{%- set hasOptgroups = false -%}
+
+<div class="supercoolfields-textsize{%- if class is defined %}  {{ class }}{% endif %}">
+  <select{%- if name is defined %} name="{{ name }}"{% endif %}>
+    {% for key, option in options %}
+      {% set optionLabel = (option.label is defined ? option.label : option) %}
+      {% set optionValue = (option.value is defined ? option.value : key) %}
+      {% set optionDisabled = (option.disabled is defined ? option.disabled : false) %}
+      <option value="{{ optionValue }}"{% if optionValue == value %} selected{% endif %}{% if optionDisabled %} disabled{% endif %}{% if option.pxVal %} data-sc-pxval="{{ option.pxVal }}"{% endif %}>{{ optionLabel }}</option>
+    {% endfor %}
+  </select>
+
+
+  {% for key, option in options %}
+    {% set optionLabel = (option.label is defined ? option.label : option) %}
+    {% set optionValue = (option.value is defined ? option.value : key) %}
+    {% if optionValue == value %}
+      <a class="supercoolfields-textsize__btn" role="button">
+        <span class="supercoolfields-textsize__label" {% if option.pxVal %} style="font-size:{{ option.pxVal }}px;"{% endif %}>{{ optionLabel }}</span>
+      </a>
+    {% endif %}
+  {% endfor %}
+
+
+  <div class="menu  supercoolfields-textsize__menu" data-align="right">
+    <ul class="padded">
+    {% for key, option in options %}
+      {% set optionLabel = (option.label is defined ? option.label : option) %}
+      {% set optionValue = (option.value is defined ? option.value : key) %}
+      <li>
+        <a class="{% if optionValue == value %}sel {% endif %}supercoolfields-textsize__option" role="button" data-sc-value="{{ optionValue }}">
+          <span class="supercoolfields-textsize__label" {% if option.pxVal %} style="font-size:{{ option.pxVal }}px;"{% endif %}>{{ optionLabel }}</span>
+        </a>
+      </li>
+    {% endfor %}
+    </ul>
+  </div>
+
+</div>

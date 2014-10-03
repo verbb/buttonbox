@@ -1,6 +1,11 @@
 .supercoolfields-colours select { display: none; }
 
-.supercoolfields-colours__btn { display: block; color: #C2C4C5; }
+.supercoolfields-colours__btn {
+  display: inline-block;
+  *display: inline;
+  zoom: 1;
+  color: #C2C4C5;
+}
 .supercoolfields-colours__btn:hover { text-decoration: none; }
 .supercoolfields-colours__btn:hover .supercoolfields-colours__label { color: #0d78f2; }
 

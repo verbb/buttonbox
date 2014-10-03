@@ -13,7 +13,7 @@ namespace Craft;
 /**
  *
  */
-class SupercoolFields_ColoursFieldType extends BaseOptionsFieldType
+class SupercoolFields_TextSizeFieldType extends BaseOptionsFieldType
 {
 	/**
 	 * Returns the type of field this is.
@@ -22,7 +22,7 @@ class SupercoolFields_ColoursFieldType extends BaseOptionsFieldType
 	 */
 	public function getName()
 	{
-		return Craft::t('Colours');
+		return Craft::t('Text Size');
 	}
 
 
@@ -43,13 +43,13 @@ class SupercoolFields_ColoursFieldType extends BaseOptionsFieldType
 			$value = $this->getDefaultValue();
 		}
 
-		craft()->templates->includeJsResource('supercoolfields/colours.js');
-		craft()->templates->includeCssResource('supercoolfields/colours.css');
+		craft()->templates->includeJsResource('supercoolfields/textsize.js');
+		craft()->templates->includeCssResource('supercoolfields/textsize.css');
 
-		$class = 'supercoolfields-colours-' . uniqid();
-		craft()->templates->includeJs("supercoolfieldsInitColours('.{$class}');");
+		$class = 'supercoolfields-textsize-' . uniqid();
+		craft()->templates->includeJs("supercoolfieldsInitTextSize('.{$class}');");
 
-		return craft()->templates->render('supercoolfields/colours/field', array(
+		return craft()->templates->render('supercoolfields/textsize/field', array(
 			'class'   => $class,
 			'name'    => $name,
 			'value'   => $value,
@@ -72,21 +72,25 @@ class SupercoolFields_ColoursFieldType extends BaseOptionsFieldType
 			// Give it a default row
 			$options = array(
 				array(
-					'label' => 'Red',
-					'value' => '#d9603b'
+					'label' => 'Small',
+					'value' => 'small',
+					'pxVal' => '13'
 				),
 				array(
-					'label' => 'Green',
-					'value' => '#328d7e',
+					'label' => 'Medium',
+					'value' => 'medium',
+					'pxVal' => '16',
 					'default' => true
 				),
 				array(
-					'label' => 'Navy',
-					'value' => '#17333a'
+					'label' => 'Large',
+					'value' => 'large',
+					'pxVal' => '24'
 				),
 				array(
-					'label' => 'Brown',
-					'value' => '#818b80'
+					'label' => 'Mega',
+					'value' => 'mega',
+					'pxVal' => '48'
 				)
 			);
 		}
@@ -101,12 +105,17 @@ class SupercoolFields_ColoursFieldType extends BaseOptionsFieldType
 				'cols'         => array(
 					'label' => array(
 						'heading'      => Craft::t('Option Label'),
-						'type'         => 'singleline'
+						'type'         => 'singleline',
+						'autopopulate' => 'value'
 					),
 					'value' => array(
-						'heading'      => Craft::t('Valid CSS Colour'),
+						'heading'      => Craft::t('CSS Class'),
 						'type'         => 'singleline',
 						'class'        => 'code'
+					),
+					'pxVal' => array(
+						'heading'      => Craft::t('Pixel Value'),
+						'type'         => 'number'
 					),
 					'default' => array(
 						'heading'      => Craft::t('Default?'),
@@ -131,7 +140,7 @@ class SupercoolFields_ColoursFieldType extends BaseOptionsFieldType
 	*/
 	protected function getOptionsSettingsLabel()
 	{
-		return Craft::t('Colour Options');
+		return Craft::t('Text Size Options');
 	}
 
 
