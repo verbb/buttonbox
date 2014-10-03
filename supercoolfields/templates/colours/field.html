@@ -2,10 +2,8 @@
 {%- set value = (value is defined ? value : null) %}
 {%- set hasOptgroups = false -%}
 
-<div class="supercoolfields-colours">
-  <select
-    {%- if id is defined %} id="{{ id }}"{% endif %}
-    {%- if name is defined %} name="{{ name }}"{% endif %}>
+<div class="supercoolfields-colours{%- if class is defined %}  {{ class }}{% endif %}">
+  <select{%- if name is defined %} name="{{ name }}"{% endif %}>
     {% for key, option in options %}
       {% set optionLabel = (option.label is defined ? option.label : option) %}
       {% set optionValue = (option.value is defined ? option.value : key) %}

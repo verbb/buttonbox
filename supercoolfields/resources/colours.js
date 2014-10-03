@@ -1,9 +1,11 @@
-function supercoolfieldsInitColours($elem) {
+function supercoolfieldsInitColours(selector) {
+
+  // cache elem
+  var $elem = $(selector);
+
 
   // hide select
   var $select = $elem.find('select');
-
-
 
 
   // find and bind the trigger and menu
@@ -21,7 +23,6 @@ function supercoolfieldsInitColours($elem) {
     }
 
   });
-
 
 
   // bind the options inside the menu and click the appropriate option in the actual select
@@ -53,14 +54,3 @@ function supercoolfieldsInitColours($elem) {
   // });
 
 }
-
-
-$(function(){
-
-  $(window).on('load', function(){
-    $('.supercoolfields-colours').each(function(i, elem){
-      supercoolfieldsInitColours($(this));
-    });
-  });
-
-});
