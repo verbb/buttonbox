@@ -18,7 +18,7 @@
     {% set optionValue = (option.value is defined ? option.value : key) %}
     {% if optionValue == value %}
       <a class="supercoolfields-textsize__btn" role="button">
-        <span class="supercoolfields-textsize__label">{{ optionLabel }}</span>
+        <span class="supercoolfields-textsize__label" {% if option.pxVal %} style="font-size:{{ option.pxVal }}px;"{% endif %}>{{ optionLabel }}</span>
       </a>
     {% endif %}
   {% endfor %}

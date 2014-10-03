@@ -22,11 +22,12 @@ function supercoolfieldsInitTextSize(selector) {
 
     } else {
 
-      var topVal = ($elem.find('.supercoolfields-textsize__option.sel').parent('li').prevAll().length * -28) + 9;
 
-      $menu.css({
-        top : topVal + 'px'
-      }).show();
+      $menu.css({ top : '9px' }).show();
+
+      var topVal = ($elem.offset().top - $elem.find('.supercoolfields-textsize__option.sel').offset().top) + 6;
+
+      $menu.css({ top : topVal+'px' });
 
     }
 
