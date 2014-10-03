@@ -19,6 +19,11 @@
 
 
 
+.supercoolfields-colours--menu {
+  left: -24px;
+  top: 9px;
+}
+
 .supercoolfields-colours--menu a:before {
   margin-top: 5px !important;
 }
