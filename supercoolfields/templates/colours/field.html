@@ -19,7 +19,7 @@
     {% if optionValue == value %}
       <a class="supercoolfields-colours__btn" role="button">
         <div class="supercoolfields-colours__block" style="background:{{ optionValue }};"></div>
-        {{ optionLabel }}
+        <div class="supercoolfields-colours__label">{{ optionLabel }}</div>
       </a>
     {% endif %}
   {% endfor %}
@@ -33,7 +33,7 @@
       <li>
         <a class="{% if optionValue == value %}sel {% endif %}supercoolfields-colours__option" role="button" data-sc-value="{{ optionValue }}">
           <div class="supercoolfields-colours__block" style="background:{{ optionValue }};"></div>
-          {{ optionLabel }}
+          <div class="supercoolfields-colours__label">{{ optionLabel }}</div>
         </a>
       </li>
     {% endfor %}

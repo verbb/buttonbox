@@ -37,7 +37,7 @@ function supercoolfieldsInitColours(selector) {
     $menu.hide();
 
     var $newSelectedOption = $elem.find('option:selected'),
-        btnInnerHtml = '<div class="supercoolfields-colours__block" style="background:'+$newSelectedOption.attr('value')+';"></div>'+$newSelectedOption.text();
+        btnInnerHtml = '<div class="supercoolfields-colours__block" style="background:'+$newSelectedOption.attr('value')+';"></div><div class="supercoolfields-colours__label">'+$newSelectedOption.text()+'</div>';
 
     $btn.html(btnInnerHtml);
 
@@ -45,16 +45,5 @@ function supercoolfieldsInitColours(selector) {
     $(this).addClass('sel');
 
   });
-
-
-
-
-  // how to manage clicking off?
-  //
-  // $(document).on('click', function(e){
-  //   if ( !$(this).parentsUntil('.supercoolfields-colours').length ) {
-  //     $menu.hide();
-  //   }
-  // });
 
 }
