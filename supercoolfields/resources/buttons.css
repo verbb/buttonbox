@@ -4,7 +4,19 @@
   clip: rect(0,0,0,0);
 }
 
-.supercoolfields-buttons img {
+.supercoolfields-buttons img,
+.supercoolfields-buttons__label {
+  display: inline-block;
+  *display: inline;
+  zoom: 1;
   vertical-align: inherit;
+  margin-top: 2px;
+}
+
+.supercoolfields-buttons img {
+  margin-top: 0;
+}
+
+.supercoolfields-buttons img.supercoolfields-buttons__with-label {
   margin-top: -2px;
 }
