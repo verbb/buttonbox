@@ -71,20 +71,20 @@ class SupercoolFields_ButtonsFieldType extends BaseOptionsFieldType
           'label' => 'Align Left',
           'showLabel' => false,
           'value' => 'alignLeft',
-          'imagePath' => '/admin/resources/supercoolFields/images/align-left.png'
+          'imagePath' => '/admin/resources/supercoolfields/images/align-left.png'
         ),
         array(
           'label' => 'Align Center',
           'showLabel' => false,
           'value' => 'alignCenter',
-          'imagePath' => '/admin/resources/supercoolFields/images/align-center.png',
+          'imagePath' => '/admin/resources/supercoolfields/images/align-center.png',
           'default' => true
         ),
         array(
           'label' => 'Align Right',
           'showLabel' => false,
           'value' => 'alignRight',
-          'imagePath' => '/admin/resources/supercoolFields/images/align-right.png'
+          'imagePath' => '/admin/resources/supercoolfields/images/align-right.png'
         )
       );
     }
