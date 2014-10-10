@@ -66,7 +66,27 @@ class SupercoolFields_ButtonsFieldType extends BaseOptionsFieldType
     if (!$options)
     {
       // Give it a default row
-      $options = array(array('label' => '', 'value' => ''));
+      $options = array(
+        array(
+          'label' => 'Align Left',
+          'showLabel' => false,
+          'value' => 'alignLeft',
+          'imagePath' => '/admin/resources/supercoolfields/images/align-left.png'
+        ),
+        array(
+          'label' => 'Align Center',
+          'showLabel' => false,
+          'value' => 'alignCenter',
+          'imagePath' => '/admin/resources/supercoolfields/images/align-center.png',
+          'default' => true
+        ),
+        array(
+          'label' => 'Align Right',
+          'showLabel' => false,
+          'value' => 'alignRight',
+          'imagePath' => '/admin/resources/supercoolfields/images/align-right.png'
+        )
+      );
     }
 
     return craft()->templates->renderMacro('_includes/forms', 'editableTableField', array(
