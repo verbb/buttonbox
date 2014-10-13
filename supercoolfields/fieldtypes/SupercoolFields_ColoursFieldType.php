@@ -72,21 +72,25 @@ class SupercoolFields_ColoursFieldType extends BaseOptionsFieldType
 			// Give it a default row
 			$options = array(
 				array(
-					'label' => 'Red',
-					'value' => '#d9603b'
+					'label'   => 'Red',
+					'value'   => 'red',
+					'hexCode' => '#d9603b'
 				),
 				array(
-					'label' => 'Green',
-					'value' => '#328d7e',
+					'label'   => 'Green',
+					'value'   => 'green',
+					'hexCode' => '#328d7e',
 					'default' => true
 				),
 				array(
-					'label' => 'Navy',
-					'value' => '#17333a'
+					'label'   => 'Navy',
+					'value'   => 'navy',
+					'hexCode' => '#17333a'
 				),
 				array(
-					'label' => 'Brown',
-					'value' => '#818b80'
+					'label'   => 'Brown',
+					'value'   => 'brown',
+					'hexCode' => '#818b80'
 				)
 			);
 		}
@@ -101,9 +105,15 @@ class SupercoolFields_ColoursFieldType extends BaseOptionsFieldType
 				'cols'         => array(
 					'label' => array(
 						'heading'      => Craft::t('Option Label'),
-						'type'         => 'singleline'
+						'type'         => 'singleline',
+						'autopopulate' => 'value'
 					),
 					'value' => array(
+						'heading'      => Craft::t('Value'),
+						'type'         => 'singleline',
+						'class'        => 'code'
+					),
+					'hexCode' => array(
 						'heading'      => Craft::t('Valid CSS Colour'),
 						'type'         => 'singleline',
 						'class'        => 'code'
