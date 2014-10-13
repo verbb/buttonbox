@@ -16,9 +16,10 @@
   {% for key, option in options %}
     {% set optionLabel = (option.label is defined ? option.label : option) %}
     {% set optionValue = (option.value is defined ? option.value : key) %}
+    {% set optionHex = (option.hexCode is defined ? option.hexCode : key) %}
     {% if optionValue == value %}
       <a class="supercoolfields-colours__btn" role="button">
-        <div class="supercoolfields-colours__block" style="background:{{ optionValue }};"></div>
+        <div class="supercoolfields-colours__block" style="background:{{ optionHex }};"></div>
         <div class="supercoolfields-colours__label">{{ optionLabel }}</div>
       </a>
     {% endif %}
@@ -30,9 +31,10 @@
     {% for key, option in options %}
       {% set optionLabel = (option.label is defined ? option.label : option) %}
       {% set optionValue = (option.value is defined ? option.value : key) %}
+      {% set optionHex = (option.hexCode is defined ? option.hexCode : key) %}
       <li>
         <a class="{% if optionValue == value %}sel {% endif %}supercoolfields-colours__option" role="button" data-sc-value="{{ optionValue }}">
-          <div class="supercoolfields-colours__block" style="background:{{ optionValue }};"></div>
+          <div class="supercoolfields-colours__block" style="background:{{ optionHex }};"></div>
           <div class="supercoolfields-colours__label">{{ optionLabel }}</div>
         </a>
       </li>
