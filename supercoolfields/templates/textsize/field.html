@@ -2,7 +2,8 @@
 {%- set value = (value is defined ? value : null) %}
 {%- set hasOptgroups = false -%}
 
-<div class="supercoolfields-textsize{%- if class is defined %}  {{ class }}{% endif %}">
+<div id="{{ name }}" class="supercoolfields-textsize">
+
   <select{%- if name is defined %} name="{{ name }}"{% endif %}>
     {% for key, option in options %}
       {% set optionLabel = (option.label is defined ? option.label : option) %}
@@ -17,21 +18,21 @@
     {% set optionLabel = (option.label is defined ? option.label : option) %}
     {% set optionValue = (option.value is defined ? option.value : key) %}
     {% if optionValue == value %}
-      <a class="supercoolfields-textsize__btn" role="button">
-        <span class="supercoolfields-textsize__label" {% if option.pxVal %} style="font-size:{{ option.pxVal }}px;"{% endif %}>{{ optionLabel }}</span>
+      <a class="btn" role="button">
+        <span{% if option.pxVal %} style="font-size:{{ option.pxVal }}px;"{% endif %}>{{ optionLabel }}</span>
       </a>
     {% endif %}
   {% endfor %}
 
 
-  <div class="menu  supercoolfields-textsize__menu" data-align="right">
+  <div class="menu" data-align="right">
     <ul class="padded">
     {% for key, option in options %}
       {% set optionLabel = (option.label is defined ? option.label : option) %}
       {% set optionValue = (option.value is defined ? option.value : key) %}
       <li>
-        <a class="{% if optionValue == value %}sel {% endif %}supercoolfields-textsize__option" role="button" data-sc-value="{{ optionValue }}">
-          <span class="supercoolfields-textsize__label" {% if option.pxVal %} style="font-size:{{ option.pxVal }}px;"{% endif %}>{{ optionLabel }}</span>
+        <a{% if optionValue == value %} class="sel"{% endif %} role="button" data-sc-value="{{ optionValue }}">
+          <span{% if option.pxVal %} style="font-size:{{ option.pxVal }}px;"{% endif %}>{{ optionLabel }}</span>
         </a>
       </li>
     {% endfor %}

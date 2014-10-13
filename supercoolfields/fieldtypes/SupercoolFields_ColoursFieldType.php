@@ -44,13 +44,11 @@ class SupercoolFields_ColoursFieldType extends BaseOptionsFieldType
 		}
 
 		craft()->templates->includeCssResource('supercoolfields/css/supercoolfields.css');
-		craft()->templates->includeJsResource('supercoolfields/colours.js');
+		craft()->templates->includeJsResource('supercoolfields/js/supercoolfields.js');
 
-		$class = 'supercoolfields-colours-' . uniqid();
-		craft()->templates->includeJs("supercoolfieldsInitColours('.{$class}');");
+		craft()->templates->includeJs('new Craft.SupercoolFieldsFancyOptions("'.craft()->templates->namespaceInputId($name).'");');
 
 		return craft()->templates->render('supercoolfields/colours/field', array(
-			'class'   => $class,
 			'name'    => $name,
 			'value'   => $value,
 			'options' => $options

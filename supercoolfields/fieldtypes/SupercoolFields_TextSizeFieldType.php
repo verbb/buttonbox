@@ -44,13 +44,11 @@ class SupercoolFields_TextSizeFieldType extends BaseOptionsFieldType
 		}
 
 		craft()->templates->includeCssResource('supercoolfields/css/supercoolfields.css');
-		craft()->templates->includeJsResource('supercoolfields/textsize.js');
+		craft()->templates->includeJsResource('supercoolfields/js/supercoolfields.js');
 
-		$class = 'supercoolfields-textsize-' . uniqid();
-		craft()->templates->includeJs("supercoolfieldsInitTextSize('.{$class}');");
+		craft()->templates->includeJs('new Craft.SupercoolFieldsFancyOptions("'.craft()->templates->namespaceInputId($name).'");');
 
 		return craft()->templates->render('supercoolfields/textsize/field', array(
-			'class'   => $class,
 			'name'    => $name,
 			'value'   => $value,
 			'options' => $options

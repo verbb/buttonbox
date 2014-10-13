@@ -2,7 +2,8 @@
 {%- set value = (value is defined ? value : null) %}
 {%- set hasOptgroups = false -%}
 
-<div class="supercoolfields-colours{%- if class is defined %}  {{ class }}{% endif %}">
+<div id="{{ name }}" class="supercoolfields-colours">
+
   <select{%- if name is defined %} name="{{ name }}"{% endif %}>
     {% for key, option in options %}
       {% set optionLabel = (option.label is defined ? option.label : option) %}
@@ -18,7 +19,7 @@
     {% set optionValue = (option.value is defined ? option.value : key) %}
     {% set optionHex = (option.hexCode is defined ? option.hexCode : key) %}
     {% if optionValue == value %}
-      <a class="supercoolfields-colours__btn" role="button">
+      <a class="btn" role="button">
         <div class="supercoolfields-colours__block" style="background:{{ optionHex }};"></div>
         <div class="supercoolfields-colours__label">{{ optionLabel }}</div>
       </a>
@@ -26,14 +27,14 @@
   {% endfor %}
 
 
-  <div class="menu  supercoolfields-colours__menu" data-align="right">
+  <div class="menu" data-align="right">
     <ul class="padded">
     {% for key, option in options %}
       {% set optionLabel = (option.label is defined ? option.label : option) %}
       {% set optionValue = (option.value is defined ? option.value : key) %}
       {% set optionHex = (option.hexCode is defined ? option.hexCode : key) %}
       <li>
-        <a class="{% if optionValue == value %}sel {% endif %}supercoolfields-colours__option" role="button" data-sc-value="{{ optionValue }}">
+        <a{% if optionValue == value %} class="sel"{% endif %} role="button" data-sc-value="{{ optionValue }}">
           <div class="supercoolfields-colours__block" style="background:{{ optionHex }};"></div>
           <div class="supercoolfields-colours__label">{{ optionLabel }}</div>
         </a>

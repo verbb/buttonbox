@@ -14,6 +14,7 @@ Craft.SupercoolFieldsButtons = Garnish.Base.extend(
 {
 
   id: null,
+
   $elem: null,
 
   init: function(id)
@@ -44,6 +45,7 @@ Craft.SupercoolFieldsStars = Garnish.Base.extend(
 {
 
   id: null,
+
   $elem: null,
   $labels: null,
 
@@ -83,6 +85,97 @@ Craft.SupercoolFieldsStars = Garnish.Base.extend(
 
     $(ev.target).addClass('hover');
     $(ev.target).prevAll('label').addClass('hover');
+
+  }
+
+});
+
+
+/**
+ * SupercoolFieldsFancyOptions Class
+ */
+Craft.SupercoolFieldsFancyOptions = Garnish.Base.extend(
+{
+
+  id: null,
+
+  $elem: null,
+  $select: null,
+  $menu: null,
+  $btn: null,
+
+  init: function(id)
+  {
+
+    this.id = id;
+    this.$elem = $('#'+this.id);
+    this.$select = this.$elem.find('select');
+    this.$menu = $elem.find('.menu');
+    this.$btn = $elem.find('.btn');
+
+    this.addListener(this.$btn, 'click', 'toggleMenu');
+
+    this.addListener(this.$menu.find('a'), 'click', 'onOptionClick');
+
+
+  },
+
+  toggleMenu: function(ev)
+  {
+
+    ev.preventDefault();
+
+    if ( this.$menu.is(':visible') ) {
+
+      this.$menu.hide();
+
+    } else {
+
+      this.$menu.css({ top : '9px' }).show();
+
+      var topVal = (this.$elem.offset().top - this.$elem.find('.sel').offset().top) + 6;
+
+      this.$menu.css({ top : topVal+'px' });
+
+    }
+
+  },
+
+
+  onOptionClick: function(ev)
+  {
+
+    var newVal = $(ev.target).data('sc-value');
+
+    this.$select.val(newVal);
+
+    this.$menu.hide();
+
+
+    this.updateField();
+
+  },
+
+  updateField: function()
+  {
+
+    // if textSize
+    var $newSelectedOption = $elem.find('option:selected'),
+        btnInnerHtml = '<span class="supercoolfields-textsize__label" style="font-size: '+$newSelectedOption.data('sc-pxval')+'px;">'+$newSelectedOption.text()+'</span>';
+
+      $btn.html(btnInnerHtml);
+
+      $elem.find('.supercoolfields-textsize__option').removeClass('sel');
+      $(this).addClass('sel');
+
+    // if colours
+    var $newSelectedOption = $elem.find('option:selected'),
+        btnInnerHtml = '<div class="supercoolfields-colours__block" style="background:'+$newSelectedOption.attr('value')+';"></div><div class="supercoolfields-colours__label">'+$newSelectedOption.text()+'</div>';
+
+    $btn.html(btnInnerHtml);
+
+    $elem.find('.supercoolfields-colours__option').removeClass('sel');
+    $(this).addClass('sel');
 
   }
 
