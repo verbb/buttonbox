@@ -105,8 +105,8 @@
 }
 .supercoolfields-stars:not(:checked) label:before { content: '★ '; }
 
-.supercoolfields-stars label.supercoolfields-hovers-active { color: #6DA8D9; }
-.supercoolfields-stars label.supercoolfields-hovers-hover { color: #333; }
+.supercoolfields-stars label.active { color: #6DA8D9; }
+.supercoolfields-stars label.hover { color: #333; }
 
 
 /**
