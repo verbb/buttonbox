@@ -43,8 +43,8 @@ class SupercoolFields_ColoursFieldType extends BaseOptionsFieldType
 			$value = $this->getDefaultValue();
 		}
 
+		craft()->templates->includeCssResource('supercoolfields/css/supercoolfields.css');
 		craft()->templates->includeJsResource('supercoolfields/colours.js');
-		craft()->templates->includeCssResource('supercoolfields/colours.css');
 
 		$class = 'supercoolfields-colours-' . uniqid();
 		craft()->templates->includeJs("supercoolfieldsInitColours('.{$class}');");

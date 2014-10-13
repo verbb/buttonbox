@@ -43,8 +43,8 @@ class SupercoolFields_TextSizeFieldType extends BaseOptionsFieldType
 			$value = $this->getDefaultValue();
 		}
 
+		craft()->templates->includeCssResource('supercoolfields/css/supercoolfields.css');
 		craft()->templates->includeJsResource('supercoolfields/textsize.js');
-		craft()->templates->includeCssResource('supercoolfields/textsize.css');
 
 		$class = 'supercoolfields-textsize-' . uniqid();
 		craft()->templates->includeJs("supercoolfieldsInitTextSize('.{$class}');");

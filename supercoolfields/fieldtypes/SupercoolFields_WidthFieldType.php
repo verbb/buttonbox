@@ -44,7 +44,7 @@ class SupercoolFields_WidthFieldType extends BaseOptionsFieldType
       $value = $this->getDefaultValue();
     }
 
-    craft()->templates->includeCssResource('supercoolfields/width.css');
+    craft()->templates->includeCssResource('supercoolfields/css/supercoolfields.css');
     craft()->templates->includeJsResource('supercoolfields/width.js');
 
     // ping all the elems here to work with Matrix etc
