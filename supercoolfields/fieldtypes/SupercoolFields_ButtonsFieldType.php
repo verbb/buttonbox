@@ -44,8 +44,9 @@ class SupercoolFields_ButtonsFieldType extends BaseOptionsFieldType
       $value = $this->getDefaultValue();
     }
 
-    craft()->templates->includeCssResource('supercoolfields/buttons.css');
-    craft()->templates->includeJsResource('supercoolfields/buttons.js');
+    craft()->templates->includeCssResource('supercoolfields/css/supercoolfields.css');
+    craft()->templates->includeJsResource('supercoolfields/js/supercoolfields.js');
+    craft()->templates->includeJs('new Craft.SupercoolFieldsButtons("'.craft()->templates->namespaceInputId($name).'");');
 
     return craft()->templates->render('supercoolfields/buttons/field', array(
       'name'    => $name,

@@ -1,4 +1,4 @@
-<div class="supercoolfields-width  btngroup">
+<div id="{{ name }}" class="supercoolfields-width  btngroup">
 
   {%- set options = (options is defined ? options : []) %}
   {%- set value = (value is defined ? value : null) %}
@@ -9,7 +9,7 @@
     {% set optionDisabled = (option.disabled is defined ? option.disabled : false) %}
     <label class="btn  big">
       <input type="radio" name="{{ name }}" value="{{ optionValue }}"{% if optionValue == value %} checked="checked"{% endif %}{% if optionDisabled %} disabled{% endif %}>
-      <span class="supercoolfields-width__label">{{ optionLabel }}</span>
+      <span>{{ optionLabel }}</span>
     </label>
   {% endfor %}
 
