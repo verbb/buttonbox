@@ -159,11 +159,11 @@
  * Width
  */
 .supercoolfields-width {
-  height: 12px;
+  height: 16px;
 }
 .supercoolfields-width .btn {
   cursor: pointer !important;
-  height: 12px;
+  height: 16px;
 }
 .supercoolfields-width .btn.active {
   background: #5286d9 !important;
