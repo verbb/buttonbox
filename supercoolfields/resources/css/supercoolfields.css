@@ -132,13 +132,13 @@
 /**
  * Stars
  */
-.supercoolfields-stars:not(:checked) input {
+.supercoolfields-stars input {
   position: absolute;
   left: -9999px;
   clip: rect(0,0,0,0);
 }
 
-.supercoolfields-stars:not(:checked) label {
+.supercoolfields-stars label {
   float: left;
   width: 1em;
   padding: 0 .1em;
@@ -149,7 +149,7 @@
   line-height: 1.2;
   color: #ddd;
 }
-.supercoolfields-stars:not(:checked) label:before { content: '★ '; }
+.supercoolfields-stars label:before { content: '★ '; }
 
 .supercoolfields-stars label.active { color: #6DA8D9; }
 .supercoolfields-stars label.hover { color: #333; }
@@ -161,8 +161,6 @@
 .supercoolfields-width label {
   cursor: pointer !important;
 }
-
-.supercoolfields-width label.supercoolfields-width--hover,
 .supercoolfields-width label.active {
   background: #5286d9 !important;
   background-image: -webkit-linear-gradient(#659cdc, #5286d9) !important;
@@ -170,21 +168,29 @@
   background-image: -ms-linear-gradient(#659cdc, #5286d9) !important;
   background-image: -o-linear-gradient(#659cdc, #5286d9) !important;
   background-image: linear-gradient(#659cdc, #5286d9) !important;
-
-
   border-color: #5286d9 !important;
+}
+.supercoolfields-width label.hover {
+  background: #357cda !important;
+  background-image: -webkit-linear-gradient(#5286d9, #357cda) !important;
+  background-image: -moz-linear-gradient(#5286d9, #357cda) !important;
+  background-image: -ms-linear-gradient(#5286d9, #357cda) !important;
+  background-image: -o-linear-gradient(#5286d9, #357cda) !important;
+  background-image: linear-gradient(#5286d9, #357cda) !important;
+  border-color: #357cda !important;
+}
+.supercoolfields-width label.active,
+.supercoolfields-width label.hover {
   -webkit-box-shadow: 0 0 0 1px #2a4c75, 0 1px 2px -1px rgba(0, 0, 0, 0.1) !important;
   -moz-box-shadow: 0 0 0 1px #2a4c75, 0 1px 2px -1px rgba(0, 0, 0, 0.1) !important;
   box-shadow: 0 0 0 1px #2a4c75, 0 1px 2px -1px rgba(0, 0, 0, 0.1) !important;
 }
-
-.supercoolfields-width input {
+.supercoolfields-width .btn input {
   position: absolute;
   left: -9999px;
   clip: rect(0,0,0,0);
 }
-
-.supercoolfields-width__label {
+.supercoolfields-width .btn span {
   white-space: nowrap;
   color: transparent;
   font-size: 0px;

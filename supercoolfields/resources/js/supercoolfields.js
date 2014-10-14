@@ -39,9 +39,9 @@ Craft.SupercoolFieldsButtons = Garnish.Base.extend(
 
 
 /**
- * SupercoolFieldsStars Class
+ * SupercoolFieldsHovers Class
  */
-Craft.SupercoolFieldsStars = Garnish.Base.extend(
+Craft.SupercoolFieldsHovers = Garnish.Base.extend(
 {
 
   id: null,
@@ -57,7 +57,9 @@ Craft.SupercoolFieldsStars = Garnish.Base.extend(
     this.$labels = this.$elem.find('label');
 
     this.addListener(this.$labels, 'mouseenter', 'updateHover');
+    // this.addListener(this.$elem, 'mouseenter', 'updateHover');
     this.addListener(this.$labels, 'mouseleave', 'removeHover');
+    // this.addListener(this.$elem, 'mouseleave', 'removeHover');
     this.addListener(this.$elem, 'click', 'update');
     this.addListener(Garnish.$win, 'load', 'update');
 
@@ -83,8 +85,9 @@ Craft.SupercoolFieldsStars = Garnish.Base.extend(
 
     this.removeHover();
 
-    $(ev.target).addClass('hover');
-    $(ev.target).prevAll('label').addClass('hover');
+    var $target = $(ev.currentTarget);
+    $target.addClass('hover');
+    $target.prevAll('label').addClass('hover');
 
   }
 
