@@ -2,25 +2,25 @@
 namespace Craft;
 
 /**
- * SupercoolFields by Supercool
+ * ButtonBox by Supercool
  *
- * @package   SupercoolFields
+ * @package   ButtonBox
  * @author    Josh Angell
  * @copyright Copyright (c) 2014, Supercool Ltd
  * @link      http://www.supercooldesign.co.uk
  */
 
-class SupercoolFieldsPlugin extends BasePlugin
+class ButtonBoxPlugin extends BasePlugin
 {
 
   public function getName()
   {
-    return Craft::t('Supercool Fields');
+    return Craft::t('Button Box');
   }
 
   public function getVersion()
   {
-    return '1.3';
+    return '1.4';
   }
 
   public function getDeveloper()

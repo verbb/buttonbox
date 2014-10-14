@@ -2,59 +2,58 @@
 namespace Craft;
 
 /**
- * SupercoolFields by Supercool
+ * ButtonBox_Colours by Supercool
  *
- * Modified from the original DropdownFieldType class
- *
- * @package   SupercoolFields
+ * @package   ButtonBox
  * @author    Josh Angell
  * @copyright Copyright (c) 2014, Supercool Ltd
  * @link      http://www.supercooldesign.co.uk
  */
-class SupercoolFields_WidthFieldType extends BaseOptionsFieldType
-{
-	// Public Methods
-	// =========================================================================
 
+/**
+ *
+ */
+class ButtonBox_ColoursFieldType extends BaseOptionsFieldType
+{
 	/**
-	 * @inheritDoc IComponentType::getName()
+	 * Returns the type of field this is.
 	 *
 	 * @return string
 	 */
 	public function getName()
 	{
-		return Craft::t('Width');
+		return Craft::t('Button Box - Colours');
 	}
 
- /**
-  * @inheritDoc IFieldType::getInputHtml()
-  *
-  * @param string $name
-  * @param mixed  $value
-  *
-  * @return string
-  */
-  public function getInputHtml($name, $value)
-  {
-    $options = $this->getTranslatedOptions();
 
-    // If this is a new entry, look for a default option
-    if ($this->isFresh())
-    {
-      $value = $this->getDefaultValue();
-    }
+	/**
+	 * Returns the field's input HTML.
+	 *
+	 * @param string $name
+	 * @param mixed  $value
+	 * @return string
+	 */
+	public function getInputHtml($name, $value)
+	{
+		$options = $this->getTranslatedOptions();
 
-    craft()->templates->includeCssResource('supercoolfields/css/supercoolfields.css');
-    craft()->templates->includeJsResource('supercoolfields/js/supercoolfields.js');
+		// If this is a new entry, look for a default option
+		if ($this->isFresh())
+		{
+			$value = $this->getDefaultValue();
+		}
 
-    craft()->templates->includeJs('new Craft.SupercoolFieldsHovers("'.craft()->templates->namespaceInputId($name).'");');
+		craft()->templates->includeCssResource('buttonbox/css/buttonbox.css');
+		craft()->templates->includeJsResource('buttonbox/js/buttonbox.js');
 
-    return craft()->templates->render('supercoolfields/width/field', array(
-      'name'    => $name,
-      'value'   => $value,
-      'options' => $options
-    ));
-  }
+		craft()->templates->includeJs('new Craft.ButtonBoxFancyOptions("'.craft()->templates->namespaceInputId($name).'");');
+
+		return craft()->templates->render('buttonbox/colours/field', array(
+			'name'    => $name,
+			'value'   => $value,
+			'options' => $options
+		));
+	}
 
 
 	/**
@@ -71,17 +70,25 @@ class SupercoolFields_WidthFieldType extends BaseOptionsFieldType
 			// Give it a default row
 			$options = array(
 				array(
-					'label' => 'One Third',
-					'value' => 'one-third'
+					'label'     => 'Red',
+					'value'     => 'red',
+					'cssColour' => '#d9603b'
 				),
 				array(
-					'label' => 'Two Thirds',
-					'value' => 'two-thirds',
-					'default' => true
+					'label'     => 'Green',
+					'value'     => 'green',
+					'cssColour' => '#328d7e',
+					'default'   => true
 				),
 				array(
-					'label' => 'Full Width',
-					'value' => 'one-whole'
+					'label'     => 'Navy',
+					'value'     => 'navy',
+					'cssColour' => '#17333a'
+				),
+				array(
+					'label'     => 'Brown',
+					'value'     => 'brown',
+					'cssColour' => '#818b80'
 				)
 			);
 		}
@@ -104,6 +111,11 @@ class SupercoolFields_WidthFieldType extends BaseOptionsFieldType
 						'type'         => 'singleline',
 						'class'        => 'code'
 					),
+					'cssColour' => array(
+						'heading'      => Craft::t('Valid CSS Colour'),
+						'type'         => 'singleline',
+						'class'        => 'code'
+					),
 					'default' => array(
 						'heading'      => Craft::t('Default?'),
 						'type'         => 'checkbox',
@@ -115,6 +127,8 @@ class SupercoolFields_WidthFieldType extends BaseOptionsFieldType
 		));
 	}
 
+
+
 	// Protected Methods
 	// =========================================================================
 
@@ -125,8 +139,9 @@ class SupercoolFields_WidthFieldType extends BaseOptionsFieldType
 	*/
 	protected function getOptionsSettingsLabel()
 	{
-		return Craft::t('Width Options');
+		return Craft::t('Colour Options');
 	}
+
 
 	/**
 	* @inheritDoc BaseSavableComponentType::defineSettings()

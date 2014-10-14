@@ -2,16 +2,16 @@
 namespace Craft;
 
 /**
- * SupercoolFields by Supercool
+ * ButtonBox_Buttons by Supercool
  *
  * Modified from the original DropdownFieldType class
  *
- * @package   SupercoolFields
+ * @package   ButtonBox
  * @author    Josh Angell
  * @copyright Copyright (c) 2014, Supercool Ltd
  * @link      http://www.supercooldesign.co.uk
  */
-class SupercoolFields_ButtonsFieldType extends BaseOptionsFieldType
+class ButtonBox_ButtonsFieldType extends BaseOptionsFieldType
 {
   // Public Methods
   // =========================================================================
@@ -23,7 +23,7 @@ class SupercoolFields_ButtonsFieldType extends BaseOptionsFieldType
    */
   public function getName()
   {
-    return Craft::t('Buttons');
+    return Craft::t('Button Box - Buttons');
   }
 
  /**
@@ -44,11 +44,11 @@ class SupercoolFields_ButtonsFieldType extends BaseOptionsFieldType
       $value = $this->getDefaultValue();
     }
 
-    craft()->templates->includeCssResource('supercoolfields/css/supercoolfields.css');
-    craft()->templates->includeJsResource('supercoolfields/js/supercoolfields.js');
-    craft()->templates->includeJs('new Craft.SupercoolFieldsButtons("'.craft()->templates->namespaceInputId($name).'");');
+    craft()->templates->includeCssResource('buttonbox/css/buttonbox.css');
+    craft()->templates->includeJsResource('buttonbox/js/buttonbox.js');
+    craft()->templates->includeJs('new Craft.ButtonBoxButtons("'.craft()->templates->namespaceInputId($name).'");');
 
-    return craft()->templates->render('supercoolfields/buttons/field', array(
+    return craft()->templates->render('buttonbox/buttons/field', array(
       'name'    => $name,
       'value'   => $value,
       'options' => $options
@@ -72,20 +72,20 @@ class SupercoolFields_ButtonsFieldType extends BaseOptionsFieldType
           'label' => 'Align Left',
           'showLabel' => false,
           'value' => 'alignLeft',
-          'imagePath' => '/admin/resources/supercoolfields/images/align-left.png'
+          'imagePath' => '/admin/resources/buttonbox/images/align-left.png'
         ),
         array(
           'label' => 'Align Center',
           'showLabel' => false,
           'value' => 'alignCenter',
-          'imagePath' => '/admin/resources/supercoolfields/images/align-center.png',
+          'imagePath' => '/admin/resources/buttonbox/images/align-center.png',
           'default' => true
         ),
         array(
           'label' => 'Align Right',
           'showLabel' => false,
           'value' => 'alignRight',
-          'imagePath' => '/admin/resources/supercoolfields/images/align-right.png'
+          'imagePath' => '/admin/resources/buttonbox/images/align-right.png'
         )
       );
     }
