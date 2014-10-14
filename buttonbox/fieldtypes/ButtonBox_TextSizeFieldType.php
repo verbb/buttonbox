@@ -2,9 +2,9 @@
 namespace Craft;
 
 /**
- * SupercoolFields by Supercool
+ * ButtonBox_TextSize by Supercool
  *
- * @package   SupercoolFields
+ * @package   ButtonBox
  * @author    Josh Angell
  * @copyright Copyright (c) 2014, Supercool Ltd
  * @link      http://www.supercooldesign.co.uk
@@ -13,7 +13,7 @@ namespace Craft;
 /**
  *
  */
-class SupercoolFields_TextSizeFieldType extends BaseOptionsFieldType
+class ButtonBox_TextSizeFieldType extends BaseOptionsFieldType
 {
 	/**
 	 * Returns the type of field this is.
@@ -22,7 +22,7 @@ class SupercoolFields_TextSizeFieldType extends BaseOptionsFieldType
 	 */
 	public function getName()
 	{
-		return Craft::t('Text Size');
+		return Craft::t('Button Box - Text Size');
 	}
 
 
@@ -43,12 +43,12 @@ class SupercoolFields_TextSizeFieldType extends BaseOptionsFieldType
 			$value = $this->getDefaultValue();
 		}
 
-		craft()->templates->includeCssResource('supercoolfields/css/supercoolfields.css');
-		craft()->templates->includeJsResource('supercoolfields/js/supercoolfields.js');
+		craft()->templates->includeCssResource('buttonbox/css/buttonbox.css');
+		craft()->templates->includeJsResource('buttonbox/js/buttonbox.js');
 
-		craft()->templates->includeJs('new Craft.SupercoolFieldsFancyOptions("'.craft()->templates->namespaceInputId($name).'");');
+		craft()->templates->includeJs('new Craft.ButtonBoxFancyOptions("'.craft()->templates->namespaceInputId($name).'");');
 
-		return craft()->templates->render('supercoolfields/textsize/field', array(
+		return craft()->templates->render('buttonbox/textsize/field', array(
 			'name'    => $name,
 			'value'   => $value,
 			'options' => $options

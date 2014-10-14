@@ -1,4 +1,4 @@
-<div id="{{ name }}" class="supercoolfields-width  btngroup">
+<div id="{{ name }}" class="buttonbox-buttons  btngroup">
 
   {%- set options = (options is defined ? options : []) %}
   {%- set value = (value is defined ? value : null) %}
@@ -7,9 +7,11 @@
     {% set optionLabel = (option.label is defined ? option.label : option) %}
     {% set optionValue = (option.value is defined ? option.value : key) %}
     {% set optionDisabled = (option.disabled is defined ? option.disabled : false) %}
-    <label class="btn  big">
+    <label class="btn  big{% if optionValue == value %} active{% endif %}">
       <input type="radio" name="{{ name }}" value="{{ optionValue }}"{% if optionValue == value %} checked="checked"{% endif %}{% if optionDisabled %} disabled{% endif %}>
-      <span>{{ optionLabel }}</span>
+      {% if option.imagePath %}<img src="{{ option.imagePath }}"{% if option.showLabel %} class="buttonbox-buttons__with-label"{% endif %} />{% endif %}
+      {% if option.imagePath and option.showLabel %}&nbsp;{% endif %}
+      {% if option.showLabel %}<span class="buttonbox-buttons__label">{{ optionLabel }}</span>{% endif %}
     </label>
   {% endfor %}
 

@@ -8,9 +8,9 @@
 
 
 /**
- * SupercoolFieldsButtons Class
+ * ButtonBoxButtons Class
  */
-Craft.SupercoolFieldsButtons = Garnish.Base.extend(
+Craft.ButtonBoxButtons = Garnish.Base.extend(
 {
 
   id: null,
@@ -39,9 +39,9 @@ Craft.SupercoolFieldsButtons = Garnish.Base.extend(
 
 
 /**
- * SupercoolFieldsHovers Class
+ * ButtonBoxHovers Class
  */
-Craft.SupercoolFieldsHovers = Garnish.Base.extend(
+Craft.ButtonBoxHovers = Garnish.Base.extend(
 {
 
   id: null,
@@ -57,9 +57,7 @@ Craft.SupercoolFieldsHovers = Garnish.Base.extend(
     this.$labels = this.$elem.find('label');
 
     this.addListener(this.$labels, 'mouseenter', 'updateHover');
-    // this.addListener(this.$elem, 'mouseenter', 'updateHover');
     this.addListener(this.$labels, 'mouseleave', 'removeHover');
-    // this.addListener(this.$elem, 'mouseleave', 'removeHover');
     this.addListener(this.$elem, 'click', 'update');
     this.addListener(Garnish.$win, 'load', 'update');
 
@@ -95,9 +93,9 @@ Craft.SupercoolFieldsHovers = Garnish.Base.extend(
 
 
 /**
- * SupercoolFieldsFancyOptions Class
+ * ButtonBoxFancyOptions Class
  */
-Craft.SupercoolFieldsFancyOptions = Garnish.Base.extend(
+Craft.ButtonBoxFancyOptions = Garnish.Base.extend(
 {
 
   id: null,
@@ -114,7 +112,7 @@ Craft.SupercoolFieldsFancyOptions = Garnish.Base.extend(
     this.$elem = $('#'+this.id);
     this.$select = this.$elem.find('select');
     this.$menu = this.$elem.find('.menu');
-    this.$btn = this.$elem.find('.supercoolfields__btn');
+    this.$btn = this.$elem.find('.buttonbox__btn');
 
     this.addListener(this.$btn, 'click', 'toggleMenu');
 
@@ -148,7 +146,7 @@ Craft.SupercoolFieldsFancyOptions = Garnish.Base.extend(
   {
 
     var $target = $(ev.currentTarget),
-        newVal = $target.data('supercoolfields-value');
+        newVal = $target.data('buttonbox-value');
         console.log(newVal);
     this.$select.val(newVal);
 
@@ -166,16 +164,16 @@ Craft.SupercoolFieldsFancyOptions = Garnish.Base.extend(
 
 
     // work out what kind of field it is and make button markup
-    if ( this.$elem.hasClass('supercoolfields-textsize') )
+    if ( this.$elem.hasClass('buttonbox-textsize') )
     {
 
-      var btnInnerHtml = '<span style="font-size: '+$newSelectedOption.data('supercoolfields-pxval')+'px;">'+$newSelectedOption.text()+'</span>';
+      var btnInnerHtml = '<span style="font-size: '+$newSelectedOption.data('buttonbox-pxval')+'px;">'+$newSelectedOption.text()+'</span>';
 
     }
-    else if ( this.$elem.hasClass('supercoolfields-colours') )
+    else if ( this.$elem.hasClass('buttonbox-colours') )
     {
 
-      var btnInnerHtml = '<div class="supercoolfields-colours__block" style="background:'+$newSelectedOption.data('supercoolfields-csscolour')+';"></div><div class="supercoolfields-colours__label">'+$newSelectedOption.text()+'</div>';
+      var btnInnerHtml = '<div class="buttonbox-colours__block" style="background:'+$newSelectedOption.data('buttonbox-csscolour')+';"></div><div class="buttonbox-colours__label">'+$newSelectedOption.text()+'</div>';
 
     }
 
