@@ -110,8 +110,8 @@ Craft.SupercoolFieldsFancyOptions = Garnish.Base.extend(
     this.id = id;
     this.$elem = $('#'+this.id);
     this.$select = this.$elem.find('select');
-    this.$menu = $elem.find('.menu');
-    this.$btn = $elem.find('.btn');
+    this.$menu = this.$elem.find('.menu');
+    this.$btn = this.$elem.find('.supercoolfields__btn');
 
     this.addListener(this.$btn, 'click', 'toggleMenu');
 
@@ -141,41 +141,48 @@ Craft.SupercoolFieldsFancyOptions = Garnish.Base.extend(
 
   },
 
-
   onOptionClick: function(ev)
   {
 
-    var newVal = $(ev.target).data('sc-value');
-
+    var $target = $(ev.currentTarget),
+        newVal = $target.data('supercoolfields-value');
+        console.log(newVal);
     this.$select.val(newVal);
 
     this.$menu.hide();
 
-
-    this.updateField();
+    this._updateField($target);
 
   },
 
-  updateField: function()
+  _updateField: function($sel)
   {
 
-    // if textSize
-    var $newSelectedOption = $elem.find('option:selected'),
-        btnInnerHtml = '<span class="supercoolfields-textsize__label" style="font-size: '+$newSelectedOption.data('sc-pxval')+'px;">'+$newSelectedOption.text()+'</span>';
+    // get newly selected option
+    var $newSelectedOption = this.$elem.find('option:selected');
 
-      $btn.html(btnInnerHtml);
 
-      $elem.find('.supercoolfields-textsize__option').removeClass('sel');
-      $(this).addClass('sel');
+    // work out what kind of field it is and make button markup
+    if ( this.$elem.hasClass('supercoolfields-textsize') )
+    {
 
-    // if colours
-    var $newSelectedOption = $elem.find('option:selected'),
-        btnInnerHtml = '<div class="supercoolfields-colours__block" style="background:'+$newSelectedOption.attr('value')+';"></div><div class="supercoolfields-colours__label">'+$newSelectedOption.text()+'</div>';
+      var btnInnerHtml = '<span style="font-size: '+$newSelectedOption.data('supercoolfields-pxval')+'px;">'+$newSelectedOption.text()+'</span>';
 
-    $btn.html(btnInnerHtml);
+    }
+    else if ( this.$elem.hasClass('supercoolfields-colours') )
+    {
 
-    $elem.find('.supercoolfields-colours__option').removeClass('sel');
-    $(this).addClass('sel');
+      var btnInnerHtml = '<div class="supercoolfields-colours__block" style="background:'+$newSelectedOption.data('supercoolfields-csscolour')+';"></div><div class="supercoolfields-colours__label">'+$newSelectedOption.text()+'</div>';
+
+    }
+
+
+    // update button
+    this.$btn.html(btnInnerHtml);
+
+    // update selected fake-option
+    this.$elem.find('.sel').removeClass('sel');
+    $sel.addClass('sel');
 
   }
 

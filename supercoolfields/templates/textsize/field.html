@@ -9,20 +9,21 @@
       {% set optionLabel = (option.label is defined ? option.label : option) %}
       {% set optionValue = (option.value is defined ? option.value : key) %}
       {% set optionDisabled = (option.disabled is defined ? option.disabled : false) %}
-      <option value="{{ optionValue }}"{% if optionValue == value %} selected{% endif %}{% if optionDisabled %} disabled{% endif %}{% if option.pxVal %} data-sc-pxval="{{ option.pxVal }}"{% endif %}>{{ optionLabel }}</option>
+      <option value="{{ optionValue }}"{% if optionValue == value %} selected{% endif %}{% if optionDisabled %} disabled{% endif %}{% if option.pxVal %} data-supercoolfields-pxval="{{ option.pxVal }}"{% endif %}>{{ optionLabel }}</option>
     {% endfor %}
   </select>
 
-
+  {% spaceless %}
   {% for key, option in options %}
     {% set optionLabel = (option.label is defined ? option.label : option) %}
     {% set optionValue = (option.value is defined ? option.value : key) %}
     {% if optionValue == value %}
-      <a class="btn" role="button">
+      <a class="supercoolfields__btn" role="button">
         <span{% if option.pxVal %} style="font-size:{{ option.pxVal }}px;"{% endif %}>{{ optionLabel }}</span>
       </a>
     {% endif %}
   {% endfor %}
+  {% endspaceless %}
 
 
   <div class="menu" data-align="right">
@@ -31,7 +32,7 @@
       {% set optionLabel = (option.label is defined ? option.label : option) %}
       {% set optionValue = (option.value is defined ? option.value : key) %}
       <li>
-        <a{% if optionValue == value %} class="sel"{% endif %} role="button" data-sc-value="{{ optionValue }}">
+        <a{% if optionValue == value %} class="sel"{% endif %} role="button" data-supercoolfields-value="{{ optionValue }}">
           <span{% if option.pxVal %} style="font-size:{{ option.pxVal }}px;"{% endif %}>{{ optionLabel }}</span>
         </a>
       </li>

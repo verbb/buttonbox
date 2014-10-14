@@ -88,7 +88,7 @@ class SupercoolFields_TextSizeFieldType extends BaseOptionsFieldType
 				array(
 					'label' => 'Mega',
 					'value' => 'mega',
-					'pxVal' => '48'
+					'pxVal' => '36'
 				)
 			);
 		}

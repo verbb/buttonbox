@@ -1,7 +1,6 @@
 {%- set options = (options is defined ? options : []) %}
 {%- set value = (value is defined ? value : null) %}
 {%- set hasOptgroups = false -%}
-
 <div id="{{ name }}" class="supercoolfields-colours">
 
   <select{%- if name is defined %} name="{{ name }}"{% endif %}>
@@ -9,33 +8,33 @@
       {% set optionLabel = (option.label is defined ? option.label : option) %}
       {% set optionValue = (option.value is defined ? option.value : key) %}
       {% set optionDisabled = (option.disabled is defined ? option.disabled : false) %}
-      <option value="{{ optionValue }}"{% if optionValue == value %} selected{% endif %}{% if optionDisabled %} disabled{% endif %}>{{ optionLabel }}</option>
+      <option value="{{ optionValue }}"{% if optionValue == value %} selected{% endif %}{% if optionDisabled %} disabled{% endif %}{% if option.cssColour %} data-supercoolfields-csscolour="{{ option.cssColour }}"{% endif %}>{{ optionLabel }}</option>
     {% endfor %}
   </select>
 
-
+  {% spaceless %}
   {% for key, option in options %}
     {% set optionLabel = (option.label is defined ? option.label : option) %}
     {% set optionValue = (option.value is defined ? option.value : key) %}
-    {% set optionHex = (option.hexCode is defined ? option.hexCode : key) %}
+    {% set optionCssColour = (option.cssColour is defined ? option.cssColour : key) %}
     {% if optionValue == value %}
-      <a class="btn" role="button">
-        <div class="supercoolfields-colours__block" style="background:{{ optionHex }};"></div>
+      <a class="supercoolfields__btn" role="button">
+        <div class="supercoolfields-colours__block" style="background:{{ optionCssColour }};"></div>
         <div class="supercoolfields-colours__label">{{ optionLabel }}</div>
       </a>
     {% endif %}
   {% endfor %}
-
+  {% endspaceless %}
 
   <div class="menu" data-align="right">
     <ul class="padded">
     {% for key, option in options %}
       {% set optionLabel = (option.label is defined ? option.label : option) %}
       {% set optionValue = (option.value is defined ? option.value : key) %}
-      {% set optionHex = (option.hexCode is defined ? option.hexCode : key) %}
+      {% set optionCssColour = (option.cssColour is defined ? option.cssColour : key) %}
       <li>
-        <a{% if optionValue == value %} class="sel"{% endif %} role="button" data-sc-value="{{ optionValue }}">
-          <div class="supercoolfields-colours__block" style="background:{{ optionHex }};"></div>
+        <a{% if optionValue == value %} class="sel"{% endif %} role="button" data-supercoolfields-value="{{ optionValue }}">
+          <div class="supercoolfields-colours__block" style="background:{{ optionCssColour }};"></div>
           <div class="supercoolfields-colours__label">{{ optionLabel }}</div>
         </a>
       </li>
