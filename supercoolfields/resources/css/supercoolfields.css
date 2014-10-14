@@ -151,17 +151,21 @@
 }
 .supercoolfields-stars label:before { content: '★ '; }
 
-.supercoolfields-stars label.active { color: #6DA8D9; }
-.supercoolfields-stars label.hover { color: #333; }
+.supercoolfields-stars label.active { color: #5286d9; }
+.supercoolfields-stars label.hover { color: #3c6da5; }
 
 
 /**
  * Width
  */
-.supercoolfields-width label {
-  cursor: pointer !important;
+.supercoolfields-width {
+  height: 12px;
 }
-.supercoolfields-width label.active {
+.supercoolfields-width .btn {
+  cursor: pointer !important;
+  height: 12px;
+}
+.supercoolfields-width .btn.active {
   background: #5286d9 !important;
   background-image: -webkit-linear-gradient(#659cdc, #5286d9) !important;
   background-image: -moz-linear-gradient(#659cdc, #5286d9) !important;
@@ -170,17 +174,17 @@
   background-image: linear-gradient(#659cdc, #5286d9) !important;
   border-color: #5286d9 !important;
 }
-.supercoolfields-width label.hover {
-  background: #357cda !important;
-  background-image: -webkit-linear-gradient(#5286d9, #357cda) !important;
-  background-image: -moz-linear-gradient(#5286d9, #357cda) !important;
-  background-image: -ms-linear-gradient(#5286d9, #357cda) !important;
-  background-image: -o-linear-gradient(#5286d9, #357cda) !important;
-  background-image: linear-gradient(#5286d9, #357cda) !important;
-  border-color: #357cda !important;
+.supercoolfields-width .btn.hover {
+  background: #3c6da5 !important;
+  background-image: -webkit-linear-gradient(#578dbc, #3c6da5) !important;
+  background-image: -moz-linear-gradient(#578dbc, #3c6da5) !important;
+  background-image: -ms-linear-gradient(#578dbc, #3c6da5) !important;
+  background-image: -o-linear-gradient(#578dbc, #3c6da5) !important;
+  background-image: linear-gradient(#578dbc, #3c6da5) !important;
+  border-color: #3c6da5 !important;
 }
-.supercoolfields-width label.active,
-.supercoolfields-width label.hover {
+.supercoolfields-width .btn.active,
+.supercoolfields-width .btn.hover {
   -webkit-box-shadow: 0 0 0 1px #2a4c75, 0 1px 2px -1px rgba(0, 0, 0, 0.1) !important;
   -moz-box-shadow: 0 0 0 1px #2a4c75, 0 1px 2px -1px rgba(0, 0, 0, 0.1) !important;
   box-shadow: 0 0 0 1px #2a4c75, 0 1px 2px -1px rgba(0, 0, 0, 0.1) !important;
