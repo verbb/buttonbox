@@ -15,12 +15,12 @@ class SupercoolFieldsPlugin extends BasePlugin
 
   public function getName()
   {
-    return Craft::t('SupercoolFields');
+    return Craft::t('Supercool Fields');
   }
 
   public function getVersion()
   {
-    return '1.0';
+    return '1.3';
   }
 
   public function getDeveloper()
@@ -31,20 +31,6 @@ class SupercoolFieldsPlugin extends BasePlugin
   public function getDeveloperUrl()
   {
     return 'http://www.supercooldesign.co.uk';
-  }
-
-  protected function defineSettings()
-  {
-    return array(
-      'embedlyApiKey' => array(AttributeType::String, 'required' => true)
-    );
-  }
-
-  public function getSettingsHtml()
-  {
-    return craft()->templates->render('supercoolFields/settings', array(
-      'settings' => $this->getSettings()
-    ));
   }
 
 }
