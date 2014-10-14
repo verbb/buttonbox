@@ -21,8 +21,9 @@ class SupercoolFields_StarsFieldType extends BaseFieldType
   public function getInputHtml($name, $value)
   {
 
-    craft()->templates->includeCssResource('supercoolfields/stars.css');
-    craft()->templates->includeJsResource('supercoolfields/radio-hovers.js');
+    craft()->templates->includeCssResource('supercoolfields/css/supercoolfields.css');
+    craft()->templates->includeJsResource('supercoolfields/js/supercoolfields.js');
+    craft()->templates->includeJs('new Craft.SupercoolFieldsHovers("'.craft()->templates->namespaceInputId($name).'");');
 
     $settings = $this->getSettings();
 
@@ -35,7 +36,7 @@ class SupercoolFields_StarsFieldType extends BaseFieldType
 
   public function getSettingsHtml()
   {
-    return craft()->templates->render('supercoolfields/stars/field-settings', array(
+    return craft()->templates->render('supercoolfields/stars/settings', array(
       'settings' => $this->getSettings()
     ));
   }

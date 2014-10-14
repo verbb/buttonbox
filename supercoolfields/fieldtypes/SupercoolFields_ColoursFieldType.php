@@ -43,14 +43,12 @@ class SupercoolFields_ColoursFieldType extends BaseOptionsFieldType
 			$value = $this->getDefaultValue();
 		}
 
-		craft()->templates->includeJsResource('supercoolfields/colours.js');
-		craft()->templates->includeCssResource('supercoolfields/colours.css');
+		craft()->templates->includeCssResource('supercoolfields/css/supercoolfields.css');
+		craft()->templates->includeJsResource('supercoolfields/js/supercoolfields.js');
 
-		$class = 'supercoolfields-colours-' . uniqid();
-		craft()->templates->includeJs("supercoolfieldsInitColours('.{$class}');");
+		craft()->templates->includeJs('new Craft.SupercoolFieldsFancyOptions("'.craft()->templates->namespaceInputId($name).'");');
 
 		return craft()->templates->render('supercoolfields/colours/field', array(
-			'class'   => $class,
 			'name'    => $name,
 			'value'   => $value,
 			'options' => $options
@@ -72,25 +70,25 @@ class SupercoolFields_ColoursFieldType extends BaseOptionsFieldType
 			// Give it a default row
 			$options = array(
 				array(
-					'label'   => 'Red',
-					'value'   => 'red',
-					'hexCode' => '#d9603b'
+					'label'     => 'Red',
+					'value'     => 'red',
+					'cssColour' => '#d9603b'
 				),
 				array(
-					'label'   => 'Green',
-					'value'   => 'green',
-					'hexCode' => '#328d7e',
-					'default' => true
+					'label'     => 'Green',
+					'value'     => 'green',
+					'cssColour' => '#328d7e',
+					'default'   => true
 				),
 				array(
-					'label'   => 'Navy',
-					'value'   => 'navy',
-					'hexCode' => '#17333a'
+					'label'     => 'Navy',
+					'value'     => 'navy',
+					'cssColour' => '#17333a'
 				),
 				array(
-					'label'   => 'Brown',
-					'value'   => 'brown',
-					'hexCode' => '#818b80'
+					'label'     => 'Brown',
+					'value'     => 'brown',
+					'cssColour' => '#818b80'
 				)
 			);
 		}
@@ -113,7 +111,7 @@ class SupercoolFields_ColoursFieldType extends BaseOptionsFieldType
 						'type'         => 'singleline',
 						'class'        => 'code'
 					),
-					'hexCode' => array(
+					'cssColour' => array(
 						'heading'      => Craft::t('Valid CSS Colour'),
 						'type'         => 'singleline',
 						'class'        => 'code'
