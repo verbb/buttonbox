@@ -60,6 +60,7 @@ Craft.ButtonBoxHovers = Garnish.Base.extend(
     this.addListener(this.$labels, 'mouseleave', 'removeHover');
     this.addListener(this.$elem, 'click', 'update');
     this.addListener(Garnish.$win, 'load', 'update');
+    Garnish.$win.trigger('load');
 
   },
 
