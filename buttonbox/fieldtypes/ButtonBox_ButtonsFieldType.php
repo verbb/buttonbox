@@ -71,20 +71,20 @@ class ButtonBox_ButtonsFieldType extends BaseOptionsFieldType
         array(
           'label' => 'Align Left',
           'showLabel' => false,
-          'value' => 'alignLeft',
-          'imagePath' => '/admin/resources/buttonbox/images/align-left.png'
+          'value' => 'left',
+          'imagePath' => '/admin/resources/buttonbox/images/align-left.png',
+          'default' => true
         ),
         array(
           'label' => 'Align Center',
           'showLabel' => false,
-          'value' => 'alignCenter',
-          'imagePath' => '/admin/resources/buttonbox/images/align-center.png',
-          'default' => true
+          'value' => 'center',
+          'imagePath' => '/admin/resources/buttonbox/images/align-center.png'
         ),
         array(
           'label' => 'Align Right',
           'showLabel' => false,
-          'value' => 'alignRight',
+          'value' => 'right',
           'imagePath' => '/admin/resources/buttonbox/images/align-right.png'
         )
       );
