@@ -1,23 +1,9 @@
-# Installation
+# Button Box - a plugin for Craft
 
-Drag the supercoolfields folder to your plugins directory.
+A set of utility field types:
 
-
-# Embed
-
-Currently supported providers:
-
-* vimeo
-* twitter
-* youtube
-* flickr
-* soundcloud
-* instagram
-* pinterest - via Embedly (api key can be set in the plugin settings)
-
-
-### Templating
-
-This: `{{ craft.supercoolfields.embed(myEmbedFieldHandle) }}`
-
-Or this: `{{ craft.supercoolfields.embed(http://vimeo.com/12345678) }}`
+1. Buttons
+2. Colours
+3. Text Size
+4. Stars
+5. Width
