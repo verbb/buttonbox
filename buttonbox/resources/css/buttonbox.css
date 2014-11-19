@@ -151,8 +151,8 @@
 }
 .buttonbox-stars label:before { content: '★ '; }
 
-.buttonbox-stars label.active { color: #5286d9; }
-.buttonbox-stars label.hover { color: #3c6da5; }
+.buttonbox-stars label.active { color: #F4B638; }
+.buttonbox-stars label.hover { color: #5286d9; }
 
 
 /**
