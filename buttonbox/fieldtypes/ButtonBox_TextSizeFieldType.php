@@ -70,33 +70,33 @@ class ButtonBox_TextSizeFieldType extends BaseOptionsFieldType
 			// Give it a default row
 			$options = array(
 				array(
-					'label' => 'Small',
-					'value' => 'small',
-					'pxVal' => '13'
-				),
-				array(
-					'label' => 'Medium',
-					'value' => 'medium',
-					'pxVal' => '16',
-					'default' => true
-				),
-				array(
-					'label' => 'Large',
-					'value' => 'large',
-					'pxVal' => '24'
-				),
-				array(
-					'label' => 'Mega',
-					'value' => 'mega',
-					'pxVal' => '36'
+					'label' => '',
+					'value' => '',
+					'pxVal' => ''
 				)
+				// array(
+				// 	'label' => 'Medium',
+				// 	'value' => 'medium',
+				// 	'pxVal' => '16',
+				// 	'default' => true
+				// ),
+				// array(
+				// 	'label' => 'Large',
+				// 	'value' => 'large',
+				// 	'pxVal' => '24'
+				// ),
+				// array(
+				// 	'label' => 'Mega',
+				// 	'value' => 'mega',
+				// 	'pxVal' => '36'
+				// )
 			);
 		}
 
 		return craft()->templates->renderMacro('_includes/forms', 'editableTableField', array(
 			array(
 				'label'        => $this->getOptionsSettingsLabel(),
-				'instructions' => Craft::t('Define the available options.'),
+				'instructions' => Craft::t('Pixel Size is optional and should be a single number.'),
 				'id'           => 'options',
 				'name'         => 'options',
 				'addRowLabel'  => Craft::t('Add an option'),
@@ -107,12 +107,12 @@ class ButtonBox_TextSizeFieldType extends BaseOptionsFieldType
 						'autopopulate' => 'value'
 					),
 					'value' => array(
-						'heading'      => Craft::t('CSS Class'),
+						'heading'      => Craft::t('Value'),
 						'type'         => 'singleline',
 						'class'        => 'code'
 					),
 					'pxVal' => array(
-						'heading'      => Craft::t('Pixel Value'),
+						'heading'      => Craft::t('Pixel Size'),
 						'type'         => 'number'
 					),
 					'default' => array(
