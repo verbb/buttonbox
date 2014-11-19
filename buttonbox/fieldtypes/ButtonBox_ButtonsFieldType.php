@@ -68,24 +68,30 @@ class ButtonBox_ButtonsFieldType extends BaseOptionsFieldType
     {
       // Give it a default row
       $options = array(
+        // array(
+        //   'label' => 'Align Left',
+        //   'showLabel' => false,
+        //   'value' => 'left',
+        //   'imageUrl' => '/admin/resources/buttonbox/images/align-left.png',
+        //   'default' => true
+        // ),
+        // array(
+        //   'label' => 'Align Center',
+        //   'showLabel' => false,
+        //   'value' => 'center',
+        //   'imageUrl' => '/admin/resources/buttonbox/images/align-center.png'
+        // ),
+        // array(
+        //   'label' => 'Align Right',
+        //   'showLabel' => false,
+        //   'value' => 'right',
+        //   'imageUrl' => '/admin/resources/buttonbox/images/align-right.png'
+        // )
         array(
-          'label' => 'Align Left',
+          'label' => '',
           'showLabel' => false,
-          'value' => 'left',
-          'imagePath' => '/admin/resources/buttonbox/images/align-left.png',
-          'default' => true
-        ),
-        array(
-          'label' => 'Align Center',
-          'showLabel' => false,
-          'value' => 'center',
-          'imagePath' => '/admin/resources/buttonbox/images/align-center.png'
-        ),
-        array(
-          'label' => 'Align Right',
-          'showLabel' => false,
-          'value' => 'right',
-          'imagePath' => '/admin/resources/buttonbox/images/align-right.png'
+          'value' => '',
+          'imageUrl' => ''
         )
       );
     }
@@ -93,7 +99,7 @@ class ButtonBox_ButtonsFieldType extends BaseOptionsFieldType
     return craft()->templates->renderMacro('_includes/forms', 'editableTableField', array(
       array(
         'label'        => $this->getOptionsSettingsLabel(),
-        'instructions' => Craft::t('Define the available options.'),
+        'instructions' => Craft::t('Image urls can be relative e.g. /admin/resources/buttonbox/images/align-left.png'),
         'id'           => 'options',
         'name'         => 'options',
         'addRowLabel'  => Craft::t('Add an option'),
@@ -113,8 +119,8 @@ class ButtonBox_ButtonsFieldType extends BaseOptionsFieldType
             'type'         => 'singleline',
             'class'        => 'code'
           ),
-          'imagePath' => array(
-            'heading'      => Craft::t('Image Path'),
+          'imageUrl' => array(
+            'heading'      => Craft::t('Image URL'),
             'type'         => 'singleline'
           ),
           'default' => array(
