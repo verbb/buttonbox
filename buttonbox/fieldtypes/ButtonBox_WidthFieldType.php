@@ -71,18 +71,18 @@ class ButtonBox_WidthFieldType extends BaseOptionsFieldType
 			// Give it a default row
 			$options = array(
 				array(
-					'label' => 'One Third',
-					'value' => 'one-third'
-				),
-				array(
-					'label' => 'Two Thirds',
-					'value' => 'two-thirds',
-					'default' => true
-				),
-				array(
-					'label' => 'Full Width',
-					'value' => 'one-whole'
+					'label' => '',
+					'value' => ''
 				)
+				// array(
+				// 	'label' => 'Two Thirds',
+				// 	'value' => 'two-thirds',
+				// 	'default' => true
+				// ),
+				// array(
+				// 	'label' => 'Full Width',
+				// 	'value' => 'one-whole'
+				// )
 			);
 		}
 
