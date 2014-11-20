@@ -39,7 +39,8 @@
 .buttonbox-colours .buttonbox__btn:hover { text-decoration: none; }
 .buttonbox-colours .buttonbox__btn:hover .buttonbox-colours__label { color: #0d78f2; }
 
-.buttonbox-colours .buttonbox-colours__block {
+
+.buttonbox-colours__block {
   width: 18px;
   height: 18px;
   margin-right: 8px;
@@ -59,29 +60,13 @@
   box-shadow: 0 0 18px -2px rgba(0, 0, 0, 0.1);
 }
 
-.buttonbox-colours .buttonbox-colours__label {
+.buttonbox-colours__label {
   display: inline-block;
   *display: inline;
   zoom: 1;
   vertical-align: middle;
   padding-top: 2px;
   font-size: 13px;
-}
-
-.buttonbox-colours .menu {
-  left: -24px;
-  top: 9px;
-}
-.buttonbox-colours .menu .buttonbox-colours__block {
-  margin-right: 5px;
-}
-.buttonbox-colours .menu a:before {
-  margin-top: 5px !important;
-}
-
-.buttonbox-colours .menu ul.padded {
-  padding-top: 6px;
-  padding-bottom: 6px;
 }
 
 
@@ -100,33 +85,29 @@
 .buttonbox-textsize .buttonbox__btn:hover { text-decoration: none; }
 .buttonbox-textsize .buttonbox__btn:hover span { color: #0d78f2; }
 
-.buttonbox-textsize .buttonbox__btn span,
-.buttonbox-textsize .menu a span {
+
+/**
+ * Fancy options menu
+ */
+.buttonbox-fancyoptions-menu a {
+  position: relative;
+}
+.buttonbox-fancyoptions-menu a:before {
+  margin-top: -6px !important;
+  top: 50%;
+  position: absolute;
+}
+.buttonbox-fancyoptions-menu a span {
   display: inline-block;
   *display: inline;
   zoom: 1;
   padding: 6px 0 3px 0;
   font-size: 13px;
 }
+.buttonbox-fancyoptions-menu .buttonbox-colours__block {
+  margin-right: 5px;
+}
 
-.buttonbox-textsize .menu {
-  left: -24px;
-  top: 9px;
-}
-.buttonbox-textsize .menu a {
-  position: relative;
-  line-height: 1;
-}
-.buttonbox-textsize .menu a:before {
-  position: absolute;
-  top: 50%;
-  bottom: 0;
-  margin-top: -5px !important;
-}
-.buttonbox-textsize .menu ul.padded {
-  padding-top: 6px;
-  padding-bottom: 6px;
-}
 
 
 /**
