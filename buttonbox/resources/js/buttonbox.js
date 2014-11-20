@@ -112,56 +112,34 @@ Craft.ButtonBoxFancyOptions = Garnish.Base.extend(
     this.id = id;
     this.$elem = $('#'+this.id);
     this.$select = this.$elem.find('select');
-    this.$menu = this.$elem.find('.menu');
     this.$btn = this.$elem.find('.buttonbox__btn');
 
-    this.addListener(this.$btn, 'click', 'toggleMenu');
-
-    this.addListener(this.$menu.find('a'), 'click', 'onOptionClick');
-
-
-  },
-
-  toggleMenu: function(ev)
-  {
-
-    ev.preventDefault();
-
-    if ( this.$menu.is(':visible') ) {
-
-      this.$menu.hide();
-
-    } else {
-
-      this.$menu.css({ top : '9px' }).show();
-
-      var topVal = (this.$elem.offset().top - this.$elem.find('.sel').offset().top) + 6;
-
-      this.$menu.css({ top : topVal+'px' });
-
-    }
+    var menuBtn = new Garnish.MenuBtn(this.$btn);
+    this.$menu = menuBtn.menu.$container;
+    menuBtn.menu.settings.onOptionSelect = $.proxy(this, 'onMenuOptionSelect');
 
   },
 
-  onOptionClick: function(ev)
+  onMenuOptionSelect: function(option)
   {
+    var $option = $(option),
+        newVal = $option.data('buttonbox-value');
 
-    var $target = $(ev.currentTarget),
-        newVal = $target.data('buttonbox-value');
-        console.log(newVal);
     this.$select.val(newVal);
 
-    this.$menu.hide();
+    this._updateField();
 
-    this._updateField($target);
+    // update selected option in menu
+    this.$menu.find('.sel').removeClass('sel');
+    $option.addClass('sel');
 
   },
 
-  _updateField: function($sel)
+  _updateField: function()
   {
 
-    // get newly selected option
-    var $newSelectedOption = this.$elem.find('option:selected');
+    // get newly selected option from the <select>
+    var $newSelectedOption = this.$select.find('option:selected');
 
 
     // work out what kind of field it is and make button markup
@@ -178,13 +156,8 @@ Craft.ButtonBoxFancyOptions = Garnish.Base.extend(
 
     }
 
-
     // update button
     this.$btn.html(btnInnerHtml);
-
-    // update selected fake-option
-    this.$elem.find('.sel').removeClass('sel');
-    $sel.addClass('sel');
 
   }
 
