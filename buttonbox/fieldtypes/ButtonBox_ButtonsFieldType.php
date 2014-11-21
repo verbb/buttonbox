@@ -36,6 +36,8 @@ class ButtonBox_ButtonsFieldType extends BaseOptionsFieldType
   */
   public function getInputHtml($name, $value)
   {
+
+    $settings = $this->getSettings();
     $options = $this->getTranslatedOptions();
 
     // If this is a new entry, look for a default option
@@ -51,7 +53,8 @@ class ButtonBox_ButtonsFieldType extends BaseOptionsFieldType
     return craft()->templates->render('buttonbox/buttons/field', array(
       'name'    => $name,
       'value'   => $value,
-      'options' => $options
+      'options' => $options,
+      'displayAsGraphic' => $settings->displayAsGraphic
     ));
   }
 
@@ -62,31 +65,14 @@ class ButtonBox_ButtonsFieldType extends BaseOptionsFieldType
    */
   public function getSettingsHtml()
   {
+
+    $settings = $this->getSettings();
     $options = $this->getOptions();
 
     if (!$options)
     {
       // Give it a default row
       $options = array(
-        // array(
-        //   'label' => 'Align Left',
-        //   'showLabel' => false,
-        //   'value' => 'left',
-        //   'imageUrl' => '/admin/resources/buttonbox/images/align-left.png',
-        //   'default' => true
-        // ),
-        // array(
-        //   'label' => 'Align Center',
-        //   'showLabel' => false,
-        //   'value' => 'center',
-        //   'imageUrl' => '/admin/resources/buttonbox/images/align-center.png'
-        // ),
-        // array(
-        //   'label' => 'Align Right',
-        //   'showLabel' => false,
-        //   'value' => 'right',
-        //   'imageUrl' => '/admin/resources/buttonbox/images/align-right.png'
-        // )
         array(
           'label' => '',
           'showLabel' => false,
@@ -96,7 +82,7 @@ class ButtonBox_ButtonsFieldType extends BaseOptionsFieldType
       );
     }
 
-    return craft()->templates->renderMacro('_includes/forms', 'editableTableField', array(
+    $table = craft()->templates->renderMacro('_includes/forms', 'editableTableField', array(
       array(
         'label'        => $this->getOptionsSettingsLabel(),
         'instructions' => Craft::t('Image urls can be relative e.g. /admin/resources/buttonbox/images/align-left.png'),
@@ -132,6 +118,20 @@ class ButtonBox_ButtonsFieldType extends BaseOptionsFieldType
         'rows' => $options
       )
     ));
+
+    $displayAsGraphic = craft()->templates->renderMacro('_includes/forms', 'checkboxField', array(
+      array(
+        'label' => Craft::t('Display as Graphic?'),
+        'instructions' => Craft::t('This will take the height restrictions off the buttons to allow for larger images.'),
+        'id' => 'displayAsGraphic',
+        'name' => 'displayAsGraphic',
+        'class' => 'displayAsGraphic',
+        'value' => 1,
+        'checked' => $settings->displayAsGraphic
+      )
+    ));
+
+    return $displayAsGraphic . $table;
   }
 
   // Protected Methods
@@ -154,8 +154,9 @@ class ButtonBox_ButtonsFieldType extends BaseOptionsFieldType
    */
   protected function defineSettings()
   {
-    return array(
+    return array_merge(parent::defineSettings(), array(
+      'displayAsGraphic' => AttributeType::Bool,
       'options' => array(AttributeType::Mixed, 'default' => array())
-    );
+    ));
   }
 }

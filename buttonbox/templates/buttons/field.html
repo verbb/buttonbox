@@ -1,7 +1,7 @@
-<div id="{{ name }}" class="buttonbox-buttons  btngroup">
+{%- set options = (options is defined ? options : []) %}
+{%- set value = (value is defined ? value : null) %}
 
-  {%- set options = (options is defined ? options : []) %}
-  {%- set value = (value is defined ? value : null) %}
+<div id="{{ name }}" class="buttonbox-buttons{% if displayAsGraphic %}  buttonbox-buttons--graphical{% endif %}  btngroup">
 
   {% for key, option in options %}
     {% set optionLabel = (option.label is defined ? option.label : option) %}
