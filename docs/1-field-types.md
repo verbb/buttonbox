@@ -41,21 +41,23 @@ If you check this Button Box will allow the button group to flow full width, use
 
 We have provided you with a set of images for useful things like alignment and columns. These can be found in `/buttonbox/resources/images` and can be referenced directly from the Image URL column in the field settings using the following pattern: `/<cpTrigger>/resources/buttonbox/images/<filename>` where `<cpTrigger>` is whatever the config value [`cpTrigger`](http://buildwithcraft.com/docs/config-settings#cpTrigger) is set to (default: ‘admin’) and `<filename>` is one of the following:
 
-* ![align center](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/align-center.png) align-center.png
-* ![align left](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/align-left.png) align-left.png
-* ![align right](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/align-right.png) align-right.png
-*  ![grid](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/grid.png) grid.png
-* ![slider](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/slider.png) slider.png
-* ![bold text](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/text-bold.png) text-bold.png
-* ![light text](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/text-light.png) text-light.png
-* ![text box](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/text-box.png) text-box.png
-*  ![text](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/text.png) text.png
-* ![1 column](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/col-1.png) col-1.png
-* ![2 columns](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/col-2.png) col-2.png
-* ![3 columns](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/col-3.png) col-3.png
-* ![1 text column](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/text-col-1.png) text-col-1.png
-* ![2 text columns](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/text-col-2.png) text-col-2.png
-* ![3 text columns](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/text-col-3.png) text-col-3.png
+| Image | Filename |
+|------:|:---------|
+| ![align center](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/align-center.png) | align-center.png |
+| ![align left](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/align-left.png) | align-left.png |
+| ![align right](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/align-right.png) | align-right.png |
+| ![grid](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/grid.png) | grid.png |
+| ![slider](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/slider.png) | slider.png |
+| ![bold text](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/text-bold.png) | text-bold.png |
+| ![light text](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/text-light.png) | text-light.png |
+| ![text box](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/text-box.png) | text-box.png |
+| ![text](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/text.png) | text.png |
+| ![1 column](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/col-1.png) | col-1.png |
+| ![2 columns](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/col-2.png) | col-2.png |
+| ![3 columns](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/col-3.png) | col-3.png |
+| ![1 text column](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/text-col-1.png) | text-col-1.png |
+| ![2 text columns](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/text-col-2.png) | text-col-2.png |
+| ![3 text columns](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/text-col-3.png) | text-col-3.png |
 
 ## Colours (with a 'U')
 
@@ -63,10 +65,10 @@ Create a select drop-down of colours.
 
 ![text size](http://s3-eu-west-1.amazonaws.com/supercoolplugins/Button-Box/colours.jpg)
 
-* Option Label: Name of your colour (e.g. 'Grey', 'Orange', or 'Mountain Honey Dew')
-* Value: This appears in your template and will most likely be a CSS class name
-* Valid CSS Colour: This creates the preview colour and just needs to be valid CSS (i.e. CSS colour names, Hex, RGB or RGBA values should all work for you).
-* Default: Optionally choose one row to define as your default option for users.
+* __Option Label:__ Name of your colour (e.g. 'Grey', 'Orange', or 'Mountain Honey Dew')
+* __Value:__ This appears in your template and will most likely be a CSS class name
+* __Valid CSS Colour:__ This creates the preview colour and just needs to be valid CSS (i.e. CSS colour names, Hex, RGB or RGBA values should all work for you).
+* __Default:__ Optionally choose one row to define as your default option for users.
 
 
 ## Text Size
@@ -99,5 +101,5 @@ You are of course free to use this as you see fit and the generic nature of a ro
 ![width](http://s3-eu-west-1.amazonaws.com/supercoolplugins/Button-Box/width.jpg)
 
 Each row you add, creates an extra box.
-* Value: This appears in your template and will most likely need to be a CSS class name.
-* Default: Optionally choose one row to define as your default option for users.
+* __Value:__ This appears in your template and will most likely need to be a CSS class name.
+* __Default:__ Optionally choose one row to define as your default option for users.
