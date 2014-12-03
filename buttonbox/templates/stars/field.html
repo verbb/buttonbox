@@ -1,6 +1,6 @@
 <div id="{{ name }}" class="buttonbox-stars">
   {% for num in 1..numStars %}
-    <label>
+    <label{% if num <= value %} class="active"{% endif %}>
       <input type="radio" id="{{ name ~ num }}" name="{{ name }}" value="{{ num }}"{% if value == num %} checked="checked"{% endif %} />
       {{ num }} Stars
     </label>
