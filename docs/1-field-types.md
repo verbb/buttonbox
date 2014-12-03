@@ -55,16 +55,16 @@ Give your users some preset text sizes.
 
 ![text size](http://s3-eu-west-1.amazonaws.com/supercoolplugins/Button-Box/text-size.jpg)
 
-* Option label: Give your size a name e.g. (e.g. 'Normal', 'Large', or 'Small print')
-* Value: This appears in your template and will most likely be a CSS class name, but could be a pixel or em value should you be that way inclined.
-* Pixel Size: This is the size the option will appear in your select menu. N.B. It does not necessarily need to correspond to the finished font-size.
-* Default: Optionally choose one row to define as your default option for users.
+* __Option label:__ Give your size a name e.g. (e.g. ‘Normal’, ‘Large’, or ‘Small print’)
+* __Value:__ This appears in your template and will most likely be a CSS class name, but could be a pixel or em value should you be that way inclined.
+* __Pixel Size:__ This is the size the option will appear in your select menu – it does not necessarily need to correspond to the  font-size you want to use on the front-end.
+* __Default:__ Optionally choose one row to define as your default option for users.
 
 
 ## Stars
 
 Make your star ratings shine.
-Simply choose how many stars you'd like to make your rating. No fuss, that's it!
+Simply choose how many stars you’d like to make your rating. No fuss, that’s it!
 
 ![star rating](http://s3-eu-west-1.amazonaws.com/supercoolplugins/Button-Box/star-rating.jpg)
 
@@ -73,7 +73,7 @@ Simply choose how many stars you'd like to make your rating. No fuss, that's it!
 
 ## Width
 
-Our idea for this is to allow users to select widths or columns on a layout – you'll most likely want to use the values as classes in your templates to line up with your CSS grid system.
+Our idea for this is to allow users to select widths or columns on a layout – you’ll most likely want to use the values as classes in your templates to line up with your CSS grid system.
 You are of course free to use this as you see fit and the generic nature of a row of empty boxes suggests that it could be used for a lot more – let us know what you come up with.
 
 ![width](http://s3-eu-west-1.amazonaws.com/supercoolplugins/Button-Box/width.jpg)
