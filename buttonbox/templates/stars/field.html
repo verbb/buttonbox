@@ -1,9 +1,11 @@
 <div id="{{ name }}" class="buttonbox-stars">
-  {% for num in numStars..1 %}
+  {% for i, num in numStars..1 %}
+    {% set rating = i + 1 %}
     <label>
-      <input type="radio" id="{{ name ~ num }}" name="{{ name }}" value="{{ num }}"{% if value == num %} checked="checked"{% endif %} />
+      <input type="radio" id="{{ name ~ num }}" name="{{ name }}" value="{{ rating }}"{% if value == rating %} checked="checked"{% endif %} />
       {{ num }} Stars
     </label>
   {% endfor %}
 </div>
 <div class="clear"></div>
+
