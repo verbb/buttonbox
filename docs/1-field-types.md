@@ -4,7 +4,7 @@ title:  "Field types"
 
 # Field Types
 
-We've currently got five field-types.
+We’ve currently got five field-types.
 
 1. [Buttons](#buttons)
 2. [Colours](#colours)
@@ -14,7 +14,7 @@ We've currently got five field-types.
 
 ## Buttons
 
-Make your own button group with optional labels and icons. We've provided you with a set of icons for common use cases but any image can be used.
+Make your own button group with optional labels and icons. We’ve provided you with a set of icons for common use cases but any image can be used.
 
 ### Display as graphic
 
@@ -30,12 +30,32 @@ If you check this Button Box will allow the button group to flow full width, use
 
 ![all the buttons](http://s3-eu-west-1.amazonaws.com/supercoolplugins/Button-Box/buttons-with-settings.jpg)
 
-* Option label: The name of your option (e.g. 'Male', 'Female', 'On', 'Off', 'Cat', or 'Dog' )
-* Show label?: Hide the label on output.
-* Value: This appears in your template.
-Image URL: The path to your image. Image urls can be relative e.g. /admin/resources/buttonbox/images/align-left.png. Icons work best when they are 30 x 20px or less.
-* Default: Optionally choose one row to define as your default option for users.
+* __Option label:__ The name of your option (e.g. ‘Male’, ‘Female’, ‘On’, ‘Off’, ‘Cat’, or ‘Dog’ )
+* __Show label?:__ Hide the label on output.
+* __Value:__ This appears in your template.
+* __Image URL:__ The path to your image. Image urls can be relative e.g. /admin/resources/buttonbox/images/align-left.png. Icons work best when they are 30 x 20px or less.
+* __Default:__ Optionally choose one row to define as your default option for users.
 
+
+#### Provided images
+
+We have provided you with a set of images for useful things like alignment and columns. These can be found in `/buttonbox/resources/images` and can be referenced directly from the Image URL column in the field settings using the following pattern: `/<cpTrigger>/resources/buttonbox/images/<filename>` where `<cpTrigger>` is whatever the config value [`cpTrigger`](http://buildwithcraft.com/docs/config-settings#cpTrigger) is set to (default: ‘admin’) and `<filename>` is one of the following:
+
+* ![align center](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/align-center.png) align-center.png
+* ![align left](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/align-left.png) align-left.png
+* ![align right](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/align-right.png) align-right.png
+*  ![grid](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/grid.png) grid.png
+* ![slider](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/slider.png) slider.png
+* ![bold text](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/text-bold.png) text-bold.png
+* ![light text](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/text-light.png) text-light.png
+* ![text box](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/text-box.png) text-box.png
+*  ![text](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/text.png) text.png
+* ![1 column](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/col-1.png) col-1.png
+* ![2 columns](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/col-2.png) col-2.png
+* ![3 columns](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/col-3.png) col-3.png
+* ![1 text column](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/text-col-1.png) text-col-1.png
+* ![2 text columns](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/text-col-2.png) text-col-2.png
+* ![3 text columns](http://plugins.supercooldesign.co.uk/admin/resources/buttonbox/images/text-col-3.png) text-col-3.png
 
 ## Colours (with a 'U')
 
