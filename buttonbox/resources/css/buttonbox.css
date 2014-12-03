@@ -27,51 +27,13 @@
 }
 .buttonbox-buttons--graphical img {
   margin-top: 0;
+  max-width: 100%;
 }
 .buttonbox-buttons--graphical .buttonbox-buttons__label {
   display: block;
   line-height: 1;
   margin-top: 12px;
 }
-
-/*.btngroup.big, .btngroup.big input.btn, .btn.big, .btn.big + .spinner {
-
-}
-.btn.big {
-padding: 0 14px;
-font-size: 14px;
-line-height: 36px;
-}
-.btngroup .btn {
-font-size: 13px;
-vertical-align: middle;
--webkit-box-shadow: none;
--moz-box-shadow: none;
-box-shadow: none;
-}
-
-.btn, .spinner {
-height: 30px;
-}
-.btn {
-display: inline-block;
-padding: 6px 12px;
-border: none;
-text-align: center;
-white-space: nowrap;
--webkit-user-select: none;
--moz-user-select: none;
--ms-user-select: none;
-cursor: pointer;
--webkit-box-sizing: border-box;
--moz-box-sizing: border-box;
-box-sizing: border-box;
--webkit-appearance: none;
-}
-
-.btn, .btngroup {
-border-radius: 3px;
-}*/
 
 
 /**

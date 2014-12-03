@@ -54,7 +54,8 @@ class ButtonBox_ButtonsFieldType extends BaseOptionsFieldType
       'name'    => $name,
       'value'   => $value,
       'options' => $options,
-      'displayAsGraphic' => $settings->displayAsGraphic
+      'displayAsGraphic' => $settings->displayAsGraphic,
+      'displayFullwidth' => $settings->displayFullwidth
     ));
   }
 
@@ -121,7 +122,7 @@ class ButtonBox_ButtonsFieldType extends BaseOptionsFieldType
 
     $displayAsGraphic = craft()->templates->renderMacro('_includes/forms', 'checkboxField', array(
       array(
-        'label' => Craft::t('Display as Graphic?'),
+        'label' => Craft::t('Display as graphic'),
         'instructions' => Craft::t('This will take the height restrictions off the buttons to allow for larger images.'),
         'id' => 'displayAsGraphic',
         'name' => 'displayAsGraphic',
@@ -131,7 +132,19 @@ class ButtonBox_ButtonsFieldType extends BaseOptionsFieldType
       )
     ));
 
-    return $displayAsGraphic . $table;
+    $displayFullwidth = craft()->templates->renderMacro('_includes/forms', 'checkboxField', array(
+      array(
+        'label' => Craft::t('Display fullwidth'),
+        'instructions' => Craft::t('Allow the button group to be fullwidth, useful for allowing larger graphics to be more responsive.'),
+        'id' => 'displayFullwidth',
+        'name' => 'displayFullwidth',
+        'class' => 'displayFullwidth',
+        'value' => 1,
+        'checked' => $settings->displayFullwidth
+      )
+    ));
+
+    return $displayAsGraphic . $displayFullwidth . $table;
   }
 
   // Protected Methods
@@ -156,6 +169,7 @@ class ButtonBox_ButtonsFieldType extends BaseOptionsFieldType
   {
     return array_merge(parent::defineSettings(), array(
       'displayAsGraphic' => AttributeType::Bool,
+      'displayFullwidth' => AttributeType::Bool,
       'options' => array(AttributeType::Mixed, 'default' => array())
     ));
   }
