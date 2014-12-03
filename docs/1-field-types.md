@@ -63,10 +63,10 @@ Create a select drop-down of colours.
 
 ![text size](http://s3-eu-west-1.amazonaws.com/supercoolplugins/Button-Box/colours.jpg)
 
-* Option Label: Name of your colour (e.g. 'Grey', 'Orange', or 'Mountain Honey Dew')
-* Value: This appears in your template and will most likely be a CSS class name
-* Valid CSS Colour: This creates the preview colour and just needs to be valid CSS (i.e. CSS colour names, Hex, RGB or RGBA values should all work for you).
-* Default: Optionally choose one row to define as your default option for users.
+* __Option Label:__ Name of your colour (e.g. 'Grey', 'Orange', or 'Mountain Honey Dew')
+* __Value:__ This appears in your template and will most likely be a CSS class name
+* __Valid CSS Colour:__ This creates the preview colour and just needs to be valid CSS (i.e. CSS colour names, Hex, RGB or RGBA values should all work for you).
+* __Default:__ Optionally choose one row to define as your default option for users.
 
 
 ## Text Size
@@ -99,5 +99,5 @@ You are of course free to use this as you see fit and the generic nature of a ro
 ![width](http://s3-eu-west-1.amazonaws.com/supercoolplugins/Button-Box/width.jpg)
 
 Each row you add, creates an extra box.
-* Value: This appears in your template and will most likely need to be a CSS class name.
-* Default: Optionally choose one row to define as your default option for users.
+* __Value:__ This appears in your template and will most likely need to be a CSS class name.
+* __Default:__ Optionally choose one row to define as your default option for users.
