@@ -134,7 +134,7 @@ class ButtonBox_ButtonsFieldType extends BaseOptionsFieldType
 
     $displayFullwidth = craft()->templates->renderMacro('_includes/forms', 'checkboxField', array(
       array(
-        'label' => Craft::t('Display fullwidth'),
+        'label' => Craft::t('Display full width'),
         'instructions' => Craft::t('Allow the button group to be fullwidth, useful for allowing larger graphics to be more responsive.'),
         'id' => 'displayFullwidth',
         'name' => 'displayFullwidth',

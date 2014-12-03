@@ -16,12 +16,15 @@ We've currently got five field-types.
 
 Make your own button group with optional labels and icons. We've provided you with a set of icons for common use cases but any image can be used.
 
-### Display as Graphic
+### Display as graphic
 
-Toggle this on and Button Box will not restrict the height of the buttons to allow for larger images.
+Toggle this on and Button Box will not restrict the height of the buttons to allow for larger images. For example you might want to allow the user to choose a layout:
 
 ![graphical buttons](http://s3-eu-west-1.amazonaws.com/supercoolplugins/Button-Box/graphic-buttons.jpg)
 
+### Display full width
+
+If you check this Button Box will allow the button group to flow full width, useful for allowing larger graphics to be more responsive.
 
 ### Button Options
 
