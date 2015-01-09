@@ -10,9 +10,6 @@ namespace Craft;
  * @link      http://www.supercooldesign.co.uk
  */
 
-/**
- *
- */
 class ButtonBox_TextSizeFieldType extends BaseOptionsFieldType
 {
 	/**
@@ -57,10 +54,10 @@ class ButtonBox_TextSizeFieldType extends BaseOptionsFieldType
 
 
 	/**
-	* @inheritDoc BaseElementFieldType::getSettingsHtml()
-	*
-	* @return string|null
-	*/
+	 * @inheritDoc BaseElementFieldType::getSettingsHtml()
+	 *
+	 * @return string|null
+	 */
 	public function getSettingsHtml()
 	{
 		$options = $this->getOptions();
@@ -74,22 +71,6 @@ class ButtonBox_TextSizeFieldType extends BaseOptionsFieldType
 					'value' => '',
 					'pxVal' => ''
 				)
-				// array(
-				// 	'label' => 'Medium',
-				// 	'value' => 'medium',
-				// 	'pxVal' => '16',
-				// 	'default' => true
-				// ),
-				// array(
-				// 	'label' => 'Large',
-				// 	'value' => 'large',
-				// 	'pxVal' => '24'
-				// ),
-				// array(
-				// 	'label' => 'Mega',
-				// 	'value' => 'mega',
-				// 	'pxVal' => '36'
-				// )
 			);
 		}
 
@@ -132,10 +113,10 @@ class ButtonBox_TextSizeFieldType extends BaseOptionsFieldType
 	// =========================================================================
 
 	/**
-	* @inheritDoc BaseOptionsFieldType::getOptionsSettingsLabel()
-	*
-	* @return string
-	*/
+	 * @inheritDoc BaseOptionsFieldType::getOptionsSettingsLabel()
+	 *
+	 * @return string
+	 */
 	protected function getOptionsSettingsLabel()
 	{
 		return Craft::t('Text Size Options');
@@ -143,15 +124,39 @@ class ButtonBox_TextSizeFieldType extends BaseOptionsFieldType
 
 
 	/**
-	* @inheritDoc BaseSavableComponentType::defineSettings()
-	*
-	* @return array
-	*/
+	 * @inheritDoc BaseSavableComponentType::defineSettings()
+	 *
+	 * @return array
+	 */
 	protected function defineSettings()
 	{
 		return array(
 			'options' => array(AttributeType::Mixed, 'default' => array())
 		);
 	}
+
+
+	/**
+	 * Returns the default field value.
+	 *
+	 * @return array|string|null
+	 */
+	protected function getDefaultValue()
+	{
+
+		foreach ($this->getOptions() as $option)
+		{
+
+			if ( !empty($option['default']) )
+			{
+				return $option['value'];
+			}
+
+		}
+
+		return $this->getOptions()[0]['value'];
+
+	}
+
 
 }

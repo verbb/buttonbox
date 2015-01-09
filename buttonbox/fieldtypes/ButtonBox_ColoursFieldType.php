@@ -10,9 +10,6 @@ namespace Craft;
  * @link      http://www.supercooldesign.co.uk
  */
 
-/**
- *
- */
 class ButtonBox_ColoursFieldType extends BaseOptionsFieldType
 {
 	/**
@@ -57,10 +54,10 @@ class ButtonBox_ColoursFieldType extends BaseOptionsFieldType
 
 
 	/**
-	* @inheritDoc BaseElementFieldType::getSettingsHtml()
-	*
-	* @return string|null
-	*/
+	 * @inheritDoc BaseElementFieldType::getSettingsHtml()
+	 *
+	 * @return string|null
+	 */
 	public function getSettingsHtml()
 	{
 		$options = $this->getOptions();
@@ -74,22 +71,6 @@ class ButtonBox_ColoursFieldType extends BaseOptionsFieldType
 					'value'     => '',
 					'cssColour' => ''
 				)
-				// array(
-				// 	'label'     => 'Green',
-				// 	'value'     => 'green',
-				// 	'cssColour' => '#328d7e',
-				// 	'default'   => true
-				// ),
-				// array(
-				// 	'label'     => 'Navy',
-				// 	'value'     => 'navy',
-				// 	'cssColour' => '#17333a'
-				// ),
-				// array(
-				// 	'label'     => 'Brown',
-				// 	'value'     => 'brown',
-				// 	'cssColour' => '#818b80'
-				// )
 			);
 		}
 
@@ -133,10 +114,10 @@ class ButtonBox_ColoursFieldType extends BaseOptionsFieldType
 	// =========================================================================
 
 	/**
-	* @inheritDoc BaseOptionsFieldType::getOptionsSettingsLabel()
-	*
-	* @return string
-	*/
+	 * @inheritDoc BaseOptionsFieldType::getOptionsSettingsLabel()
+	 *
+	 * @return string
+	 */
 	protected function getOptionsSettingsLabel()
 	{
 		return Craft::t('Colour Options');
@@ -144,15 +125,39 @@ class ButtonBox_ColoursFieldType extends BaseOptionsFieldType
 
 
 	/**
-	* @inheritDoc BaseSavableComponentType::defineSettings()
-	*
-	* @return array
-	*/
+	 * @inheritDoc BaseSavableComponentType::defineSettings()
+	 *
+	 * @return array
+	 */
 	protected function defineSettings()
 	{
 		return array(
 			'options' => array(AttributeType::Mixed, 'default' => array())
 		);
 	}
+
+
+	/**
+	 * Returns the default field value.
+	 *
+	 * @return array|string|null
+	 */
+	protected function getDefaultValue()
+	{
+
+		foreach ($this->getOptions() as $option)
+		{
+
+			if ( !empty($option['default']) )
+			{
+				return $option['value'];
+			}
+
+		}
+
+		return $this->getOptions()[0]['value'];
+
+	}
+
 
 }
