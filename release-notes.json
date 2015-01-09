@@ -1,5 +1,15 @@
 [
 	{
+		"version" : "1.3.1",
+		"date"    : "9-1-2015",
+		"notes"   : [
+			{
+				"type"    : "fixed",
+				"message" : "Fixed a bug where fancy options fields (text size and colours) were not showing if there was no default option selected."
+			}
+		]
+	},
+	{
 		"version" : "1.3",
 		"date"    : "3-12-2014",
 		"notes"   : [

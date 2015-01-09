@@ -20,7 +20,7 @@ class ButtonBoxPlugin extends BasePlugin
 
   public function getVersion()
   {
-    return '1.3';
+    return '1.3.1';
   }
 
   public function getDeveloper()
@@ -30,7 +30,7 @@ class ButtonBoxPlugin extends BasePlugin
 
   public function getDeveloperUrl()
   {
-    return 'http://www.supercooldesign.co.uk';
+    return 'http://plugins.supercooldesign.co.uk';
   }
 
 }
