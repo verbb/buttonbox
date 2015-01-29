@@ -144,7 +144,9 @@ class ButtonBox_TextSizeFieldType extends BaseOptionsFieldType
 	protected function getDefaultValue()
 	{
 
-		foreach ($this->getOptions() as $option)
+		$options = $this->getOptions();
+
+		foreach ($options as $option)
 		{
 
 			if ( !empty($option['default']) )
@@ -154,7 +156,7 @@ class ButtonBox_TextSizeFieldType extends BaseOptionsFieldType
 
 		}
 
-		return $this->getOptions()[0]['value'];
+		return $options[0]['value'];
 
 	}
 

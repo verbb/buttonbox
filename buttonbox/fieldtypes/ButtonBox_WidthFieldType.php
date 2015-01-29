@@ -74,15 +74,6 @@ class ButtonBox_WidthFieldType extends BaseOptionsFieldType
 					'label' => '',
 					'value' => ''
 				)
-				// array(
-				// 	'label' => 'Two Thirds',
-				// 	'value' => 'two-thirds',
-				// 	'default' => true
-				// ),
-				// array(
-				// 	'label' => 'Full Width',
-				// 	'value' => 'one-whole'
-				// )
 			);
 		}
 
