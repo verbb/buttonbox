@@ -13,3 +13,11 @@ A set of utility field types:
 ![Buttons](http://s3-eu-west-1.amazonaws.com/supercoolplugins/Button-Box/buttons.jpg)
 
 For details of how to use and install this plugin please see the [docs](http://plugins.supercooldesign.co.uk/plugin/button-box/docs).
+
+## Resources
+
+Here is a loose list of resources other people have made that work well with this plugin:
+
+- A collection of around 30 [Button Box icons](https://github.com/pixeljitsu/cc0-images/tree/master/button-box-buttons) by Steve Adams.
+
+If you have resources you’d like to see in this list then feel free to open an issue or email me at [josh@supercooldesign.co.uk](mailto:josh@supercooldesign.co.uk).
