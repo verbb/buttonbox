@@ -9,7 +9,7 @@
     {% set optionDisabled = (option.disabled is defined ? option.disabled : false) %}
     <label class="btn  big{% if optionValue == value %} active{% endif %}">
       <input type="radio" name="{{ name }}" value="{{ optionValue }}"{% if optionValue == value %} checked="checked"{% endif %}{% if optionDisabled %} disabled{% endif %}>
-      {% if option.imageUrl %}<img src="{{ option.imageUrl }}"{% if option.showLabel %} class="buttonbox-buttons__with-label"{% endif %} />{% endif %}
+      {% if option.imageUrl %}<img src="{{ option.imageUrl }}"{% if option.showLabel %} class="buttonbox-buttons__with-label"{% endif %} {% if not option.showLabel %} title="{{ optionLabel }}"{% endif %} />{% endif %}
       {% if option.imageUrl and option.showLabel %}&nbsp;{% endif %}
       {% if option.showLabel %}<span class="buttonbox-buttons__label">{{ optionLabel }}</span>{% endif %}
     </label>
