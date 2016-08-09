@@ -60,6 +60,11 @@ class ButtonBox_TriggersFieldType extends BaseOptionsFieldType
     craft()->templates->includeJsResource('buttonbox/js/buttonbox.js');
     craft()->templates->includeJs('new Craft.ButtonBoxButtons("'.craft()->templates->namespaceInputId($name).'");');
 
+    // Parse element tags in links
+    foreach ($options as $i => $opt) {
+      $options[$i]['value'] = craft()->templates->renderObjectTemplate($opt['value'], $this->element);
+    }
+
     return craft()->templates->render('buttonbox/triggers/field', array(
       'name'    => $name,
       'value'   => $value,
