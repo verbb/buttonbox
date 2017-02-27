@@ -1,5 +1,15 @@
 [
 	{
+		"version" : "1.4.0",
+		"date"    : "27-2-2017",
+		"notes"   : [
+			{
+				"type"    : "added",
+				"message" : "Added Triggers button type (thanks @lindseydiloreto)."
+			}
+		]
+	},
+	{
 		"version" : "1.3.3",
 		"date"    : "1-7-2016",
 		"notes"   : [
