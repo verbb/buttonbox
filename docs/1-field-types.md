@@ -103,3 +103,16 @@ You are of course free to use this as you see fit and the generic nature of a ro
 Each row you add, creates an extra box.
 * __Value:__ This appears in your template and will most likely need to be a CSS class name.
 * __Default:__ Optionally choose one row to define as your default option for users.
+
+## Triggers
+
+Instead of being a "radio button in disguise", a trigger acts more like an actual button. As in, you click it and something immediately happens.
+
+There are two types of triggers... "Link" and "JavaScript".
+
+* A __link trigger__ is a straightforward link. Enter the URL of the page you would like to be taken to. You can optionally have the link open in a new window.
+* A __JavaScript trigger__ will run whatever JS you specify. Generally speaking, it'll make sense to simply call a function, which would enact more complex behavior.
+
+![Triggers](http://s3-eu-west-1.amazonaws.com/supercoolplugins/Button-Box/buttonbox-triggers.png)
+
+For the JavaScript trigger, `emailCustomer` would be a custom user function, which could trigger anything they want. That JS function would have to be [included separately](https://github.com/lindseydiloreto/craft-cpjs), but it could be as simple or complex as they need. It could even trigger a controller action... the possibilities are nearly endless!
