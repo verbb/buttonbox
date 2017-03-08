@@ -48,6 +48,7 @@ Craft.ButtonBoxHovers = Garnish.Base.extend(
 
   $elem: null,
   $labels: null,
+  $cancel: null,
 
   init: function(id)
   {
@@ -55,13 +56,21 @@ Craft.ButtonBoxHovers = Garnish.Base.extend(
     this.id = id;
     this.$elem = $('#'+this.id);
     this.$labels = this.$elem.find('label');
+    this.$cancel = this.$elem.find('.buttonbox-stars__cancel');
 
     this.addListener(this.$labels, 'mouseenter', 'updateHover');
     this.addListener(this.$labels, 'mouseleave', 'removeHover');
+    this.addListener(this.$cancel, 'click', 'cancelStars');
     this.addListener(this.$elem, 'click', 'update');
     this.addListener(Garnish.$win, 'load', 'update');
     Garnish.$win.trigger('load');
 
+  },
+
+  cancelStars: function()
+  {
+    this.$elem.find('input').prop('checked', false);
+    this.$elem.find('input:first').prop('checked', true);
   },
 
   update: function()

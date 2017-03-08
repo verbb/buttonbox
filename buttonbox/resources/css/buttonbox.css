@@ -146,6 +146,10 @@
 .buttonbox-stars label.active { color: #F4B638; }
 .buttonbox-stars label.hover { color: #5286d9; }
 
+.buttonbox-stars__cancel {
+  vertical-align: sub;
+}
+
 
 /**
  * Width

@@ -20,7 +20,7 @@ class ButtonBoxPlugin extends BasePlugin
 
   public function getVersion()
   {
-    return '1.4.0';
+    return '1.5.0';
   }
 
   public function getDeveloper()
