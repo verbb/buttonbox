@@ -1,0 +1,30 @@
+{#
+/**
+ * ButtonBox plugin for Craft CMS
+ *
+ * ButtonBox Stars Field Settings
+ *
+ * @author    Supercool
+ * @copyright Copyright (c) 2017 Supercool
+ * @link      http://supercooldesign.co.uk
+ * @package   ButtonBox
+ * @since     1.0.0
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+{% do view.registerAssetBundle("supercool\\buttonbox\\assetbundles\\buttonbox\\ButtonBoxAsset") %}
+
+{{ forms.textField({
+  label: "Number of Stars"|t,
+  id: 'totalStars',
+  name: 'totalStars',
+  value: field['totalStars'],
+  size: 2,
+  required: true,
+  errors: field.getErrors('totalStars'),
+}) }}
+
+
+

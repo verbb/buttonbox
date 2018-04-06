@@ -1,0 +1,28 @@
+{%- set options = (options is defined ? options : []) %}
+{%- set value = (value is defined ? value : null) %}
+
+<div id="{{ name }}" class="buttonbox-buttons{% if displayAsGraphic %} buttonbox-buttons--graphical{% endif %}{% if displayFullwidth %}  fullwidth{% endif %} btngroup">
+
+  {% for key, option in options %}
+
+    {% set optionLabel = (option.label is defined ? option.label : option) %}
+    {% set optionValue = (option.value is defined ? option.value : '#') %}
+    {% set optionType = (option.type is defined ? option.type : 'link') %}
+    {% set optionShowLabel = (option.showLabel is defined ? option.showLabel : true) %}
+    {% set optionNewWindow = (option.newWindow is defined ? option.newWindow : false) %}
+
+    {% set imageAndLabel %}
+      {% if option.imageUrl %}<img src="{{ option.imageUrl }}"{% if optionShowLabel %} class="buttonbox-buttons__with-label"{% endif %} {% if not optionShowLabel %} title="{{ optionLabel }}"{% endif %} />{% endif %}
+      {% if option.imageUrl and optionShowLabel %}&nbsp;{% endif %}
+      {{ optionShowLabel ? optionLabel }}
+    {% endset %}
+
+    {% if 'js' == optionType %}
+      <button type="button" onclick="{{ optionValue }}" class="btn big">{{ imageAndLabel|raw }}</button>
+    {% else %}
+      <a href="{{ optionValue }}" class="btn big"{% if optionNewWindow %} target="_blank"{% endif %}>{{ imageAndLabel|raw }}</a>
+    {% endif %}
+
+  {% endfor %}
+
+</div>

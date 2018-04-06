@@ -1,0 +1,11 @@
+<div id="{{ name }}" class="buttonbox-stars">
+  <input type="radio" id="{{ name ~ 0 }}" name="{{ name }}" value="{{ 0 }}"{% if value == 0 %} checked="checked"{% endif %} />
+  {% for num in 1..totalStars %}
+    <label{% if num <= value %} class="active"{% endif %}>
+      <input type="radio" id="{{ name ~ num }}" name="{{ name }}" value="{{ num }}"{% if value == num %} checked="checked"{% endif %} />
+      {{ num }} Stars
+    </label>
+  {% endfor %}
+  <div class="buttonbox-stars__cancel delete icon"></div>
+</div>
+<div class="clear"></div>

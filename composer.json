@@ -1,0 +1,41 @@
+{
+    "name": "supercool/buttonbox",
+    "description": "A collection of utility field types for Craft",
+    "type": "craft-plugin",
+    "version": "0.1.0",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "buttonbox"
+    ],
+    "support": {
+        "docs": "https://github.com/supercool/buttonbox/blob/master/README.md",
+        "issues": "https://github.com/supercool/buttonbox/issues"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Supercool",
+            "homepage": "http://supercooldesign.co.uk"
+        }
+    ],
+    "require": {
+        "craftcms/cms": "^3.0.0-RC1"
+    },
+    "autoload": {
+        "psr-4": {
+          "supercool\\buttonbox\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "Button Box",
+        "handle": "buttonbox",
+        "schemaVersion": "1.0.0",
+        "hasCpSettings": false,
+        "hasCpSection": false,
+        "changelogUrl": "https://raw.githubusercontent.com/supercool/buttonbox/master/CHANGELOG.md",
+        "class": "supercool\\buttonbox\\ButtonBox"
+    }
+}
