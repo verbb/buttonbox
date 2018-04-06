@@ -60,10 +60,6 @@ class Colours extends BaseOptionsField
     public function rules()
     {
         $rules = parent::rules();
-        // $rules = array_merge($rules, [
-        //     ['totalStars', 'required'],
-        //     ['totalStars', 'integer', 'min' => 2],
-        // ]);
         return $rules;
     }
 
@@ -90,6 +86,11 @@ class Colours extends BaseOptionsField
      */
     public function normalizeValue($value, ElementInterface $element = null)
     {
+        if ( !$value )
+        {
+            $value = $this->defaultValue();
+        }
+
         return $value;
     }
 
@@ -179,7 +180,7 @@ class Colours extends BaseOptionsField
         $options = $this->translatedOptions();
 
         // If this is a new entry, look for a default option
-        if ($this->isFresh($element))
+        if ( $this->isFresh($element) )
         {
             $value = $this->defaultValue();
         }

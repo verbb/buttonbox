@@ -62,10 +62,6 @@ class Buttons extends BaseOptionsField
     public function rules()
     {
         $rules = parent::rules();
-        // $rules = array_merge($rules, [
-        //     ['totalStars', 'required'],
-        //     ['totalStars', 'integer', 'min' => 2],
-        // ]);
         return $rules;
     }
 
@@ -92,6 +88,11 @@ class Buttons extends BaseOptionsField
      */
     public function normalizeValue($value, ElementInterface $element = null)
     {
+        if ( !$value )
+        {
+            $value = $this->defaultValue();
+        }
+        
         return $value;
     }
 
@@ -137,7 +138,7 @@ class Buttons extends BaseOptionsField
         $table = Craft::$app->getView()->renderTemplateMacro('_includes/forms', 'editableTableField', array(
             array(
                 'label'        => $this->optionsSettingLabel(),
-                'instructions' => Craft::t('buttonbox', 'Image urls can be relative e.g. /admin/resources/buttonbox/images/align-left.png'),
+                'instructions' => Craft::t('buttonbox', 'Image urls can be relative e.g. /images/align-left.png'),
                 'id'           => 'options',
                 'name'         => 'options',
                 'addRowLabel'  => Craft::t('buttonbox', 'Add an option'),
@@ -212,7 +213,7 @@ class Buttons extends BaseOptionsField
         $options = $this->translatedOptions();
 
         // If this is a new entry, look for a default option
-        if ($this->isFresh($element))
+        if ( $this->isFresh($element) )
         {
             $value = $this->defaultValue();
         }

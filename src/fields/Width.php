@@ -60,10 +60,6 @@ class Width extends BaseOptionsField
     public function rules()
     {
         $rules = parent::rules();
-        // $rules = array_merge($rules, [
-        //     ['totalStars', 'required'],
-        //     ['totalStars', 'integer', 'min' => 2],
-        // ]);
         return $rules;
     }
 
@@ -90,6 +86,11 @@ class Width extends BaseOptionsField
      */
     public function normalizeValue($value, ElementInterface $element = null)
     {
+        if ( !$value )
+        {
+            $value = $this->defaultValue();
+        }
+
         return $value;
     }
 
