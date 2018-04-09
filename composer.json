@@ -2,7 +2,7 @@
     "name": "supercool/buttonbox",
     "description": "A collection of utility field types for Craft",
     "type": "craft-plugin",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "keywords": [
         "craft",
         "cms",
