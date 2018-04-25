@@ -91,7 +91,7 @@ class Colours extends BaseOptionsField
             $value = $this->defaultValue();
         }
 
-        return $value;
+        return parent::normalizeValue($value, $element);
     }
 
     /**
