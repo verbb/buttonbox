@@ -16,6 +16,8 @@ use supercool\buttonbox\assetbundles\buttonbox\ButtonBoxAsset;
 use Craft;
 use craft\base\ElementInterface;
 use craft\fields\BaseOptionsField;
+use craft\fields\data\OptionData;
+use craft\fields\data\SingleOptionFieldData;
 use craft\helpers\Db;
 use yii\db\Schema;
 use craft\helpers\Json;
@@ -90,6 +92,24 @@ class Colours extends BaseOptionsField
         {
             $value = $this->defaultValue();
         }
+
+        // Normalize to an array
+        $selectedValues = (array)$value;
+
+        $value = reset($selectedValues) ?: null;
+        $label = $this->optionLabel($value);
+        $value = new SingleOptionFieldData($label, $value, true);
+
+        $options = [];
+
+        if ($this->options) {
+            foreach ($this->options as $option) {
+                $selected = in_array($option['value'], $selectedValues, true);
+                $options[] = new OptionData($option['label'], $option['value'], $selected);
+            }
+        }
+
+        $value->setOptions($options);
 
         return $value;
     }
@@ -204,29 +224,6 @@ class Colours extends BaseOptionsField
         return Craft::t('buttonbox', 'Colour Options');
     }
 
-    /**
-     * Override this method to return custom default value
-     * 
-     * @return string 
-     */
-    protected function defaultValue()
-    {
-
-        $options = $this->translatedOptions();
-
-        foreach ($options as $option)
-        {
-
-            if ( !empty($option['default']) )
-            {
-                return $option['value'];
-            }
-
-        }
-
-        return $options[0]['value'];
-
-    }
 
     /**
      * Override this method to add cssColour and default value to the options
