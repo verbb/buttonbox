@@ -7,3 +7,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## 2.0.0 - 2018-04-09
 ### Added
 - Initial Craft CMS 3 release
+
+## 2.0.1 - 2018-06-14
+### Fixed
+- Fix PHP 7.2 count error
