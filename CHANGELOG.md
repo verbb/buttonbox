@@ -11,3 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## 2.0.1 - 2018-06-14
 ### Fixed
 - Fix PHP 7.2 count error
+
+## 2.0.2 - 2018-07-13
+### Fixed
+- Fix PHP 7.2 count error for buttons, text size and width field types
