@@ -16,6 +16,8 @@ use supercool\buttonbox\assetbundles\buttonbox\ButtonBoxAsset;
 use Craft;
 use craft\base\ElementInterface;
 use craft\fields\BaseOptionsField;
+use craft\fields\data\OptionData;
+use craft\fields\data\SingleOptionFieldData;
 use craft\helpers\Db;
 use yii\db\Schema;
 use craft\helpers\Json;
@@ -90,6 +92,24 @@ class Width extends BaseOptionsField
         {
             $value = $this->defaultValue();
         }
+
+        // Normalize to an array
+        $selectedValues = (array)$value;
+
+        $value = reset($selectedValues) ?: null;
+        $label = $this->optionLabel($value);
+        $value = new SingleOptionFieldData($label, $value, true);
+
+        $options = [];
+
+        if ($this->options) {
+            foreach ($this->options as $option) {
+                $selected = in_array($option['value'], $selectedValues, true);
+                $options[] = new OptionData($option['label'], $option['value'], $selected);
+            }
+        }
+
+        $value->setOptions($options);
 
         return $value;
     }
