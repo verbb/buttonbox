@@ -92,6 +92,10 @@ class Width extends BaseOptionsField
         {
             $value = $this->defaultValue();
         }
+        
+        if ($value instanceof SingleOptionFieldData) {
+            $value = $value->value;
+        }
 
         // Normalize to an array
         $selectedValues = (array)$value;
