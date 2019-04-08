@@ -15,3 +15,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## 2.0.2 - 2018-07-13
 ### Fixed
 - Fix PHP 7.2 count error for buttons, text size and width field types
+
+## 2.0.3 - 2019-04-08
+### Fixed
+- Fixes Mulitsite error normalizeValue #25
