@@ -51,66 +51,18 @@ class Triggers extends BaseOptionsField
         return Craft::t('buttonbox', 'Button Box - Triggers');
     }
 
+    /**
+     * Returns whether this field has a column in the content table.
+     *
+     * @return bool
+     */
+    public static function hasContentColumn(): bool
+    {
+        return false;
+    }
+
     // Public Methods
     // =========================================================================
-
-    /**
-     * Returns the validation rules for attributes.
-     *
-     * @return array
-     */
-    public function rules()
-    {
-        $rules = parent::rules();
-        // $rules = array_merge($rules, [
-        //     ['totalStars', 'required'],
-        //     ['totalStars', 'integer', 'min' => 2],
-        // ]);
-        return $rules;
-    }
-
-    /**
-     * Returns the column type that this field should get within the content table.
-     */
-    public function getContentColumnType(): string
-    {
-        return Schema::TYPE_TEXT;
-    }
-
-    /**
-     * Normalizes the field’s value for use.
-     *
-     * This method is called when the field’s value is first accessed from the element. For example, the first time
-     * `entry.myFieldHandle` is called from a template, or right before [[getInputHtml()]] is called. Whatever
-     * this method returns is what `entry.myFieldHandle` will likewise return, and what [[getInputHtml()]]’s and
-     * [[serializeValue()]]’s $value arguments will be set to.
-     *
-     * @param mixed                 $value   The raw field value
-     * @param ElementInterface|null $element The element the field is associated with, if there is one
-     *
-     * @return mixed The prepared field value
-     */
-    public function normalizeValue($value, ElementInterface $element = null)
-    {
-        return $value;
-    }
-
-    /**
-     * Modifies an element query.
-     *
-     * This method will be called whenever elements are being searched for that may have this field assigned to them.
-     *
-     * If the method returns `false`, the query will be stopped before it ever gets a chance to execute.
-     *
-     * @param ElementQueryInterface $query The element query
-     * @param mixed                 $value The value that was set on this field’s corresponding [[ElementCriteriaModel]] param, if any.
-     *
-     * @return null|false `false` in the event that the method is sure that no elements are going to be found.
-     */
-    public function serializeValue($value, ElementInterface $element = null)
-    {
-        return parent::serializeValue($value, $element);
-    }
 
     /**
      * Returns the component’s settings HTML.
@@ -251,30 +203,6 @@ class Triggers extends BaseOptionsField
     protected function optionsSettingLabel() : string
     {
         return Craft::t('buttonbox', 'Triggers Options');
-    }
-
-    /**
-     * Override this method to return custom default value
-     * 
-     * @return string 
-     */
-    protected function defaultValue()
-    {
-
-        $options = $this->translatedOptions();
-
-        foreach ($options as $option)
-        {
-
-            if ( !empty($option['default']) )
-            {
-                return $option['value'];
-            }
-
-        }
-
-        return $options[0]['value'];
-
     }
 
     /**
