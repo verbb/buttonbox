@@ -19,3 +19,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## 2.0.3 - 2019-04-08
 ### Fixed
 - Fixes Mulitsite error normalizeValue #25
+
+## 2.0.4 - 2019-06-20
+### Fixed
+- Merge the fix by @lindseydiloreto about Trigger field
