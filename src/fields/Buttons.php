@@ -8,10 +8,10 @@
  * @copyright Copyright (c) 2017 Supercool
  */
 
-namespace supercool\buttonbox\fields;
+namespace verbb\buttonbox\fields;
 
-use supercool\buttonbox\ButtonBox as ButtonBoxPlugin;
-use supercool\buttonbox\assetbundles\buttonbox\ButtonBoxAsset;
+use verbb\buttonbox\ButtonBox as ButtonBoxPlugin;
+use verbb\buttonbox\assetbundles\buttonbox\ButtonBoxAsset;
 
 use Craft;
 use craft\base\ElementInterface;

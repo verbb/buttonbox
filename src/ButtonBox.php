@@ -8,14 +8,14 @@
  * @copyright Copyright (c) 2017 Supercool
  */
 
-namespace supercool\buttonbox;
+namespace verbb\buttonbox;
 
-use supercool\buttonbox\fields\Stars as StarsField;
-use supercool\buttonbox\fields\Colours as ColoursField;
-use supercool\buttonbox\fields\TextSize as TextSizeField;
-use supercool\buttonbox\fields\Buttons as ButtonsField;
-use supercool\buttonbox\fields\Width as WidthField;
-use supercool\buttonbox\fields\Triggers as TriggersField;
+use verbb\buttonbox\fields\Stars as StarsField;
+use verbb\buttonbox\fields\Colours as ColoursField;
+use verbb\buttonbox\fields\TextSize as TextSizeField;
+use verbb\buttonbox\fields\Buttons as ButtonsField;
+use verbb\buttonbox\fields\Width as WidthField;
+use verbb\buttonbox\fields\Triggers as TriggersField;
 
 use Craft;
 use craft\base\Plugin;
@@ -46,6 +46,8 @@ class ButtonBox extends Plugin
      * @var ButtonBox
      */
     public static $plugin;
+
+    public $schemaVersion = '2.0.0';
 
     // Public Methods
     // =========================================================================

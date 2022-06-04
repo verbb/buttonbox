@@ -1,8 +1,8 @@
 {
-    "name": "supercool/buttonbox",
+    "name": "verbb/buttonbox",
     "description": "A collection of utility field types for Craft",
     "type": "craft-plugin",
-    "version": "2.0.4",
+    "version": "3.0.0",
     "keywords": [
         "craft",
         "cms",
@@ -11,31 +11,37 @@
         "buttonbox"
     ],
     "support": {
-        "docs": "https://github.com/supercool/buttonbox/blob/master/README.md",
-        "issues": "https://github.com/supercool/buttonbox/issues"
+        "email": "support@verbb.io",
+        "issues": "https://github.com/verbb/buttonbox/issues?state=open",
+        "source": "https://github.com/verbb/buttonbox",
+        "docs": "https://github.com/verbb/buttonbox",
+        "rss": "https://github.com/verbb/buttonbox/commits/v2.atom"
     },
     "license": "MIT",
     "authors": [
         {
             "name": "Supercool",
             "homepage": "http://supercooldesign.co.uk"
+        },
+        {
+            "name": "Verbb",
+            "homepage": "https://verbb.io"
         }
     ],
     "require": {
-        "craftcms/cms": "^3.0.0-RC1"
+        "craftcms/cms": "^3.7.0",
+        "verbb/base": "^1.0.2"
     },
     "autoload": {
         "psr-4": {
-          "supercool\\buttonbox\\": "src/"
+          "verbb\\buttonbox\\": "src/"
         }
     },
     "extra": {
         "name": "Button Box",
         "handle": "buttonbox",
-        "schemaVersion": "1.0.0",
-        "hasCpSettings": false,
-        "hasCpSection": false,
-        "changelogUrl": "https://raw.githubusercontent.com/supercool/buttonbox/master/CHANGELOG.md",
-        "class": "supercool\\buttonbox\\ButtonBox"
+        "documentationUrl": "https://github.com/verbb/buttonbox",
+        "changelogUrl": "https://raw.githubusercontent.com/verbb/buttonbox/craft-3/CHANGELOG.md",
+        "class": "verbb\\buttonbox\\ButtonBox"
     }
 }

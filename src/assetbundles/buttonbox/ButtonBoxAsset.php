@@ -8,7 +8,7 @@
  * @copyright Copyright (c) 2017 Supercool
  */
 
-namespace supercool\buttonbox\assetbundles\buttonbox;
+namespace verbb\buttonbox\assetbundles\buttonbox;
 
 use Craft;
 use craft\web\AssetBundle;
@@ -34,7 +34,7 @@ class ButtonBoxAsset extends AssetBundle
     public function init()
     {
         // define the path that your publishable resources live
-        $this->sourcePath = "@supercool/buttonbox/assetbundles/buttonbox/dist";
+        $this->sourcePath = "@verbb/buttonbox/assetbundles/buttonbox/dist";
 
         // define the dependencies
         $this->depends = [
