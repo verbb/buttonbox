@@ -13,7 +13,7 @@
     {% endfor %}
   </select>
 
-  {% spaceless %}
+  {% apply spaceless %}
   {% for key, option in options %}
     {% set optionLabel = (option.label is defined ? option.label : option) %}
     {% set optionValue = (option.value is defined ? option.value : key) %}
@@ -23,7 +23,7 @@
       </a>
     {% endif %}
   {% endfor %}
-  {% endspaceless %}
+  {% endapply %}
 
 
   <div class="menu  buttonbox-fancyoptions-menu" data-align="right">

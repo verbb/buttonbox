@@ -1,4 +1,4 @@
-# Button Box - a plugin for Craft CMS 3.x
+# Button Box - a plugin for Craft CMS 4.x
 
 A set of utility field types:
 
@@ -19,7 +19,7 @@ For details of how to use and install this plugin please see the [docs](http://p
 
 ## Requirements
 
-This plugin requires Craft CMS 3.0.0 RC or later.
+This plugin requires Craft CMS 4.0.0 or later.
 
 ## Installation
 

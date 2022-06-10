@@ -1,6 +1,6 @@
 <?php
 /**
- * Button Box plugin for Craft CMS 3.x
+ * Button Box plugin for Craft CMS 4.x
  *
  * Button Box
  *
@@ -47,7 +47,7 @@ class ButtonBox extends Plugin
      */
     public static $plugin;
 
-    public $schemaVersion = '2.0.0';
+    public string $schemaVersion = '2.0.0';
 
     // Public Methods
     // =========================================================================
@@ -70,7 +70,7 @@ class ButtonBox extends Plugin
 
         // Register our fields
         Event::on(
-            Fields::className(),
+            Fields::class,
             Fields::EVENT_REGISTER_FIELD_TYPES,
             function (RegisterComponentTypesEvent $event) {
                 $event->types[] = StarsField::class;
@@ -84,7 +84,7 @@ class ButtonBox extends Plugin
 
         // Do something after we're installed
         Event::on(
-            Plugins::className(),
+            Plugins::class,
             Plugins::EVENT_AFTER_INSTALL_PLUGIN,
             function (PluginEvent $event) {
                 if ($event->plugin === $this) {

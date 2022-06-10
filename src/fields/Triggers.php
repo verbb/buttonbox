@@ -1,6 +1,6 @@
 <?php
 /**
- * ButtonBox plugin for Craft CMS 3.x
+ * ButtonBox plugin for Craft CMS 4.x
  *
  * ButtonBox
  *
@@ -10,6 +10,7 @@
 
 namespace verbb\buttonbox\fields;
 
+use craft\helpers\Cp;
 use verbb\buttonbox\ButtonBox as ButtonBoxPlugin;
 use verbb\buttonbox\assetbundles\buttonbox\ButtonBoxAsset;
 
@@ -37,7 +38,7 @@ class Triggers extends BaseOptionsField
     // Static Methods
     // =========================================================================
     
-    public $options;
+    public array $options;
     public $displayAsGraphic;
     public $displayFullwidth;
 
@@ -69,7 +70,7 @@ class Triggers extends BaseOptionsField
      *
      * @return string|null
      */
-    public function getSettingsHtml()
+    public function getSettingsHtml(): ?string
     {
         $options = $this->translatedOptions();
 
@@ -88,73 +89,70 @@ class Triggers extends BaseOptionsField
             );
         }
 
-        $table =  Craft::$app->getView()->renderTemplateMacro('_includes/forms', 'editableTableField', array(
-            array(
-                'label'        => $this->optionsSettingLabel(),
-                'instructions' => Craft::t('buttonbox', 'Image urls can be relative e.g. /admin/resources/buttonbox/images/align-left.png'),
-                'id'           => 'options',
-                'name'         => 'options',
-                'addRowLabel'  => Craft::t('buttonbox', 'Add a trigger'),
-                'cols'         => array(
-                  'label' => array(
-                    'heading'      => Craft::t('buttonbox', 'Option Label'),
-                    'type'         => 'singleline'
-                    ),
-                  'showLabel' => array(
-                    'heading'      => Craft::t('buttonbox', 'Show Label?'),
-                    'type'         => 'checkbox',
-                    'class'        => 'thin'
-                    ),
-                  'imageUrl' => array(
-                    'heading'      => Craft::t('buttonbox', 'Image URL'),
-                    'type'         => 'singleline'
-                    ),
-                  'type' => array(
+        $table = Cp::editableTableFieldHtml(array(
+            'label' => $this->optionsSettingLabel(),
+            'instructions' => Craft::t('buttonbox', 'Image urls can be relative e.g. /admin/resources/buttonbox/images/align-left.png'),
+            'id' => 'options',
+            'name' => 'options',
+            'addRowLabel' => Craft::t('buttonbox', 'Add a trigger'),
+            'allowAdd' => true,
+            'allowReorder' => true,
+            'allowDelete' => true,
+            'cols' => array(
+                'label' => array(
+                    'heading' => Craft::t('buttonbox', 'Option Label'),
+                    'type' => 'singleline'
+                ),
+                'showLabel' => array(
+                    'heading' => Craft::t('buttonbox', 'Show Label?'),
+                    'type' => 'checkbox',
+                    'class' => 'thin'
+                ),
+                'imageUrl' => array(
+                    'heading' => Craft::t('buttonbox', 'Image URL'),
+                    'type' => 'singleline'
+                ),
+                'type' => array(
                     'heading' => Craft::t('buttonbox', 'Trigger Type'),
-                    'class'   => 'thin triggerType',
-                    'type'    => 'select',
+                    'class' => 'thin triggerType',
+                    'type' => 'select',
                     'options' => array(
-                      'link' => 'Link',
-                      'js'   => 'JavaScript'
-                      ),
+                        'link' => 'Link',
+                        'js' => 'JavaScript'
                     ),
-                  'value' => array(
-                    'heading'      => Craft::t('buttonbox', 'HREF or Custom JS'),
-                    'type'         => 'singleline',
-                    'class'        => 'code triggerValue'
-                    ),
-                  'newWindow' => array(
-                    'heading'      => Craft::t('buttonbox', 'New window?'),
-                    'type'         => 'checkbox',
-                    'class'        => 'thin newWindow'
-                    ),
-                  ),
-                'rows' => $options
-            )
+                ),
+                'value' => array(
+                    'heading' => Craft::t('buttonbox', 'HREF or Custom JS'),
+                    'type' => 'singleline',
+                    'class' => 'code triggerValue'
+                ),
+                'newWindow' => array(
+                    'heading' => Craft::t('buttonbox', 'New window?'),
+                    'type' => 'checkbox',
+                    'class' => 'thin newWindow'
+                ),
+            ),
+            'rows' => $options
         ));
 
-        $displayAsGraphic = Craft::$app->getView()->renderTemplateMacro('_includes/forms', 'checkboxField', array(
-          array(
-            'label' => Craft::t('buttonbox', 'Display as graphic'),
+        $displayAsGraphic = Cp::checkboxFieldHtml(array(
+            'checkboxLabel' => Craft::t('buttonbox', 'Display as graphic'),
             'instructions' => Craft::t('buttonbox', 'This will take the height restrictions off the buttons to allow for larger images.'),
             'id' => 'displayAsGraphic',
             'name' => 'displayAsGraphic',
             'class' => 'displayAsGraphic',
             'value' => 1,
             'checked' => $this->displayAsGraphic
-            )
         ));
 
-        $displayFullwidth = Craft::$app->getView()->renderTemplateMacro('_includes/forms', 'checkboxField', array(
-          array(
-            'label' => Craft::t('buttonbox', 'Display full width'),
+        $displayFullwidth = Cp::checkboxFieldHtml(array(
+            'checkboxLabel' => Craft::t('buttonbox', 'Display full width'),
             'instructions' => Craft::t('buttonbox', 'Allow the button group to be fullwidth, useful for allowing larger graphics to be more responsive.'),
             'id' => 'displayFullwidth',
             'name' => 'displayFullwidth',
             'class' => 'displayFullwidth',
             'value' => 1,
             'checked' => $this->displayFullwidth
-            )
         ));
 
         return $displayAsGraphic . $displayFullwidth . $table;
@@ -168,7 +166,7 @@ class Triggers extends BaseOptionsField
      *
      * @return string The input HTML.
      */
-    public function getInputHtml($value, ElementInterface $element = null): string
+    public function getInputHtml(mixed $value, ?\craft\base\ElementInterface $element = null): string
     {
         $name = $this->handle;
         $options = $this->translatedOptions();

@@ -1,6 +1,6 @@
 <?php
 /**
- * ButtonBox plugin for Craft CMS 3.x
+ * ButtonBox plugin for Craft CMS 4.x
  *
  * ButtonBox
  *
@@ -10,6 +10,7 @@
 
 namespace verbb\buttonbox\fields;
 
+use craft\helpers\Cp;
 use verbb\buttonbox\ButtonBox as ButtonBoxPlugin;
 use verbb\buttonbox\assetbundles\buttonbox\ButtonBoxAsset;
 
@@ -39,7 +40,7 @@ class TextSize extends BaseOptionsField
     // Static Methods
     // =========================================================================
     
-    public $options;
+    public array $options;
 
     /**
      * Returns the display name of this class.
@@ -59,7 +60,7 @@ class TextSize extends BaseOptionsField
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         $rules = parent::rules();
         return $rules;
@@ -86,7 +87,7 @@ class TextSize extends BaseOptionsField
      *
      * @return mixed The prepared field value
      */
-    public function normalizeValue($value, ElementInterface $element = null)
+    public function normalizeValue(mixed $value, ?\craft\base\ElementInterface $element = null): mixed
     {
         if ( !$value )
         {
@@ -101,7 +102,7 @@ class TextSize extends BaseOptionsField
         $selectedValues = (array)$value;
 
         $value = reset($selectedValues) ?: null;
-        $label = $this->optionLabel($value);
+        $label = $this->optionsSettingLabel();
         $value = new SingleOptionFieldData($label, $value, true);
 
         $options = [];
@@ -130,7 +131,7 @@ class TextSize extends BaseOptionsField
      *
      * @return null|false `false` in the event that the method is sure that no elements are going to be found.
      */
-    public function serializeValue($value, ElementInterface $element = null)
+    public function serializeValue(mixed $value, ?\craft\base\ElementInterface $element = null): mixed
     {
         return parent::serializeValue($value, $element);
     }
@@ -140,7 +141,7 @@ class TextSize extends BaseOptionsField
      *
      * @return string|null
      */
-    public function getSettingsHtml()
+    public function getSettingsHtml(): ?string
     {
         $options = $this->translatedOptions();
 
@@ -156,36 +157,37 @@ class TextSize extends BaseOptionsField
             );
         }
 
-        return Craft::$app->getView()->renderTemplateMacro('_includes/forms', 'editableTableField', array(
-            array(
-                'label'        => $this->optionsSettingLabel(),
-                'instructions' => Craft::t('buttonbox', 'Pixel Size is optional and should be a single number.'),
-                'id'           => 'options',
-                'name'         => 'options',
-                'addRowLabel'  => Craft::t('buttonbox', 'Add an option'),
-                'cols'         => array(
-                    'label' => array(
-                        'heading'      => Craft::t('buttonbox', 'Option Label'),
-                        'type'         => 'singleline',
-                        'autopopulate' => 'value'
-                    ),
-                    'value' => array(
-                        'heading'      => Craft::t('buttonbox', 'Value'),
-                        'type'         => 'singleline',
-                        'class'        => 'code'
-                    ),
-                    'pxVal' => array(
-                        'heading'      => Craft::t('buttonbox', 'Pixel Size'),
-                        'type'         => 'number'
-                    ),
-                    'default' => array(
-                        'heading'      => Craft::t('buttonbox', 'Default?'),
-                        'type'         => 'checkbox',
-                        'class'        => 'thin'
-                    ),
+        return Cp::editableTableFieldHtml(array(
+            'label' => $this->optionsSettingLabel(),
+            'instructions' => Craft::t('buttonbox', 'Pixel Size is optional and should be a single number.'),
+            'id' => 'options',
+            'name' => 'options',
+            'addRowLabel' => Craft::t('buttonbox', 'Add an option'),
+            'allowAdd' => true,
+            'allowReorder' => true,
+            'allowDelete' => true,
+            'cols' => array(
+                'label' => array(
+                    'heading' => Craft::t('buttonbox', 'Option Label'),
+                    'type' => 'singleline',
+                    'autopopulate' => 'value'
                 ),
-                'rows' => $options
-            )
+                'value' => array(
+                    'heading' => Craft::t('buttonbox', 'Value'),
+                    'type' => 'singleline',
+                    'class' => 'code'
+                ),
+                'pxVal' => array(
+                    'heading' => Craft::t('buttonbox', 'Pixel Size'),
+                    'type' => 'number'
+                ),
+                'default' => array(
+                    'heading' => Craft::t('buttonbox', 'Default?'),
+                    'type' => 'checkbox',
+                    'class' => 'thin'
+                ),
+            ),
+            'rows' => $options
         ));
 
     }
@@ -197,7 +199,7 @@ class TextSize extends BaseOptionsField
      *
      * @return string The input HTML.
      */
-    public function getInputHtml($value, ElementInterface $element = null): string
+    public function getInputHtml(mixed $value, ?\craft\base\ElementInterface $element = null): string
     {
         $name = $this->handle;
         $options = $this->translatedOptions();
@@ -229,10 +231,10 @@ class TextSize extends BaseOptionsField
 
     /**
      * Override this method to return custom default value
-     * 
-     * @return string 
+     *
+     * @return array|string|null
      */
-    protected function defaultValue()
+    protected function defaultValue(): array|string|null
     {
 
         $options = $this->translatedOptions();
