@@ -20,12 +20,12 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Supercool",
-            "homepage": "http://supercooldesign.co.uk"
-        },
-        {
             "name": "Verbb",
             "homepage": "https://verbb.io"
+        },
+        {
+            "name": "Supercool",
+            "homepage": "http://supercooldesign.co.uk"
         }
     ],
     "require": {
