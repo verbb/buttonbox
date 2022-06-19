@@ -13,9 +13,9 @@ use craft\db\Migration;
 
 class m220604_000000_verbb_migration extends Migration
 {
-    /**
-     * @inheritdoc
-     */
+    // Public Methods
+    // =========================================================================
+
     public function safeUp()
     {
         $this->update('{{%fields}}', ['type' => Buttons::class], ['type' => 'supercool\buttonbox\fields\Buttons']);
@@ -57,9 +57,6 @@ class m220604_000000_verbb_migration extends Migration
         return true;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function safeDown()
     {
         echo "m220604_000000_verbb_migration cannot be reverted.\n";

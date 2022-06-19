@@ -1,0 +1,16 @@
+{% import '_includes/forms' as forms %}
+
+{% do view.registerAssetBundle('verbb\\buttonbox\\assetbundles\\ButtonBoxAsset') %}
+
+{{ forms.textField({
+    label: 'Number of Stars' | t('buttonbox'),
+    instructions: 'Enter the number of stars to show.' | t('buttonbox'),
+    id: 'totalStars',
+    name: 'totalStars',
+    value: settings.totalStars,
+    size: 2,
+    required: true,
+}) }}
+
+
+

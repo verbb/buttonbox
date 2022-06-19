@@ -217,6 +217,12 @@
       "oAP" : "\/src\/assetbundles",
       "oF" : 0
     },
+    "\/src\/base" : {
+      "ft" : 65536,
+      "oA" : 1,
+      "oAP" : "\/src\/base",
+      "oF" : 0
+    },
     "\/src\/ButtonBox.php" : {
       "cB" : 0,
       "ft" : 8192,
@@ -246,6 +252,49 @@
       "oA" : 1,
       "oAP" : "\/src\/migrations",
       "oF" : 0
+    },
+    "\/src\/resources\/dist" : {
+      "ft" : 65536,
+      "oA" : 1,
+      "oAP" : "\/src\/resources\/dist",
+      "oF" : 0
+    },
+    "\/src\/resources\/src\/js\/buttonbox.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 1,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/src\/resources\/dist\/js\/buttonbox.js",
+      "oF" : 0,
+      "sC" : 0,
+      "tS" : 0
+    },
+    "\/src\/resources\/src\/js\/settings-triggers.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 1,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/src\/resources\/dist\/js\/settings-triggers.js",
+      "oF" : 0,
+      "sC" : 0,
+      "tS" : 0
+    },
+    "\/src\/resources\/src\/scss\/buttonbox.scss" : {
+      "aP" : 1,
+      "bl" : 0,
+      "co" : 0,
+      "dP" : 10,
+      "ec" : 1,
+      "ft" : 4,
+      "ma" : 0,
+      "oA" : 0,
+      "oAP" : "\/src\/resources\/dist\/css\/buttonbox.css",
+      "oF" : 0,
+      "oS" : 3,
+      "pg" : 0,
+      "sct" : 1
     },
     "\/src\/templates" : {
       "ft" : 65536,
