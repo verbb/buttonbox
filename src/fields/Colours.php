@@ -152,7 +152,7 @@ class Colours extends BaseOptionsField
         $translatedOptions = [];
 
         foreach ($this->options as $option) {
-            $cssColour = !strstr($option['cssColour'], '#') ? '#' . $option['cssColour'] : $cssColour;
+            $cssColour = !strstr($option['cssColour'], '#') ? '#' . $option['cssColour'] : $option['cssColour'];
 
             $translatedOptions[] = [
                 'label' => Craft::t('site', $option['label']),
