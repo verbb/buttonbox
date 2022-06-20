@@ -51,11 +51,11 @@ If you check this Button Box will allow the button group to flow full width, use
 - **Option label:** The name of your option (e.g. ‘Male’, ‘Female’, ‘On’, ‘Off’, ‘Cat’, or ‘Dog’)
 - **Show label?:** Hide the label on output.
 - **Value:** This appears in your template.
-- **Image URL:** The path to your image. Image urls can be relative e.g. `/admin/resources/buttonbox/images/align-left.png`. Icons work best when they are 30 x 20px or less.
+- **Image URL:** The path to your image. Image URLs are relative to your `@webroot` e.g. `/images/align-left.png` is `http://site.test/images/align-left.png`. Icons work best when they are 30 x 20px or less.
 - **Default:** Optionally choose one row to define as your default option for users.
 
 ### Provided images
-We have provided you with a set of images for useful things like alignment and columns. These can be found in `/buttonbox/resources/images` and can be referenced directly from the Image URL column in the field settings using the following pattern: `/<cpTrigger>/resources/buttonbox/images/<filename>` where `<cpTrigger>` is whatever the config value cpTrigger is set to (default: ‘admin’) and `<filename>` is one of the following:
+We have provided some [sample icons](https://github.com/verbb/buttonbox/tree/craft-3/resources/images) for common scenarios.
 
 Image | Filename
 --- | ---
