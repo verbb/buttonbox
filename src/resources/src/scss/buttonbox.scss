@@ -52,10 +52,10 @@
 
 .buttonbox-colours .buttonbox__btn {
     display: inline-block;
-    *display: inline;
     zoom: 1;
     color: #C2C4C5;
 }
+
 .buttonbox-colours .buttonbox__btn:hover {
     text-decoration: none;
 }
@@ -94,10 +94,7 @@
 }
 
 .buttonbox-textsize .buttonbox__btn {
-    display: inline-block;
-    zoom: 1;
     color: #C2C4C5;
-    line-height: 1;
 }
 
 .buttonbox-textsize .buttonbox__btn:hover {

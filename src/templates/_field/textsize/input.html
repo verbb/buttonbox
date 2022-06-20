@@ -9,7 +9,12 @@
             {% set optionValue = (option.value is defined ? option.value : key) %}
             {% set optionDisabled = (option.disabled is defined ? option.disabled : false) %}
             
-            <option value="{{ optionValue }}"{% if optionValue == value %} selected{% endif %}{% if optionDisabled %} disabled{% endif %}{% if option.pxVal %} data-buttonbox-pxval="{{ option.pxVal }}"{% endif %}>{{ optionLabel }}</option>
+            <option {{ attr({
+                value: optionValue,
+                selected: optionValue == value ? true : false,
+                disabled: optionDisabled ? true : false,
+                'data-buttonbox-pxval': option.pxVal ? option.pxVal : false,
+            }) }}>{{ optionLabel }}</option>
         {% endfor %}
     </select>
 
@@ -17,10 +22,10 @@
         {% for key, option in options %}
             {% set optionLabel = (option.label is defined ? option.label : option) %}
             {% set optionValue = (option.value is defined ? option.value : key) %}
-            
+
             {% if optionValue == value %}
                 <a class="buttonbox__btn" role="button">
-                    <span{% if option.pxVal %} style="font-size:{{ option.pxVal }}px;"{% endif %}>{{ optionLabel }}</span>
+                    <span{% if option.pxVal %} style="font-size: {{ option.pxVal }}px;"{% endif %}>{{ optionLabel }}</span>
                 </a>
             {% endif %}
         {% endfor %}
@@ -34,7 +39,7 @@
                 
                 <li>
                     <a{% if optionValue == value %} class="sel"{% endif %} role="button" data-buttonbox-value="{{ optionValue }}">
-                        <span{% if option.pxVal %} style="font-size:{{ option.pxVal }}px;"{% endif %}>{{ optionLabel }}</span>
+                        <span{% if option.pxVal %} style="font-size: {{ option.pxVal }}px;"{% endif %}>{{ optionLabel }}</span>
                     </a>
                 </li>
             {% endfor %}

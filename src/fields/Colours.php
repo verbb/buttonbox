@@ -136,6 +136,7 @@ class Colours extends BaseOptionsField
         ]);
     }
 
+
     // Protected Methods
     // =========================================================================
     
@@ -161,5 +162,4 @@ class Colours extends BaseOptionsField
 
         return $translatedOptions;
     }
-
 }
