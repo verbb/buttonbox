@@ -11,6 +11,7 @@ use craft\fields\data\SingleOptionFieldData;
 use craft\helpers\Db;
 use craft\helpers\Json;
 use craft\helpers\Template;
+use craft\helpers\UrlHelper;
 
 use yii\db\Schema;
 
@@ -23,6 +24,7 @@ class Buttons extends BaseOptionsField
     {
         return Craft::t('buttonbox', 'Button Box - Buttons');
     }
+
 
     // Properties
     // =========================================================================
@@ -81,14 +83,16 @@ class Buttons extends BaseOptionsField
                   'showLabel' => false,
                   'value' => '',
                   'imageUrl' => '',
-                ]
+                ],
             ];
         }
 
         $table = Craft::$app->getView()->renderTemplateMacro('_includes/forms', 'editableTableField', [
             [
                 'label' => $this->optionsSettingLabel(),
-                'instructions' => Craft::t('buttonbox', 'Image urls can be relative e.g. /images/align-left.png'),
+                'instructions' => Craft::t('buttonbox', 'Image URLs are relative to your `@webroot` e.g. `/images/align-left.png` is `{url}`.', [
+                    'url' => UrlHelper::siteUrl('/images/align-left.png'),
+                ]),
                 'id' => 'options',
                 'name' => 'options',
                 'addRowLabel' => Craft::t('buttonbox', 'Add an option'),
@@ -169,7 +173,6 @@ class Buttons extends BaseOptionsField
             'displayAsGraphic' => $this->displayAsGraphic,
             'displayFullwidth' => $this->displayFullwidth,
         ]);
-
     }
 
 

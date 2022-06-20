@@ -103,8 +103,7 @@ class Colours extends BaseOptionsField
                     ],
                     'cssColour' => [
                         'heading' => Craft::t('buttonbox', 'Valid CSS Colour'),
-                        'type' => 'singleline',
-                        'class' => 'code',
+                        'type' => 'color',
                     ],
                     'default' => [
                         'heading' => Craft::t('buttonbox', 'Default?'),
@@ -150,10 +149,12 @@ class Colours extends BaseOptionsField
         $translatedOptions = [];
 
         foreach ($this->options as $option) {
+            $cssColour = !strstr($option['cssColour'], '#') ? '#' . $option['cssColour'] : $cssColour;
+
             $translatedOptions[] = [
                 'label' => Craft::t('site', $option['label']),
                 'value' => $option['value'],
-                'cssColour' => $option['cssColour'],
+                'cssColour' => $cssColour,
                 'default' => $option['default'],
             ];
         }

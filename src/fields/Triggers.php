@@ -9,6 +9,7 @@ use craft\fields\BaseOptionsField;
 use craft\helpers\Db;
 use craft\helpers\Json;
 use craft\helpers\Template;
+use craft\helpers\UrlHelper;
 
 use yii\db\Schema;
 
@@ -59,7 +60,9 @@ class Triggers extends BaseOptionsField
         $table = Craft::$app->getView()->renderTemplateMacro('_includes/forms', 'editableTableField', [
             [
                 'label' => $this->optionsSettingLabel(),
-                'instructions' => Craft::t('buttonbox', 'Image urls can be relative e.g. /admin/resources/buttonbox/images/align-left.png'),
+                'instructions' => Craft::t('buttonbox', 'Image URLs are relative to your `@webroot` e.g. `/images/align-left.png` is `{url}`.', [
+                    'url' => UrlHelper::siteUrl('/images/align-left.png'),
+                ]),
                 'id' => 'options',
                 'name' => 'options',
                 'addRowLabel' => Craft::t('buttonbox', 'Add a trigger'),
