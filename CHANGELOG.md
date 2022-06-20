@@ -1,5 +1,10 @@
 # Changelog
 
+## 4.0.1 - 2022-06-21
+
+### Fixed
+- Merge fixes from `3.0.2`.
+
 ## 4.0.0 - 2022-06-20
 
 ### Changed
