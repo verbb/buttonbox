@@ -138,6 +138,11 @@
 // Stars
 // ==========================================================================
 
+.buttonbox-stars {
+    display: flex;
+    align-items: center;
+}
+
 .buttonbox-stars input {
     position: absolute;
     left: -9999px;
@@ -154,22 +159,22 @@
     font-size: 1.5em;
     line-height: 1.2;
     color: #ddd;
-}
 
-.buttonbox-stars label:before {
-    content: '★ ';
-}
+    &:before {
+        content: '★ ';
+    }
 
-.buttonbox-stars label.active {
-    color: #F4B638;
-}
+    &.active {
+        color: #F4B638;
+    }
 
-.buttonbox-stars label.hover {
-    color: #5286d9;
+    &.hover {
+        color: #5286d9;
+    }
 }
 
 .buttonbox-stars__cancel {
-    vertical-align: sub;
+    margin-left: 10px;
 }
 
 

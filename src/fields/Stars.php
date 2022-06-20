@@ -26,13 +26,13 @@ class Stars extends Field
     // Properties
     // =========================================================================
 
-    public $totalStars = 5;
+    public int $totalStars = 5;
 
 
     // Public Methods
     // =========================================================================
 
-    public function rules()
+    public function rules(): array
     {
         $rules = parent::rules();
 
@@ -49,14 +49,14 @@ class Stars extends Field
         return Schema::TYPE_INTEGER;
     }
 
-    public function getSettingsHtml()
+    public function getSettingsHtml(): ?string
     {
         return Craft::$app->getView()->renderTemplate('buttonbox/_field/stars/settings', [
             'settings' => $this->getSettings(),
         ]);
     }
 
-    public function getInputHtml($value, ElementInterface $element = null): string
+    public function getInputHtml(mixed $value, ElementInterface $element = null): string
     {
         $name = $this->handle;
 

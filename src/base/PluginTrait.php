@@ -1,6 +1,8 @@
 <?php
 namespace verbb\buttonbox\base;
 
+use verbb\buttonbox\ButtonBox;
+
 use Craft;
 
 use yii\log\Logger;
@@ -12,13 +14,13 @@ trait PluginTrait
     // Static Properties
     // =========================================================================
 
-    public static $plugin;
+    public static ButtonBox $plugin;
 
 
     // Public Methods
     // =========================================================================
 
-    public static function log($message, $attributes = [])
+    public static function log($message, $attributes = []): void
     {
         if ($attributes) {
             $message = Craft::t('buttonbox', $message, $attributes);
@@ -27,7 +29,7 @@ trait PluginTrait
         Craft::getLogger()->log($message, Logger::LEVEL_INFO, 'buttonbox');
     }
 
-    public static function error($message, $attributes = [])
+    public static function error($message, $attributes = []): void
     {
         if ($attributes) {
             $message = Craft::t('buttonbox', $message, $attributes);

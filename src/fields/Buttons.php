@@ -29,9 +29,9 @@ class Buttons extends BaseOptionsField
     // Properties
     // =========================================================================
     
-    public $displayAsGraphic;
-    public $displayFullwidth;
-    public $options;
+    public ?bool $displayAsGraphic = null;
+    public ?bool $displayFullwidth = null;
+    public array $options = [];
 
 
     // Public Methods
@@ -42,7 +42,7 @@ class Buttons extends BaseOptionsField
         return Schema::TYPE_TEXT;
     }
 
-    public function normalizeValue($value, ElementInterface $element = null)
+    public function normalizeValue(mixed $value, ElementInterface $element = null): mixed
     {
         if (!$value) {
             $value = $this->defaultValue();
@@ -55,7 +55,7 @@ class Buttons extends BaseOptionsField
         $selectedValues = (array)$value;
 
         $value = reset($selectedValues) ?: null;
-        $label = $this->optionLabel($value);
+        $label = $this->optionsSettingLabel();
         $value = new SingleOptionFieldData($label, $value, true);
 
         $options = [];
@@ -72,7 +72,7 @@ class Buttons extends BaseOptionsField
         return $value;
     }
 
-    public function getSettingsHtml()
+    public function getSettingsHtml(): ?string
     {
         $options = $this->translatedOptions();
 
@@ -87,73 +87,71 @@ class Buttons extends BaseOptionsField
             ];
         }
 
-        $table = Craft::$app->getView()->renderTemplateMacro('_includes/forms', 'editableTableField', [
-            [
-                'label' => $this->optionsSettingLabel(),
-                'instructions' => Craft::t('buttonbox', 'Image URLs are relative to your `@webroot` e.g. `/images/align-left.png` is `{url}`.', [
-                    'url' => UrlHelper::siteUrl('/images/align-left.png'),
-                ]),
-                'id' => 'options',
-                'name' => 'options',
-                'addRowLabel' => Craft::t('buttonbox', 'Add an option'),
-                'cols' => [
-                    'label' => [
-                        'heading' => Craft::t('buttonbox', 'Option Label'),
-                        'type' => 'singleline',
-                        'autopopulate' => 'value',
-                    ],
-                    'showLabel' => [
-                        'heading' => Craft::t('buttonbox', 'Show Label?'),
-                        'type' => 'checkbox',
-                        'class' => 'thin',
-                    ],
-                    'value' => [
-                        'heading' => Craft::t('buttonbox', 'Value'),
-                        'type' => 'singleline',
-                        'class' => 'code',
-                    ],
-                    'imageUrl' => [
-                        'heading' => Craft::t('buttonbox', 'Image URL'),
-                        'type' => 'singleline',
-                    ],
-                    'default' => [
-                        'heading' => Craft::t('buttonbox', 'Default?'),
-                        'type' => 'checkbox',
-                        'class' => 'thin',
-                    ],
+        $table = Craft::$app->getView()->renderTemplate('_includes/forms/editableTable', [
+            'label' => $this->optionsSettingLabel(),
+            'instructions' => Craft::t('buttonbox', 'Image URLs are relative to your `@webroot` e.g. `/images/align-left.png` is `{url}`.', [
+                'url' => UrlHelper::siteUrl('/images/align-left.png'),
+            ]),
+            'id' => 'options',
+            'name' => 'options',
+            'addRowLabel' => Craft::t('buttonbox', 'Add an option'),
+            'cols' => [
+                'label' => [
+                    'heading' => Craft::t('buttonbox', 'Option Label'),
+                    'type' => 'singleline',
+                    'autopopulate' => 'value',
                 ],
-                'rows' => $options,
+                'showLabel' => [
+                    'heading' => Craft::t('buttonbox', 'Show Label?'),
+                    'type' => 'checkbox',
+                    'class' => 'thin',
+                ],
+                'value' => [
+                    'heading' => Craft::t('buttonbox', 'Value'),
+                    'type' => 'singleline',
+                    'class' => 'code',
+                ],
+                'imageUrl' => [
+                    'heading' => Craft::t('buttonbox', 'Image URL'),
+                    'type' => 'singleline',
+                ],
+                'default' => [
+                    'heading' => Craft::t('buttonbox', 'Default?'),
+                    'type' => 'checkbox',
+                    'class' => 'thin',
+                ],
             ],
+            'rows' => $options,
+            'static' => false,
+            'allowAdd' => true,
+            'allowDelete' => true,
+            'allowReorder' => true,
         ]);
 
-        $displayAsGraphic = Craft::$app->getView()->renderTemplateMacro('_includes/forms', 'checkboxField', [
-            [
-                'label' => Craft::t('buttonbox', 'Display as graphic'),
-                'instructions' => Craft::t('buttonbox', 'This will take the height restrictions off the buttons to allow for larger images.'),
-                'id' => 'displayAsGraphic',
-                'name' => 'displayAsGraphic',
-                'class' => 'displayAsGraphic',
-                'value' => 1,
-                'checked' => $this->displayAsGraphic,
-            ],
+        $displayAsGraphic = Craft::$app->getView()->renderTemplate('_includes/forms/checkboxField', [
+            'label' => Craft::t('buttonbox', 'Display as graphic'),
+            'instructions' => Craft::t('buttonbox', 'This will take the height restrictions off the buttons to allow for larger images.'),
+            'id' => 'displayAsGraphic',
+            'name' => 'displayAsGraphic',
+            'class' => 'displayAsGraphic',
+            'value' => 1,
+            'checked' => $this->displayAsGraphic,
         ]);
 
-        $displayFullwidth = Craft::$app->getView()->renderTemplateMacro('_includes/forms', 'checkboxField', [
-            [
-                'label' => Craft::t('buttonbox', 'Display full width'),
-                'instructions' => Craft::t('buttonbox', 'Allow the button group to be fullwidth, useful for allowing larger graphics to be more responsive.'),
-                'id' => 'displayFullwidth',
-                'name' => 'displayFullwidth',
-                'class' => 'displayFullwidth',
-                'value' => 1,
-                'checked' => $this->displayFullwidth,
-            ],
+        $displayFullwidth = Craft::$app->getView()->renderTemplate('_includes/forms/checkboxField', [
+            'label' => Craft::t('buttonbox', 'Display full width'),
+            'instructions' => Craft::t('buttonbox', 'Allow the button group to be fullwidth, useful for allowing larger graphics to be more responsive.'),
+            'id' => 'displayFullwidth',
+            'name' => 'displayFullwidth',
+            'class' => 'displayFullwidth',
+            'value' => 1,
+            'checked' => $this->displayFullwidth,
         ]);
 
         return $displayAsGraphic . $displayFullwidth . $table;
     }
 
-    public function getInputHtml($value, ElementInterface $element = null): string
+    public function getInputHtml(mixed $value, ElementInterface $element = null): string
     {
         $name = $this->handle;
         $options = $this->translatedOptions();
@@ -184,7 +182,7 @@ class Buttons extends BaseOptionsField
         return Craft::t('buttonbox', 'Button Options');
     }
 
-    protected function defaultValue()
+    protected function defaultValue(): array|string|null
     {
         $options = $this->translatedOptions();
 

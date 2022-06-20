@@ -79,13 +79,19 @@ Craft.ButtonBoxFancyOptions = Garnish.Base.extend({
 
     init: function(id) {
         this.id = id;
-        this.$elem = $('#'+this.id);
+        this.$elem = $('#' + this.id);
         this.$select = this.$elem.find('select');
         this.$btn = this.$elem.find('.buttonbox__btn');
 
         var menuBtn = new Garnish.MenuBtn(this.$btn);
-        this.$menu = menuBtn.menu.$container;
-        menuBtn.menu.settings.onOptionSelect = $.proxy(this, 'onMenuOptionSelect');
+
+        if (menuBtn) {
+            this.$menu = menuBtn.menu.$container;
+
+            if (this.$menu) {
+                menuBtn.menu.settings.onOptionSelect = $.proxy(this, 'onMenuOptionSelect');
+            }
+        }
     },
 
     onMenuOptionSelect: function(option) {
