@@ -8,6 +8,7 @@ use craft\base\ElementInterface;
 use craft\fields\BaseOptionsField;
 use craft\fields\data\OptionData;
 use craft\fields\data\SingleOptionFieldData;
+use craft\helpers\Cp;
 use craft\helpers\Db;
 use craft\helpers\Json;
 use craft\helpers\Template;
@@ -87,7 +88,7 @@ class Buttons extends BaseOptionsField
             ];
         }
 
-        $table = Craft::$app->getView()->renderTemplate('_includes/forms/editableTable', [
+        $table = Cp::editableTableFieldHtml([
             'label' => $this->optionsSettingLabel(),
             'instructions' => Craft::t('buttonbox', 'Image URLs are relative to your `@webroot` e.g. `/images/align-left.png` is `{url}`.', [
                 'url' => UrlHelper::siteUrl('/images/align-left.png'),
@@ -128,8 +129,8 @@ class Buttons extends BaseOptionsField
             'allowReorder' => true,
         ]);
 
-        $displayAsGraphic = Craft::$app->getView()->renderTemplate('_includes/forms/checkboxField', [
-            'label' => Craft::t('buttonbox', 'Display as graphic'),
+        $displayAsGraphic = Cp::checkboxFieldHtml([
+            'checkboxLabel' => Craft::t('buttonbox', 'Display as graphic'),
             'instructions' => Craft::t('buttonbox', 'This will take the height restrictions off the buttons to allow for larger images.'),
             'id' => 'displayAsGraphic',
             'name' => 'displayAsGraphic',
@@ -138,8 +139,8 @@ class Buttons extends BaseOptionsField
             'checked' => $this->displayAsGraphic,
         ]);
 
-        $displayFullwidth = Craft::$app->getView()->renderTemplate('_includes/forms/checkboxField', [
-            'label' => Craft::t('buttonbox', 'Display full width'),
+        $displayFullwidth = Cp::checkboxFieldHtml([
+            'checkboxLabel' => Craft::t('buttonbox', 'Display full width'),
             'instructions' => Craft::t('buttonbox', 'Allow the button group to be fullwidth, useful for allowing larger graphics to be more responsive.'),
             'id' => 'displayFullwidth',
             'name' => 'displayFullwidth',

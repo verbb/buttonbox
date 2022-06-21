@@ -8,6 +8,7 @@ use craft\base\ElementInterface;
 use craft\fields\BaseOptionsField;
 use craft\fields\data\OptionData;
 use craft\fields\data\SingleOptionFieldData;
+use craft\helpers\Cp;
 use craft\helpers\Db;
 use craft\helpers\Json;
 use craft\helpers\Template;
@@ -83,7 +84,7 @@ class Colours extends BaseOptionsField
             ];
         }
 
-        return Craft::$app->getView()->renderTemplate('_includes/forms/editableTable', [
+        return Cp::editableTableFieldHtml([
             'label' => $this->optionsSettingLabel(),
             'instructions' => Craft::t('buttonbox', 'Define the available options.'),
             'id' => 'options',
