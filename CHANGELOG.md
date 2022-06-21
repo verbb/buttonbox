@@ -1,5 +1,10 @@
 # Changelog
 
+## 4.0.2 - 2022-06-21
+
+### Fixed
+- Fix an error when creating new fields.
+
 ## 4.0.1 - 2022-06-21
 
 ### Fixed
