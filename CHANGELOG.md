@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.0.3 - 2022-06-21
+
+### Changed
+- Now requires Button Box `3.0.0` in order to update from Craft 3.
+
+### Removed
+- Removed Craft 2 migration.
+
 ## 4.0.2 - 2022-06-21
 
 ### Fixed
