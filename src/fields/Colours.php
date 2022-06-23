@@ -8,9 +8,6 @@ use craft\base\ElementInterface;
 use craft\fields\BaseOptionsField;
 use craft\fields\data\OptionData;
 use craft\fields\data\SingleOptionFieldData;
-use craft\helpers\Db;
-use craft\helpers\Json;
-use craft\helpers\Template;
 
 use yii\db\Schema;
 
@@ -39,7 +36,7 @@ class Colours extends BaseOptionsField
         return Schema::TYPE_TEXT;
     }
 
-    public function normalizeValue($value, ElementInterface $element = null)
+    public function normalizeValue($value, ElementInterface $element = null): SingleOptionFieldData
     {
         if (!$value) {
             $value = $this->defaultValue();
@@ -69,7 +66,7 @@ class Colours extends BaseOptionsField
         return $value;
     }
 
-    public function getSettingsHtml()
+    public function getSettingsHtml(): ?string
     {
         $options = $this->translatedOptions();
 
@@ -150,7 +147,7 @@ class Colours extends BaseOptionsField
         $translatedOptions = [];
 
         foreach ($this->options as $option) {
-            $cssColour = !strstr($option['cssColour'], '#') ? '#' . $option['cssColour'] : $option['cssColour'];
+            $cssColour = strpos($option['cssColour'], '#') === false ? '#' . $option['cssColour'] : $option['cssColour'];
 
             $translatedOptions[] = [
                 'label' => Craft::t('site', $option['label']),

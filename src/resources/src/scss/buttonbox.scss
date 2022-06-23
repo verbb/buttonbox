@@ -188,14 +188,12 @@
 }
 
 .buttonbox-width .btn.active {
-    background: #5286d9 !important;
-    background-image: linear-gradient(#659cdc, #5286d9) !important;
+    background: #5286d9 linear-gradient(#659cdc, #5286d9) !important;
     border-color: #5286d9 !important;
 }
 
 .buttonbox-width .btn.hover {
-    background: #3c6da5 !important;
-    background-image: linear-gradient(#578dbc, #3c6da5) !important;
+    background: #3c6da5 linear-gradient(#578dbc, #3c6da5) !important;
     border-color: #3c6da5 !important;
 }
 

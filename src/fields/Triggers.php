@@ -6,12 +6,7 @@ use verbb\buttonbox\assetbundles\ButtonBoxAsset;
 use Craft;
 use craft\base\ElementInterface;
 use craft\fields\BaseOptionsField;
-use craft\helpers\Db;
-use craft\helpers\Json;
-use craft\helpers\Template;
 use craft\helpers\UrlHelper;
-
-use yii\db\Schema;
 
 class Triggers extends BaseOptionsField
 {
@@ -40,7 +35,7 @@ class Triggers extends BaseOptionsField
     // Public Methods
     // =========================================================================
 
-    public function getSettingsHtml()
+    public function getSettingsHtml(): string
     {
         $options = $this->translatedOptions();
 

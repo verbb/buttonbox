@@ -8,9 +8,6 @@ use craft\base\ElementInterface;
 use craft\fields\BaseOptionsField;
 use craft\fields\data\OptionData;
 use craft\fields\data\SingleOptionFieldData;
-use craft\helpers\Db;
-use craft\helpers\Json;
-use craft\helpers\Template;
 use craft\helpers\UrlHelper;
 
 use yii\db\Schema;
@@ -42,7 +39,7 @@ class Buttons extends BaseOptionsField
         return Schema::TYPE_TEXT;
     }
 
-    public function normalizeValue($value, ElementInterface $element = null)
+    public function normalizeValue($value, ElementInterface $element = null): SingleOptionFieldData
     {
         if (!$value) {
             $value = $this->defaultValue();
@@ -72,7 +69,7 @@ class Buttons extends BaseOptionsField
         return $value;
     }
 
-    public function getSettingsHtml()
+    public function getSettingsHtml(): string
     {
         $options = $this->translatedOptions();
 

@@ -3,12 +3,8 @@ namespace verbb\buttonbox\migrations;
 
 use verbb\buttonbox\fields\Buttons;
 use verbb\buttonbox\fields\Colours;
-use verbb\buttonbox\fields\Stars;
-use verbb\buttonbox\fields\TextSize;
-use verbb\buttonbox\fields\Triggers;
 use verbb\buttonbox\fields\Width;
 
-use Craft;
 use craft\db\Migration;
 
 class m190506_031734_migrate_buttonbox extends Migration
@@ -23,7 +19,7 @@ class m190506_031734_migrate_buttonbox extends Migration
         $this->update('{{%fields}}', ['type' => Width::class], ['type' => 'ButtonBox_Width']);
     }
 
-    public function safeDown()
+    public function safeDown(): bool
     {
         echo "m190506_031734_migrate_buttonbox cannot be reverted.\n";
         return false;
