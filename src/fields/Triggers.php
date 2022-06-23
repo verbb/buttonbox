@@ -17,7 +17,7 @@ class Triggers extends BaseOptionsField
 {
     // Static Methods
     // =========================================================================
-    
+
     public static function displayName(): string
     {
         return Craft::t('buttonbox', 'Button Box - Triggers');
@@ -31,11 +31,11 @@ class Triggers extends BaseOptionsField
 
     // Properties
     // =========================================================================
-    
+
     public $options;
     public $displayAsGraphic;
     public $displayFullwidth;
-  
+
 
     // Public Methods
     // =========================================================================
@@ -161,8 +161,8 @@ class Triggers extends BaseOptionsField
 
     // Protected Methods
     // =========================================================================
-    
-    protected function optionsSettingLabel() : string
+
+    protected function optionsSettingLabel(): string
     {
         return Craft::t('buttonbox', 'Triggers Options');
     }

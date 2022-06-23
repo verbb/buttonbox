@@ -47,7 +47,7 @@ class ButtonBox extends Plugin
 
     // Private Methods
     // =========================================================================
-    
+
     private function _registerFieldTypes()
     {
         Event::on(Fields::class, Fields::EVENT_REGISTER_FIELD_TYPES, function(RegisterComponentTypesEvent $event) {

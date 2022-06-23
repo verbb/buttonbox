@@ -19,7 +19,7 @@ class Buttons extends BaseOptionsField
 {
     // Static Methods
     // =========================================================================
-    
+
     public static function displayName(): string
     {
         return Craft::t('buttonbox', 'Button Box - Buttons');
@@ -28,7 +28,7 @@ class Buttons extends BaseOptionsField
 
     // Properties
     // =========================================================================
-    
+
     public $displayAsGraphic;
     public $displayFullwidth;
     public $options;
@@ -47,7 +47,7 @@ class Buttons extends BaseOptionsField
         if (!$value) {
             $value = $this->defaultValue();
         }
-        
+
         if ($value instanceof SingleOptionFieldData) {
             $value = $value->value;
         }
@@ -79,10 +79,10 @@ class Buttons extends BaseOptionsField
         if (!$options) {
             $options = [
                 [
-                  'label' => '',
-                  'showLabel' => false,
-                  'value' => '',
-                  'imageUrl' => '',
+                    'label' => '',
+                    'showLabel' => false,
+                    'value' => '',
+                    'imageUrl' => '',
                 ],
             ];
         }
@@ -178,8 +178,8 @@ class Buttons extends BaseOptionsField
 
     // Protected Methods
     // =========================================================================
-    
-    protected function optionsSettingLabel() : string
+
+    protected function optionsSettingLabel(): string
     {
         return Craft::t('buttonbox', 'Button Options');
     }

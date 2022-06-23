@@ -18,7 +18,7 @@ class Colours extends BaseOptionsField
 {
     // Static Methods
     // =========================================================================
-    
+
     public static function displayName(): string
     {
         return Craft::t('buttonbox', 'Button Box - Colours');
@@ -27,7 +27,7 @@ class Colours extends BaseOptionsField
 
     // Properties
     // =========================================================================
-    
+
     public $options;
 
 
@@ -44,7 +44,7 @@ class Colours extends BaseOptionsField
         if (!$value) {
             $value = $this->defaultValue();
         }
-        
+
         if ($value instanceof SingleOptionFieldData) {
             $value = $value->value;
         }
@@ -139,8 +139,8 @@ class Colours extends BaseOptionsField
 
     // Protected Methods
     // =========================================================================
-    
-    protected function optionsSettingLabel() : string
+
+    protected function optionsSettingLabel(): string
     {
         return Craft::t('buttonbox', 'Colour Options');
     }

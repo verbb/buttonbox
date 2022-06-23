@@ -44,7 +44,7 @@ class TextSize extends BaseOptionsField
         if (!$value) {
             $value = $this->defaultValue();
         }
-        
+
         if ($value instanceof SingleOptionFieldData) {
             $value = $value->value;
         }
@@ -89,7 +89,7 @@ class TextSize extends BaseOptionsField
                 'instructions' => Craft::t('buttonbox', 'Pixel Size is optional and should be a single number.'),
                 'id' => 'options',
                 'name' => 'options',
-                'addRowLabel'  => Craft::t('buttonbox', 'Add an option'),
+                'addRowLabel' => Craft::t('buttonbox', 'Add an option'),
                 'cols' => [
                     'label' => [
                         'heading' => Craft::t('buttonbox', 'Option Label'),
@@ -134,14 +134,13 @@ class TextSize extends BaseOptionsField
             'value' => $value,
             'options' => $options,
         ]);
-
     }
 
 
     // Protected Methods
     // =========================================================================
-    
-    protected function optionsSettingLabel() : string
+
+    protected function optionsSettingLabel(): string
     {
         return Craft::t('buttonbox', 'Text Size Options');
     }
