@@ -166,7 +166,7 @@ class Triggers extends BaseOptionsField
         return Craft::t('buttonbox', 'Triggers Options');
     }
 
-    protected function translatedOptions(): array
+    protected function translatedOptions(bool $encode = false): array
     {
         $translatedOptions = [];
 

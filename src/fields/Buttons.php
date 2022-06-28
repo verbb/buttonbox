@@ -196,7 +196,7 @@ class Buttons extends BaseOptionsField
         return $options[0]['value'];
     }
 
-    protected function translatedOptions(): array
+    protected function translatedOptions(bool $encode = false): array
     {
         $translatedOptions = [];
 
