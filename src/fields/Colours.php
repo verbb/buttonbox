@@ -142,6 +142,19 @@ class Colours extends BaseOptionsField
         return Craft::t('buttonbox', 'Colour Options');
     }
 
+    protected function defaultValue()
+    {
+        $options = $this->translatedOptions();
+
+        foreach ($options as $option) {
+            if (!empty($option['default'])) {
+                return $option['value'];
+            }
+        }
+
+        return $options[0]['value'];
+    }
+
     protected function translatedOptions(): array
     {
         $translatedOptions = [];
