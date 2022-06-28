@@ -16,7 +16,7 @@ class m220604_000000_verbb_migration extends Migration
     // Public Methods
     // =========================================================================
 
-    public function safeUp()
+    public function safeUp(): bool
     {
         $this->update('{{%fields}}', ['type' => Buttons::class], ['type' => 'supercool\buttonbox\fields\Buttons']);
         $this->update('{{%fields}}', ['type' => Colours::class], ['type' => 'supercool\buttonbox\fields\Colours']);
@@ -57,7 +57,7 @@ class m220604_000000_verbb_migration extends Migration
         return true;
     }
 
-    public function safeDown()
+    public function safeDown(): bool
     {
         echo "m220604_000000_verbb_migration cannot be reverted.\n";
         return false;

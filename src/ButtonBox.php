@@ -9,7 +9,6 @@ use verbb\buttonbox\fields\Buttons as ButtonsField;
 use verbb\buttonbox\fields\Width as WidthField;
 use verbb\buttonbox\fields\Triggers as TriggersField;
 
-use Craft;
 use craft\base\Plugin;
 use craft\events\RegisterComponentTypesEvent;
 use craft\services\Fields;
@@ -34,7 +33,7 @@ class ButtonBox extends Plugin
     // Public Methods
     // =========================================================================
 
-    public function init()
+    public function init(): void
     {
         parent::init();
 
@@ -48,8 +47,8 @@ class ButtonBox extends Plugin
 
     // Private Methods
     // =========================================================================
-    
-    private function _registerFieldTypes()
+
+    private function _registerFieldTypes(): void
     {
         Event::on(Fields::class, Fields::EVENT_REGISTER_FIELD_TYPES, function(RegisterComponentTypesEvent $event) {
             $event->types[] = StarsField::class;

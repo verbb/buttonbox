@@ -34,6 +34,7 @@
                 <img {{ attr({
                     src: option.imageUrl,
                     title: not option.showLabel ? optionLabel : false,
+                    alt: not option.showLabel ? optionLabel : false,
                     class: [
                         option.showLabel ? 'buttonbox-buttons__with-label' : false,
                     ] | filter,

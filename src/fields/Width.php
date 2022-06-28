@@ -8,10 +8,6 @@ use craft\base\ElementInterface;
 use craft\fields\BaseOptionsField;
 use craft\fields\data\OptionData;
 use craft\fields\data\SingleOptionFieldData;
-use craft\helpers\Cp;
-use craft\helpers\Db;
-use craft\helpers\Json;
-use craft\helpers\Template;
 
 use yii\db\Schema;
 
@@ -19,7 +15,7 @@ class Width extends BaseOptionsField
 {
     // Static Methods
     // =========================================================================
-    
+
     public static function displayName(): string
     {
         return Craft::t('buttonbox', 'Button Box - Width');
@@ -45,7 +41,7 @@ class Width extends BaseOptionsField
         if (!$value) {
             $value = $this->defaultValue();
         }
-        
+
         if ($value instanceof SingleOptionFieldData) {
             $value = $value->value;
         }
@@ -132,14 +128,13 @@ class Width extends BaseOptionsField
             'value' => $value,
             'options' => $options,
         ]);
-
     }
 
 
     // Protected Methods
     // =========================================================================
-    
-    protected function optionsSettingLabel() : string
+
+    protected function optionsSettingLabel(): string
     {
         return Craft::t('buttonbox', 'Width Options');
     }

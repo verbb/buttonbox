@@ -6,9 +6,6 @@ use verbb\buttonbox\assetbundles\ButtonBoxAsset;
 use Craft;
 use craft\base\ElementInterface;
 use craft\base\Field;
-use craft\helpers\Db;
-use craft\helpers\Json;
-use craft\helpers\Template;
 
 use yii\db\Schema;
 
@@ -32,14 +29,12 @@ class Stars extends Field
     // Public Methods
     // =========================================================================
 
-    public function rules(): array
+    public function defineRules(): array
     {
-        $rules = parent::rules();
+        $rules = parent::defineRules();
 
-        $rules = array_merge($rules, [
-            ['totalStars', 'required'],
-            ['totalStars', 'integer', 'min' => 2],
-        ]);
+        $rules[] = [['totalStars'], 'required'];
+        $rules[] = [['totalStars'], 'integer', 'min' => 2];
 
         return $rules;
     }

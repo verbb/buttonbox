@@ -6,19 +6,13 @@ use verbb\buttonbox\assetbundles\ButtonBoxAsset;
 use Craft;
 use craft\base\ElementInterface;
 use craft\fields\BaseOptionsField;
-use craft\helpers\Cp;
-use craft\helpers\Db;
-use craft\helpers\Json;
-use craft\helpers\Template;
 use craft\helpers\UrlHelper;
-
-use yii\db\Schema;
 
 class Triggers extends BaseOptionsField
 {
     // Static Methods
     // =========================================================================
-    
+
     public static function displayName(): string
     {
         return Craft::t('buttonbox', 'Button Box - Triggers');
@@ -160,8 +154,8 @@ class Triggers extends BaseOptionsField
 
     // Protected Methods
     // =========================================================================
-    
-    protected function optionsSettingLabel() : string
+
+    protected function optionsSettingLabel(): string
     {
         return Craft::t('buttonbox', 'Triggers Options');
     }

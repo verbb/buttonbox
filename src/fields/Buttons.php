@@ -8,10 +8,6 @@ use craft\base\ElementInterface;
 use craft\fields\BaseOptionsField;
 use craft\fields\data\OptionData;
 use craft\fields\data\SingleOptionFieldData;
-use craft\helpers\Cp;
-use craft\helpers\Db;
-use craft\helpers\Json;
-use craft\helpers\Template;
 use craft\helpers\UrlHelper;
 
 use yii\db\Schema;
@@ -20,7 +16,7 @@ class Buttons extends BaseOptionsField
 {
     // Static Methods
     // =========================================================================
-    
+
     public static function displayName(): string
     {
         return Craft::t('buttonbox', 'Button Box - Buttons');
@@ -48,7 +44,7 @@ class Buttons extends BaseOptionsField
         if (!$value) {
             $value = $this->defaultValue();
         }
-        
+
         if ($value instanceof SingleOptionFieldData) {
             $value = $value->value;
         }
@@ -80,10 +76,10 @@ class Buttons extends BaseOptionsField
         if (!$options) {
             $options = [
                 [
-                  'label' => '',
-                  'showLabel' => false,
-                  'value' => '',
-                  'imageUrl' => '',
+                    'label' => '',
+                    'showLabel' => false,
+                    'value' => '',
+                    'imageUrl' => '',
                 ],
             ];
         }
@@ -177,8 +173,8 @@ class Buttons extends BaseOptionsField
 
     // Protected Methods
     // =========================================================================
-    
-    protected function optionsSettingLabel() : string
+
+    protected function optionsSettingLabel(): string
     {
         return Craft::t('buttonbox', 'Button Options');
     }
