@@ -247,6 +247,12 @@
       "plM" : 3758088159,
       "prP" : 0
     },
+    "\/src\/migrations" : {
+      "ft" : 65536,
+      "oA" : 1,
+      "oAP" : "\/src\/migrations",
+      "oF" : 0
+    },
     "\/src\/resources\/dist" : {
       "ft" : 65536,
       "oA" : 1,
