@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.1.0 - 2022-06-29
+
+### Changed
+- Now requires Craft 4.1.0+.
+
+### Fixed
+- Fix a type error occurring on Craft 4.1.0.
+
 ## 4.0.3 - 2022-06-21
 
 ### Changed
