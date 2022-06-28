@@ -6,6 +6,7 @@ use verbb\buttonbox\assetbundles\ButtonBoxAsset;
 use Craft;
 use craft\base\ElementInterface;
 use craft\fields\BaseOptionsField;
+use craft\helpers\Cp;
 use craft\helpers\UrlHelper;
 
 class Triggers extends BaseOptionsField
@@ -26,11 +27,11 @@ class Triggers extends BaseOptionsField
 
     // Properties
     // =========================================================================
-    
+
     public array $options = [];
     public ?bool $displayAsGraphic = null;
     public ?bool $displayFullwidth = null;
-  
+
 
     // Public Methods
     // =========================================================================

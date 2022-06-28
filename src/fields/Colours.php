@@ -8,6 +8,7 @@ use craft\base\ElementInterface;
 use craft\fields\BaseOptionsField;
 use craft\fields\data\OptionData;
 use craft\fields\data\SingleOptionFieldData;
+use craft\helpers\Cp;
 
 use yii\db\Schema;
 
@@ -24,7 +25,7 @@ class Colours extends BaseOptionsField
 
     // Properties
     // =========================================================================
-    
+
     public array $options = [];
 
 
@@ -162,7 +163,7 @@ class Colours extends BaseOptionsField
         $translatedOptions = [];
 
         foreach ($this->options as $option) {
-            $cssColour = strpos($option['cssColour'], '#') === false ? '#' . $option['cssColour'] : $option['cssColour'];
+            $cssColour = !str_contains($option['cssColour'], '#') ? '#' . $option['cssColour'] : $option['cssColour'];
 
             $translatedOptions[] = [
                 'label' => Craft::t('site', $option['label']),

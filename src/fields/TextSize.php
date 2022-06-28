@@ -8,6 +8,7 @@ use craft\base\ElementInterface;
 use craft\fields\BaseOptionsField;
 use craft\fields\data\OptionData;
 use craft\fields\data\SingleOptionFieldData;
+use craft\helpers\Cp;
 
 use yii\db\Schema;
 
@@ -36,7 +37,7 @@ class TextSize extends BaseOptionsField
         return Schema::TYPE_TEXT;
     }
 
-    public function normalizeValue(mixed $value, ElementInterface $element = null): mixed
+    public function normalizeValue(mixed $value, ElementInterface $element = null): SingleOptionFieldData
     {
         if (!$value) {
             $value = $this->defaultValue();
@@ -85,7 +86,7 @@ class TextSize extends BaseOptionsField
             'instructions' => Craft::t('buttonbox', 'Pixel Size is optional and should be a single number.'),
             'id' => 'options',
             'name' => 'options',
-            'addRowLabel'  => Craft::t('buttonbox', 'Add an option'),
+            'addRowLabel' => Craft::t('buttonbox', 'Add an option'),
             'cols' => [
                 'label' => [
                     'heading' => Craft::t('buttonbox', 'Option Label'),

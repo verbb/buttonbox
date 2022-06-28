@@ -8,6 +8,7 @@ use craft\base\ElementInterface;
 use craft\fields\BaseOptionsField;
 use craft\fields\data\OptionData;
 use craft\fields\data\SingleOptionFieldData;
+use craft\helpers\Cp;
 
 use yii\db\Schema;
 
@@ -36,7 +37,7 @@ class Width extends BaseOptionsField
         return Schema::TYPE_TEXT;
     }
 
-    public function normalizeValue(mixed $value, ElementInterface $element = null): mixed
+    public function normalizeValue(mixed $value, ElementInterface $element = null): SingleOptionFieldData
     {
         if (!$value) {
             $value = $this->defaultValue();

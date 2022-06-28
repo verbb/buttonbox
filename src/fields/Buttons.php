@@ -8,6 +8,7 @@ use craft\base\ElementInterface;
 use craft\fields\BaseOptionsField;
 use craft\fields\data\OptionData;
 use craft\fields\data\SingleOptionFieldData;
+use craft\helpers\Cp;
 use craft\helpers\UrlHelper;
 
 use yii\db\Schema;
@@ -25,7 +26,7 @@ class Buttons extends BaseOptionsField
 
     // Properties
     // =========================================================================
-    
+
     public ?bool $displayAsGraphic = null;
     public ?bool $displayFullwidth = null;
     public array $options = [];
@@ -39,7 +40,7 @@ class Buttons extends BaseOptionsField
         return Schema::TYPE_TEXT;
     }
 
-    public function normalizeValue(mixed $value, ElementInterface $element = null): mixed
+    public function normalizeValue(mixed $value, ElementInterface $element = null): SingleOptionFieldData
     {
         if (!$value) {
             $value = $this->defaultValue();
