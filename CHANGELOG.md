@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.1.0 - 2022-06-29
+
+### Changed
+- Now requires Craft 3.7.46+.
+
+### Fixed
+- Fix a type error ocurring on Craft 3.7.46.
+- Fix colour field default value not being set correctly.
+
 ## 3.0.2 - 2022-06-21
 
 ### Fixed
