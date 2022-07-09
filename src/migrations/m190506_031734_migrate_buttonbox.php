@@ -12,11 +12,13 @@ class m190506_031734_migrate_buttonbox extends Migration
     // Public Methods
     // =========================================================================
 
-    public function safeUp()
+    public function safeUp(): bool
     {
         $this->update('{{%fields}}', ['type' => Colours::class], ['type' => 'ButtonBox_Colours']);
         $this->update('{{%fields}}', ['type' => Buttons::class], ['type' => 'ButtonBox_Buttons']);
         $this->update('{{%fields}}', ['type' => Width::class], ['type' => 'ButtonBox_Width']);
+    
+        return true;
     }
 
     public function safeDown(): bool
