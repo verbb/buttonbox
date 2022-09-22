@@ -1,4 +1,7 @@
 # Button Box Plugin for Craft CMS
+
+> The plugin’s package name has changed to `verbb/buttonbox`. Button Box will need be updated to 3.0 from a terminal, by running `composer require verbb/buttonbox && composer remove supercool/buttonbox`.
+
 A treasure trove of shiny buttons for you to make use of in your Craft control panel.
 
 ![Buttons, Colours, Text Size and Stars](https://raw.githubusercontent.com/verbb/buttonbox/craft-3/screenshots/width-star-colours-text-size.jpg)
