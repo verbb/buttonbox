@@ -193,7 +193,7 @@ class Buttons extends BaseOptionsField
         return $options[0]['value'];
     }
 
-    protected function translatedOptions(bool $encode = false): array
+    protected function translatedOptions(bool $encode = false, mixed $value = null, ?craft\base\ElementInterface $element = null): array
     {
         $translatedOptions = [];
 
