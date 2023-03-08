@@ -1,5 +1,10 @@
 # Changelog
 
+## 4.2.0 - 2023-03-09
+
+### Changed
+- Now requires Craft 4.4.0+.
+
 ## 4.1.0 - 2022-06-29
 
 ### Changed
