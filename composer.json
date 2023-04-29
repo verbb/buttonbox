@@ -1,6 +1,6 @@
 {
     "name": "verbb/buttonbox",
-    "description": "A collection of utility field types for Craft",
+    "description": "A collection of utility field types.",
     "type": "craft-plugin",
     "version": "4.2.0",
     "keywords": [
