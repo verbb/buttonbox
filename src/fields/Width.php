@@ -147,7 +147,7 @@ class Width extends BaseOptionsField
             }
         }
 
-        return $options[0]['value'];
+        return null;
     }
 
     protected function translatedOptions(bool $encode = false): array
