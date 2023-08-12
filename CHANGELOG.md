@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.1.2 - 2023-08-12
+
+### Fixed
+- Fix some fields using the first option automatically as the default value.
+
 ## 3.1.1 - 2022-07-31
 
 ### Added
