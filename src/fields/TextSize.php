@@ -155,7 +155,7 @@ class TextSize extends BaseOptionsField
             }
         }
 
-        return $options[0]['value'];
+        return null;
     }
 
     protected function translatedOptions(bool $encode = false, mixed $value = null, ?ElementInterface $element = null): array
