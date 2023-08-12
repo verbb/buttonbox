@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.2.1 - 2023-08-12
+
+### Changed
+- Update color for button labels for better contrast.
+
+### Fixed
+- Fix some fields using the first option automatically as the default value.
+
 ## 4.2.0 - 2023-03-09
 
 ### Changed
