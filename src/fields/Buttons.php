@@ -81,6 +81,7 @@ class Buttons extends BaseOptionsField
                     'showLabel' => false,
                     'value' => '',
                     'imageUrl' => '',
+                    'imageAlign' => 'left',
                 ],
             ];
         }
@@ -112,6 +113,16 @@ class Buttons extends BaseOptionsField
                 'imageUrl' => [
                     'heading' => Craft::t('buttonbox', 'Image URL'),
                     'type' => 'singleline',
+                ],
+                'imageAlign' => [
+                    'heading' => Craft::t('buttonbox', 'Image Align'),
+                    'type' => 'select',
+                    'options' => [
+                        ['label' => Craft::t('buttonbox', 'Left'), 'value' => 'left'],
+                        ['label' => Craft::t('buttonbox', 'Right'), 'value' => 'right'],
+                        ['label' => Craft::t('buttonbox', 'Top'), 'value' => 'top'],
+                        ['label' => Craft::t('buttonbox', 'Bottom'), 'value' => 'bottom'],
+                    ],
                 ],
                 'default' => [
                     'heading' => Craft::t('buttonbox', 'Default?'),
@@ -203,6 +214,7 @@ class Buttons extends BaseOptionsField
                 'value' => $option['value'],
                 'showLabel' => $option['showLabel'],
                 'imageUrl' => $option['imageUrl'],
+                'imageAlign' => $option['imageAlign'] ?? '',
                 'default' => $option['default'],
             ];
         }

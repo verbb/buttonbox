@@ -17,9 +17,11 @@
         
         <label {{ attr({
             class: [
+                'buttonbox-button',
                 'btn',
                 'big',
                 optionValue == value ? 'active' : false,
+                'buttonbox-button__img-align-' ~ (option.imageAlign ?: 'left'),
             ] | filter,
         }) }}>
             <input {{ attr({
@@ -41,7 +43,6 @@
                 }) }} />
             {% endif %}
 
-            {% if option.imageUrl and option.showLabel %}&nbsp;{% endif %}
             {% if option.showLabel %}<span class="buttonbox-buttons__label">{{ optionLabel }}</span>{% endif %}
         </label>
     {% endfor %}
