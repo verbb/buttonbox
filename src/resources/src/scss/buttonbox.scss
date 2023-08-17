@@ -19,6 +19,8 @@
     display: flex;
     align-items: center;
     gap: 5px;
+    height: auto !important;
+    align-self: stretch;
 }
 
 .buttonbox-button__img-align-top {
@@ -35,18 +37,6 @@
 
 .buttonbox-button__img-align-bottom {
     flex-direction: column-reverse;
-}
-
-.buttonbox-buttons--graphical {
-    .btn {
-        height: auto;
-        padding: 12px;
-    }
-
-    img {
-        margin-top: 0;
-        max-width: 100%;
-    }
 }
 
 
