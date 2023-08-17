@@ -11,16 +11,30 @@
     clip: rect(0,0,0,0);
 }
 
-.buttonbox-buttons img,
 .buttonbox-buttons__label {
-    display: inline-block;
-    zoom: 1;
-    vertical-align: inherit;
-    margin-top: 2px;
+    line-height: 1.4;
 }
 
-.buttonbox-buttons img.buttonbox-buttons__with-label {
-    margin-top: -2px;
+.buttonbox-button {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.buttonbox-button__img-align-top {
+    flex-direction: column;
+}
+
+.buttonbox-button__img-align-left {
+    flex-direction: row;
+}
+
+.buttonbox-button__img-align-right {
+    flex-direction: row-reverse;
+}
+
+.buttonbox-button__img-align-bottom {
+    flex-direction: column-reverse;
 }
 
 .buttonbox-buttons--graphical {
@@ -32,12 +46,6 @@
     img {
         margin-top: 0;
         max-width: 100%;
-    }
-
-    .buttonbox-buttons__label {
-        display: block;
-        line-height: 1;
-        margin-top: 12px;
     }
 }
 
