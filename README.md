@@ -1,5 +1,5 @@
 # Button Box plugin for Craft CMS
-<img width="500" src="https://verbb.imgix.net/plugins/button-box/button-box-social-card.png?v=1">
+<img width="500" src="https://verbb.imgix.net/plugins/button-box/button-box-social-card.png?v=2">
 
 Button Box is a Craft CMS plugin for a collcetion of button field types for a variety of needs.
 
