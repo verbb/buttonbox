@@ -1,5 +1,17 @@
 # Changelog
 
+## 4.2.2 - 2023-10-05
+
+### Added
+- Add “Image Align” option to “Buttons” buttons.
+
+### Changed
+- Improve alignment of “Buttons” type fields.
+
+### Fixed
+- Fix default value for fields not working correctly in some instances.
+- Fix invalid (removed) options causing issues when save fields.
+
 ## 4.2.1 - 2023-08-12
 
 ### Changed
