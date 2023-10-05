@@ -35,14 +35,14 @@
     },
     "autoload": {
         "psr-4": {
-          "verbb\\buttonbox\\": "src/"
+            "verbb\\buttonbox\\": "src/"
         }
     },
     "extra": {
         "name": "Button Box",
         "handle": "buttonbox",
         "documentationUrl": "https://github.com/verbb/buttonbox",
-        "changelogUrl": "https://raw.githubusercontent.com/verbb/buttonbox/craft-3/CHANGELOG.md",
+        "changelogUrl": "https://raw.githubusercontent.com/verbb/buttonbox/craft-4/CHANGELOG.md",
         "class": "verbb\\buttonbox\\ButtonBox"
     }
 }
