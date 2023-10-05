@@ -5,7 +5,9 @@ use verbb\buttonbox\assetbundles\ButtonBoxAsset;
 
 use Craft;
 use craft\base\ElementInterface;
+use craft\events\DefineInputOptionsEvent;
 use craft\fields\BaseOptionsField;
+use craft\helpers\ArrayHelper;
 use craft\helpers\Cp;
 use craft\helpers\UrlHelper;
 
@@ -28,7 +30,6 @@ class Triggers extends BaseOptionsField
     // Properties
     // =========================================================================
 
-    public array $options = [];
     public ?bool $displayAsGraphic = null;
     public ?bool $displayFullwidth = null;
 
@@ -44,6 +45,7 @@ class Triggers extends BaseOptionsField
             $options = [
                 [
                     'label' => '',
+                    'value' => '',
                     'showLabel' => false,
                     'imageUrl' => '',
                     'type' => '',
@@ -128,11 +130,17 @@ class Triggers extends BaseOptionsField
     public function getInputHtml(mixed $value, ElementInterface $element = null): string
     {
         $name = $this->handle;
-        $options = $this->translatedOptions();
+        $options = $this->translatedOptions(true, $value, $element);
 
-        // If this is a new entry, look for a default option
-        if ($this->isFresh($element)) {
-            $value = $this->defaultValue();
+        if (!$value->valid) {
+            Craft::$app->getView()->setInitialDeltaValue($this->handle, $this->encodeValue($value->value));
+            $default = $this->defaultValue();
+
+            if ($default !== null) {
+                $value = $this->normalizeValue($this->defaultValue());
+            } else {
+                $value = null;
+            }
         }
 
         Craft::$app->getView()->registerAssetBundle(ButtonBoxAsset::class);
@@ -145,7 +153,7 @@ class Triggers extends BaseOptionsField
 
         return Craft::$app->getView()->renderTemplate('buttonbox/_field/triggers/input', [
             'name' => $name,
-            'value' => $value,
+            'value' => $this->encodeValue($value),
             'options' => $options,
             'displayAsGraphic' => $this->displayAsGraphic,
             'displayFullwidth' => $this->displayFullwidth,
@@ -163,12 +171,23 @@ class Triggers extends BaseOptionsField
 
     protected function translatedOptions(bool $encode = false, mixed $value = null, ?ElementInterface $element = null): array
     {
+        $options = $this->options();
         $translatedOptions = [];
 
-        foreach ($this->options as $option) {
+        if ($this->hasEventHandlers(self::EVENT_DEFINE_OPTIONS)) {
+            $event = new DefineInputOptionsEvent([
+                'options' => $options,
+                'value' => $value,
+                'element' => $element,
+            ]);
+            $this->trigger(self::EVENT_DEFINE_OPTIONS, $event);
+            $options = $event->options;
+        }
+
+        foreach ($options as $option) {
             $translatedOptions[] = [
                 'label' => Craft::t('site', $option['label']),
-                'value' => $option['value'],
+                'value' => $encode ? $this->encodeValue($option['value']) : $option['value'],
                 'showLabel' => $option['showLabel'],
                 'imageUrl' => $option['imageUrl'],
                 'type' => $option['type'],

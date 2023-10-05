@@ -5,9 +5,11 @@ use verbb\buttonbox\assetbundles\ButtonBoxAsset;
 
 use Craft;
 use craft\base\ElementInterface;
+use craft\events\DefineInputOptionsEvent;
 use craft\fields\BaseOptionsField;
 use craft\fields\data\OptionData;
 use craft\fields\data\SingleOptionFieldData;
+use craft\helpers\ArrayHelper;
 use craft\helpers\Cp;
 
 use yii\db\Schema;
@@ -23,48 +25,12 @@ class Width extends BaseOptionsField
     }
 
 
-    // Properties
-    // =========================================================================
-
-    public array $options = [];
-
-
     // Public Methods
     // =========================================================================
 
     public function getContentColumnType(): string
     {
         return Schema::TYPE_TEXT;
-    }
-
-    public function normalizeValue(mixed $value, ElementInterface $element = null): SingleOptionFieldData
-    {
-        if (!$value) {
-            $value = $this->defaultValue();
-        }
-
-        if ($value instanceof SingleOptionFieldData) {
-            $value = $value->value;
-        }
-
-        $selectedValues = (array)$value;
-
-        $value = reset($selectedValues) ?: null;
-        $label = $this->optionsSettingLabel();
-        $value = new SingleOptionFieldData($label, $value, true);
-
-        $options = [];
-
-        if ($this->options) {
-            foreach ($this->options as $option) {
-                $selected = in_array($option['value'], $selectedValues, true);
-                $options[] = new OptionData($option['label'], $option['value'], $selected);
-            }
-        }
-
-        $value->setOptions($options);
-
-        return $value;
     }
 
     public function getSettingsHtml(): ?string
@@ -114,11 +80,17 @@ class Width extends BaseOptionsField
     public function getInputHtml(mixed $value, ElementInterface $element = null): string
     {
         $name = $this->handle;
-        $options = $this->translatedOptions();
+        $options = $this->translatedOptions(true, $value, $element);
 
-        // If this is a new entry, look for a default option
-        if ($this->isFresh($element)) {
-            $value = $this->defaultValue();
+        if (!$value->valid) {
+            Craft::$app->getView()->setInitialDeltaValue($this->handle, $this->encodeValue($value->value));
+            $default = $this->defaultValue();
+
+            if ($default !== null) {
+                $value = $this->normalizeValue($this->defaultValue());
+            } else {
+                $value = null;
+            }
         }
 
         Craft::$app->getView()->registerAssetBundle(ButtonBoxAsset::class);
@@ -126,7 +98,7 @@ class Width extends BaseOptionsField
 
         return Craft::$app->getView()->renderTemplate('buttonbox/_field/width/input', [
             'name' => $name,
-            'value' => $value,
+            'value' => $this->encodeValue($value),
             'options' => $options,
         ]);
     }
@@ -140,27 +112,25 @@ class Width extends BaseOptionsField
         return Craft::t('buttonbox', 'Width Options');
     }
 
-    protected function defaultValue(): array|string|null
-    {
-        $options = $this->translatedOptions();
-
-        foreach ($options as $option) {
-            if (!empty($option['default'])) {
-                return $option['value'];
-            }
-        }
-
-        return null;
-    }
-
     protected function translatedOptions(bool $encode = false, mixed $value = null, ?ElementInterface $element = null): array
     {
+        $options = $this->options();
         $translatedOptions = [];
 
-        foreach ($this->options as $option) {
+        if ($this->hasEventHandlers(self::EVENT_DEFINE_OPTIONS)) {
+            $event = new DefineInputOptionsEvent([
+                'options' => $options,
+                'value' => $value,
+                'element' => $element,
+            ]);
+            $this->trigger(self::EVENT_DEFINE_OPTIONS, $event);
+            $options = $event->options;
+        }
+
+        foreach ($options as $option) {
             $translatedOptions[] = [
                 'label' => Craft::t('site', $option['label']),
-                'value' => $option['value'],
+                'value' => $encode ? $this->encodeValue($option['value']) : $option['value'],
                 'default' => $option['default'],
             ];
         }
