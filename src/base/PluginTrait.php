@@ -3,53 +3,30 @@ namespace verbb\buttonbox\base;
 
 use verbb\buttonbox\ButtonBox;
 
-use Craft;
-
-use yii\log\Logger;
-
-use verbb\base\BaseHelper;
+use verbb\base\LogTrait;
+use verbb\base\helpers\Plugin;
 
 trait PluginTrait
 {
-    // Static Properties
+    // Properties
     // =========================================================================
 
-    public static ButtonBox $plugin;
+    public static ?ButtonBox $plugin = null;
 
 
-    // Public Methods
+    // Traits
     // =========================================================================
 
-    public static function log($message, $attributes = []): void
-    {
-        if ($attributes) {
-            $message = Craft::t('buttonbox', $message, $attributes);
-        }
-
-        Craft::getLogger()->log($message, Logger::LEVEL_INFO, 'buttonbox');
-    }
-
-    public static function error($message, $attributes = []): void
-    {
-        if ($attributes) {
-            $message = Craft::t('buttonbox', $message, $attributes);
-        }
-
-        Craft::getLogger()->log($message, Logger::LEVEL_ERROR, 'buttonbox');
-    }
+    use LogTrait;
 
 
-    // Private Methods
+    // Static Methods
     // =========================================================================
 
-    private function _setPluginComponents(): void
+    public static function config(): array
     {
-        BaseHelper::registerModule();
-    }
+        Plugin::bootstrapPlugin('asset-count');
 
-    private function _setLogging(): void
-    {
-        BaseHelper::setFileLogging('buttonbox');
+        return [];
     }
-
 }

@@ -19,6 +19,11 @@ class Stars extends Field
         return Craft::t('buttonbox', 'Button Box - Stars');
     }
 
+    public static function dbType(): string
+    {
+        return Schema::TYPE_INTEGER;
+    }
+
 
     // Properties
     // =========================================================================
@@ -29,21 +34,6 @@ class Stars extends Field
     // Public Methods
     // =========================================================================
 
-    public function defineRules(): array
-    {
-        $rules = parent::defineRules();
-
-        $rules[] = [['totalStars'], 'required'];
-        $rules[] = [['totalStars'], 'integer', 'min' => 2];
-
-        return $rules;
-    }
-
-    public function getContentColumnType(): string
-    {
-        return Schema::TYPE_INTEGER;
-    }
-
     public function getSettingsHtml(): ?string
     {
         return Craft::$app->getView()->renderTemplate('buttonbox/_field/stars/settings', [
@@ -51,7 +41,7 @@ class Stars extends Field
         ]);
     }
 
-    public function getInputHtml(mixed $value, ElementInterface $element = null): string
+    protected function inputHtml(mixed $value, ?ElementInterface $element, bool $inline): string
     {
         $name = $this->handle;
 
@@ -63,5 +53,19 @@ class Stars extends Field
             'value' => $value,
             'totalStars' => $this->totalStars,
         ]);
+    }
+
+
+    // Protected Methods
+    // =========================================================================
+
+    protected function defineRules(): array
+    {
+        $rules = parent::defineRules();
+
+        $rules[] = [['totalStars'], 'required'];
+        $rules[] = [['totalStars'], 'integer', 'min' => 2];
+
+        return $rules;
     }
 }

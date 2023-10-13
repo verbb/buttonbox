@@ -24,14 +24,14 @@ class Colours extends BaseOptionsField
         return Craft::t('buttonbox', 'Button Box - Colours');
     }
 
-
-    // Public Methods
-    // =========================================================================
-
-    public function getContentColumnType(): string
+    public static function dbType(): string
     {
         return Schema::TYPE_TEXT;
     }
+
+
+    // Public Methods
+    // =========================================================================
 
     public function getSettingsHtml(): ?string
     {
@@ -82,7 +82,7 @@ class Colours extends BaseOptionsField
         ]);
     }
 
-    public function getInputHtml(mixed $value, ElementInterface $element = null): string
+    protected function inputHtml(mixed $value, ?ElementInterface $element, bool $inline): string
     {
         $name = $this->handle;
         $options = $this->translatedOptions(true, $value, $element);

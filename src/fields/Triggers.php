@@ -21,11 +21,6 @@ class Triggers extends BaseOptionsField
         return Craft::t('buttonbox', 'Button Box - Triggers');
     }
 
-    public static function hasContentColumn(): bool
-    {
-        return false;
-    }
-
 
     // Properties
     // =========================================================================
@@ -127,7 +122,7 @@ class Triggers extends BaseOptionsField
         return $displayAsGraphic . $displayFullwidth . $table;
     }
 
-    public function getInputHtml(mixed $value, ElementInterface $element = null): string
+    protected function inputHtml(mixed $value, ?ElementInterface $element, bool $inline): string
     {
         $name = $this->handle;
         $options = $this->translatedOptions(true, $value, $element);

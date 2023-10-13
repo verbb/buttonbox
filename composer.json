@@ -2,7 +2,7 @@
     "name": "verbb/buttonbox",
     "description": "A collection of utility field types.",
     "type": "craft-plugin",
-    "version": "4.2.2",
+    "version": "5.0.0-beta.1",
     "keywords": [
         "craft",
         "cms",
@@ -29,9 +29,9 @@
         }
     ],
     "require": {
-        "php": "^8.0.2",
-        "craftcms/cms": "^4.4.0",
-        "verbb/base": "^2.0.0"
+        "php": "^8.2",
+        "craftcms/cms": "^5.0.0-alpha.1",
+        "verbb/base": "^3.0.0-beta.1"
     },
     "autoload": {
         "psr-4": {
@@ -42,7 +42,7 @@
         "name": "Button Box",
         "handle": "buttonbox",
         "documentationUrl": "https://github.com/verbb/buttonbox",
-        "changelogUrl": "https://raw.githubusercontent.com/verbb/buttonbox/craft-4/CHANGELOG.md",
+        "changelogUrl": "https://raw.githubusercontent.com/verbb/buttonbox/craft-5/CHANGELOG.md",
         "class": "verbb\\buttonbox\\ButtonBox"
     }
 }
