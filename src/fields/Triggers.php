@@ -122,6 +122,10 @@ class Triggers extends BaseOptionsField
         return $displayAsGraphic . $displayFullwidth . $table;
     }
 
+
+    // Protected Methods
+    // =========================================================================
+
     protected function inputHtml(mixed $value, ?ElementInterface $element, bool $inline): string
     {
         $name = $this->handle;
@@ -154,10 +158,6 @@ class Triggers extends BaseOptionsField
             'displayFullwidth' => $this->displayFullwidth,
         ]);
     }
-
-
-    // Protected Methods
-    // =========================================================================
 
     protected function optionsSettingLabel(): string
     {

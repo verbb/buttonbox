@@ -82,6 +82,10 @@ class TextSize extends BaseOptionsField
         ]);
     }
 
+
+    // Protected Methods
+    // =========================================================================
+
     protected function inputHtml(mixed $value, ?ElementInterface $element, bool $inline): string
     {
         $name = $this->handle;
@@ -107,10 +111,6 @@ class TextSize extends BaseOptionsField
             'options' => $options,
         ]);
     }
-
-
-    // Protected Methods
-    // =========================================================================
 
     protected function optionsSettingLabel(): string
     {

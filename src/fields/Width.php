@@ -77,6 +77,10 @@ class Width extends BaseOptionsField
         ]);
     }
 
+
+    // Protected Methods
+    // =========================================================================
+
     protected function inputHtml(mixed $value, ?ElementInterface $element, bool $inline): string
     {
         $name = $this->handle;
@@ -102,10 +106,6 @@ class Width extends BaseOptionsField
             'options' => $options,
         ]);
     }
-
-
-    // Protected Methods
-    // =========================================================================
 
     protected function optionsSettingLabel(): string
     {

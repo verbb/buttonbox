@@ -41,20 +41,6 @@ class Stars extends Field
         ]);
     }
 
-    protected function inputHtml(mixed $value, ?ElementInterface $element, bool $inline): string
-    {
-        $name = $this->handle;
-
-        Craft::$app->getView()->registerAssetBundle(ButtonBoxAsset::class);
-        Craft::$app->getView()->registerJs('new Craft.ButtonBoxHovers("' . Craft::$app->getView()->namespaceInputId($name) . '");');
-
-        return Craft::$app->getView()->renderTemplate('buttonbox/_field/stars/input', [
-            'name' => $name,
-            'value' => $value,
-            'totalStars' => $this->totalStars,
-        ]);
-    }
-
 
     // Protected Methods
     // =========================================================================
@@ -67,5 +53,19 @@ class Stars extends Field
         $rules[] = [['totalStars'], 'integer', 'min' => 2];
 
         return $rules;
+    }
+
+    protected function inputHtml(mixed $value, ?ElementInterface $element, bool $inline): string
+    {
+        $name = $this->handle;
+
+        Craft::$app->getView()->registerAssetBundle(ButtonBoxAsset::class);
+        Craft::$app->getView()->registerJs('new Craft.ButtonBoxHovers("' . Craft::$app->getView()->namespaceInputId($name) . '");');
+
+        return Craft::$app->getView()->renderTemplate('buttonbox/_field/stars/input', [
+            'name' => $name,
+            'value' => $value,
+            'totalStars' => $this->totalStars,
+        ]);
     }
 }
