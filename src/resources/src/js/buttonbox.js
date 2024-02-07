@@ -83,7 +83,7 @@ Craft.ButtonBoxFancyOptions = Garnish.Base.extend({
         this.$select = this.$elem.find('select');
         this.$btn = this.$elem.find('.menubtn');
 
-        var menuBtn = new Garnish.MenuBtn(this.$btn);
+        var menuBtn = this.$btn.data('menubtn');
 
         if (menuBtn && menuBtn.menu) {
             this.$menu = menuBtn.menu.$container;
