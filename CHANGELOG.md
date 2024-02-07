@@ -1,5 +1,18 @@
 # Changelog
 
+## 4.2.3 - 2024-02-08
+
+### Added
+- Added “Placeholder Text” field setting for Colour and Text Size fields.
+
+### Changed
+- Colour and Text Size fields now show a dropdown consistent with Craft’s UI.
+
+### Fixed
+- Fix Colour and Text Size fields not triggering an updated value call when changing their value.
+- Fix double-binding of JS menubtn for some fields.
+- Fix an error when displaying Colour and Text Size buttons for new elements.
+
 ## 4.2.2 - 2023-10-05
 
 ### Added
