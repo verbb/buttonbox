@@ -25,6 +25,12 @@ class Colours extends BaseOptionsField
     }
 
 
+    // Properties
+    // =========================================================================
+
+    public ?string $placeholderText = 'Select an option';
+
+
     // Public Methods
     // =========================================================================
 
@@ -79,6 +85,12 @@ class Colours extends BaseOptionsField
             'allowAdd' => true,
             'allowDelete' => true,
             'allowReorder' => true,
+        ]) . Cp::textFieldHtml([
+            'label' => Craft::t('buttonbox', 'Placholder Text'),
+            'instructions' => Craft::t('buttonbox', 'When no options are set, and no default, this text will be shown.'),
+            'id' => 'placeholderText',
+            'name' => 'placeholderText',
+            'value' => $this->placeholderText,
         ]);
     }
 
@@ -102,6 +114,7 @@ class Colours extends BaseOptionsField
         Craft::$app->getView()->registerJs('new Craft.ButtonBoxFancyOptions("' . Craft::$app->getView()->namespaceInputId($name) . '");');
 
         return Craft::$app->getView()->renderTemplate('buttonbox/_field/colours/input', [
+            'field' => $this,
             'name' => $name,
             'value' => $this->encodeValue($value),
             'options' => $options,
