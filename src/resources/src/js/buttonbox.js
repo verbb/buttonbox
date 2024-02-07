@@ -98,7 +98,9 @@ Craft.ButtonBoxFancyOptions = Garnish.Base.extend({
         var $option = $(option),
         newVal = $option.data('buttonbox-value');
 
+        // Update the jQuery value and attribute so that Craft detects a change
         this.$select.val(newVal);
+        this.$select.attr('value', newVal);
 
         this._updateField();
 
