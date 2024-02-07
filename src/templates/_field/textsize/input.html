@@ -18,20 +18,26 @@
         {% endfor %}
     </select>
 
+    {% set displayValue = field.placeholderText | t('buttonbox') %}
+
     {% apply spaceless %}
         {% for key, option in options %}
             {% set optionLabel = (option.label is defined ? option.label : option) %}
             {% set optionValue = (option.value is defined ? option.value : key) %}
 
             {% if optionValue == value %}
-                <a class="buttonbox__btn" role="button">
+                {% set displayValue %}
                     <span{% if option.pxVal %} style="font-size: {{ option.pxVal }}px;"{% endif %}>{{ optionLabel }}</span>
-                </a>
+                {% endset %}
             {% endif %}
         {% endfor %}
     {% endapply %}
 
-    <div class="menu  buttonbox-fancyoptions-menu" data-align="right">
+    <button type="button" class="btn menubtn" aria-label="{{ displayValue | striptags }}">
+        {{ displayValue }}
+    </button>
+
+    <div class="menu buttonbox-fancyoptions-menu">
         <ul class="padded">
             {% for key, option in options %}
                 {% set optionLabel = (option.label is defined ? option.label : option) %}
