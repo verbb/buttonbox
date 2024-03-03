@@ -81,24 +81,29 @@ Craft.ButtonBoxFancyOptions = Garnish.Base.extend({
         this.id = id;
         this.$elem = $('#' + this.id);
         this.$select = this.$elem.find('select');
-        this.$btn = this.$elem.find('.buttonbox__btn');
+        this.$btn = this.$elem.find('.menubtn');
 
-        var menuBtn = new Garnish.MenuBtn(this.$btn);
+        // Give it a second to resolve properly, particularly for Matrix/Super Table/Neo blocks
+        setTimeout(() => {
+            var menuBtn = this.$btn.data('menubtn');
 
-        if (menuBtn && menuBtn.menu) {
-            this.$menu = menuBtn.menu.$container;
+            if (menuBtn && menuBtn.menu) {
+                this.$menu = menuBtn.menu.$container;
 
-            if (this.$menu) {
-                menuBtn.menu.settings.onOptionSelect = $.proxy(this, 'onMenuOptionSelect');
+                if (this.$menu) {
+                    menuBtn.menu.settings.onOptionSelect = $.proxy(this, 'onMenuOptionSelect');
+                }
             }
-        }
+        }, 100);
     },
 
     onMenuOptionSelect: function(option) {
         var $option = $(option),
         newVal = $option.data('buttonbox-value');
 
+        // Update the jQuery value and attribute so that Craft detects a change
         this.$select.val(newVal);
+        this.$select.attr('value', newVal);
 
         this._updateField();
 
