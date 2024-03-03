@@ -1,5 +1,10 @@
 # Changelog
 
+## 4.2.4 - 2024-03-04
+
+### Fixed
+- Fix an issue where fields weren’t being initialized properly when in Matrix/Super Table/Neo blocks.
+
 ## 4.2.3 - 2024-02-08
 
 ### Added
