@@ -21,6 +21,11 @@ class Triggers extends BaseOptionsField
         return Craft::t('buttonbox', 'Button Box - Triggers');
     }
 
+    public static function icon(): string
+    {
+        return '@verbb/buttonbox/icon-mask.svg';
+    }
+
 
     // Properties
     // =========================================================================

@@ -25,6 +25,11 @@ class Buttons extends BaseOptionsField
         return Craft::t('buttonbox', 'Button Box - Buttons');
     }
 
+    public static function icon(): string
+    {
+        return '@verbb/buttonbox/icon-mask.svg';
+    }
+
     public static function dbType(): string
     {
         return Schema::TYPE_TEXT;

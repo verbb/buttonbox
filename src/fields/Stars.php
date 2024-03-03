@@ -19,6 +19,11 @@ class Stars extends Field
         return Craft::t('buttonbox', 'Button Box - Stars');
     }
 
+    public static function icon(): string
+    {
+        return '@verbb/buttonbox/icon-mask.svg';
+    }
+
     public static function dbType(): string
     {
         return Schema::TYPE_INTEGER;

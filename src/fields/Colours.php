@@ -24,6 +24,11 @@ class Colours extends BaseOptionsField
         return Craft::t('buttonbox', 'Button Box - Colours');
     }
 
+    public static function icon(): string
+    {
+        return '@verbb/buttonbox/icon-mask.svg';
+    }
+
     public static function dbType(): string
     {
         return Schema::TYPE_TEXT;
