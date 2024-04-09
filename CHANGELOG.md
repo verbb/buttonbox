@@ -1,5 +1,10 @@
 # Changelog
 
+## 5.0.0-beta.2 - 2024-04-09
+
+### Fixed
+- Fix an error with `normalizeValue()` when editing fields.
+
 ## 5.0.0-beta.1 - 2024-03-04
 
 ### Changed
