@@ -150,7 +150,7 @@ class Buttons extends BaseOptionsField
             $default = $this->defaultValue();
 
             if ($default !== null) {
-                $value = $this->normalizeValue($this->defaultValue());
+                $value = $this->normalizeValue($this->defaultValue(), $element);
             } else {
                 $value = null;
             }
