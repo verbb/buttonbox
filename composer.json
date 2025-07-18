@@ -2,7 +2,7 @@
     "name": "verbb/buttonbox",
     "description": "A collection of utility field types.",
     "type": "craft-plugin",
-    "version": "5.0.0",
+    "version": "5.0.1",
     "keywords": [
         "craft",
         "cms",
