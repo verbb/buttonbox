@@ -9,6 +9,11 @@
 ### Fixed
 - Fix an error with `normalizeValue()` when editing fields.
 
+## 4.2.5 - 2025-07-18
+
+### Changed
+- Update English translations.
+
 ## 4.2.4 - 2024-03-04
 
 ### Fixed
@@ -86,7 +91,6 @@
 ### Changed
 - Now requires PHP `8.0.2+`.
 - Now requires Craft `4.0.0+`.
-
 
 ## 3.1.0 - 2022-06-29
 
