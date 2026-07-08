@@ -178,6 +178,24 @@
 
 
 // ==========================================================================
+// Button sizing (replaces Craft .big)
+// ==========================================================================
+
+.buttonbox-btngroup--big .btn,
+.buttonbox-btn--big.btn {
+    padding-block: 0;
+    padding-inline: 14px;
+    font-size: 14px;
+    line-height: 36px;
+    min-height: calc(36rem / 16);
+}
+
+.buttonbox-buttons .buttonbox-btn--big.btn {
+    height: auto !important;
+}
+
+
+// ==========================================================================
 // Width
 // ==========================================================================
 
@@ -185,18 +203,34 @@
     height: 16px;
 }
 
-.buttonbox-width .btn {
+.buttonbox-width.btngroup {
+    display: inline-flex;
+    width: auto;
+    max-width: 100%;
+}
+
+.buttonbox-width.btngroup .buttonbox-btn--width.btn {
+    --input-height: 16px;
+    flex: none;
     cursor: pointer !important;
-    height: 16px;
+    height: 16px !important;
+    min-height: 16px !important;
+    max-height: 16px !important;
+    padding-block: 0 !important;
+    padding-inline: 14px !important;
+    line-height: 16px !important;
+    font-size: 0 !important;
 }
 
 .buttonbox-width .btn.active {
-    background: #5286d9 linear-gradient(#659cdc, #5286d9) !important;
+    background-color: #5286d9 !important;
+    background-image: linear-gradient(#659cdc, #5286d9) !important;
     border-color: #5286d9 !important;
 }
 
 .buttonbox-width .btn.hover {
-    background: #3c6da5 linear-gradient(#578dbc, #3c6da5) !important;
+    background-color: #3c6da5 !important;
+    background-image: linear-gradient(#578dbc, #3c6da5) !important;
     border-color: #3c6da5 !important;
 }
 
@@ -214,7 +248,7 @@
 .buttonbox-width .btn span {
     white-space: nowrap;
     color: transparent;
-    font-size: 0px;
+    font-size: 0;
     width: 12px;
     display: block;
 }
