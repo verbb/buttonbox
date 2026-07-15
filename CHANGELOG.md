@@ -1,5 +1,10 @@
 # Changelog
 
+## 4.2.6 - 2026-07-15
+
+### Fixed
+- Fix large button style for Triggers and Width types.
+
 ## 4.2.5 - 2025-07-18
 
 ### Changed
