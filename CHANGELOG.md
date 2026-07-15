@@ -1,5 +1,10 @@
 # Changelog
 
+## 5.0.2 - 2026-07-15
+
+### Fixed
+- Fix large button style for Triggers and Width types.
+
 ## 5.0.1 - 2025-07-18
 
 ### Changed
