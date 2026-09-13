@@ -1,21 +1,7 @@
 # Configuration
-Create a `buttonbox.php` file under your `/config` directory with the following options available to you. You can also use multi-environment options to change these per environment.
 
-The below shows the defaults already used by Button Box, so you don't need to add these options unless you want to modify the values.
+Button Box's options are configured on each field. Open **Settings → Fields**, choose your Button Box field, and set its available choices and display options. Different fields can offer different values and defaults.
 
-```php
-<?php
+For example, a layout field might offer Compact and Detailed options, while a colour field offers your site's approved palette. See [Buttons](docs:feature-tour/buttons) for the field settings and a template example.
 
-return [
-    '*' => [
-        'pluginName' => 'Button Box',
-    ]
-];
-```
-
-## Configuration options
-- `pluginName` - If you wish to customise the plugin name.
-
-
-## Control Panel
-You can also manage configuration settings through the Control Panel by visiting Settings → Button Box.
+There are no plugin-wide PHP settings to copy into a configuration file.
