@@ -1,7 +1,7 @@
 <p align="center"><img src="https://assets.verbb.io/plugins/button-box/button-box-icon.svg" width="100" height="100" alt="Button Box icon"></p>
 <h1 align="center">Button Box for Craft CMS</h1>
 
-Button Box is a Craft CMS plugin for a collcetion of button field types for a variety of needs.
+Button Box is a Craft CMS plugin for a collection of button field types for a variety of needs.
 
 ## Available Buttons
 - Buttons
@@ -18,7 +18,7 @@ Visit the [Button Box Plugin page](https://verbb.io/craft-plugins/button-box) fo
 Originally created by the team at [Supercool Ltd](http://www.supercooldesign.co.uk/).
 
 ## Support
-Get in touch with us via the [Button Box Support page](https://verbb.io/craft-plugins/button-box/support) or by [creating a Github issue](https://github.com/verbb/button-box/issues)
+Get in touch with us via the [Button Box Support page](https://verbb.io/craft-plugins/button-box/support) or by [creating a Github issue](https://github.com/verbb/buttonbox/issues)
 
 ## Sponsor
 Button Box is licensed under the MIT license, meaning it will always be free and open source – we love free stuff! If you'd like to show your support to the plugin regardless, [Sponsor](https://github.com/sponsors/verbb) development.
