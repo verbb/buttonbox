@@ -1,6 +1,6 @@
 {
     "name": "verbb/buttonbox",
-    "description": "A collection of utility field types.",
+    "description": "A collection of visual Craft CMS fields for buttons, colours, widths, ratings and other preset choices.",
     "type": "craft-plugin",
     "version": "5.0.3",
     "keywords": [
