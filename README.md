@@ -1,7 +1,18 @@
 <p align="center"><img src="https://assets.verbb.io/plugins/button-box/button-box-icon.svg" width="100" height="100" alt="Button Box icon"></p>
 <h1 align="center">Button Box for Craft CMS</h1>
 
-Button Box is a Craft CMS plugin for a collection of button field types for a variety of needs.
+Button Box is a Craft CMS plugin that replaces fiddly free-text settings with compact, visual Craft fields. Give authors clear choices for buttons, colours, widths, text sizes, ratings, and trigger-style options.
+
+Present approved options as recognisable controls instead of asking editors to remember class names or magic values. The stored value remains predictable for templates while the field itself communicates what each choice means.
+
+## Features
+
+- Present labelled options in a compact button group.
+- Give authors a visual palette backed by stable template values.
+- Offer the typography sizes your design system actually supports.
+- Capture familiar rating-style values with an immediate visual control.
+- Let authors choose from approved width or alignment options.
+- Model small on-or-off or action-oriented choices without a generic dropdown.
 
 ## Available Buttons
 - Buttons
@@ -21,7 +32,7 @@ Originally created by the team at [Supercool Ltd](http://www.supercooldesign.co.
 Get in touch with us via the [Button Box Support page](https://verbb.io/craft-plugins/button-box/support) or by [creating a Github issue](https://github.com/verbb/buttonbox/issues)
 
 ## Sponsor
-Button Box is licensed under the MIT license, meaning it will always be free and open source – we love free stuff! If you'd like to show your support to the plugin regardless, [Sponsor](https://github.com/sponsors/verbb) development.
+Button Box is licensed under the MIT license, meaning it will always be free and open source - we love free stuff! If you'd like to show your support to the plugin regardless, [Sponsor](https://github.com/sponsors/verbb) development.
 
 <h2></h2>
 

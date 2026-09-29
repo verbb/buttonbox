@@ -4,10 +4,17 @@ Present approved options as recognisable controls instead of asking editors to r
 
 ## Features
 
-- **Button choices:** Present labelled options in a compact button group.
-- **Colour choices:** Give authors a visual palette backed by stable template values.
-- **Text sizes:** Offer the typography sizes your design system actually supports.
-- **Stars and ratings:** Capture familiar rating-style values with an immediate visual control.
-- **Widths:** Let authors choose from approved width or alignment options.
-- **Triggers:** Model small on-or-off or action-oriented choices without a generic dropdown.
-- **Consistent design choices:** Use Button Box fields for recurring presentation decisions such as alignment, colour, width, and emphasis. Projects can keep those decisions constrained without turning every content update into a developer task.
+- Present labelled options in a compact button group.
+- Give authors a visual palette backed by stable template values.
+- Offer the typography sizes your design system actually supports.
+- Capture familiar rating-style values with an immediate visual control.
+- Let authors choose from approved width or alignment options.
+- Model small on-or-off or action-oriented choices without a generic dropdown.
+
+## Available Buttons
+- Buttons
+- Colours
+- Text Size
+- Stars
+- Width
+- Triggers
