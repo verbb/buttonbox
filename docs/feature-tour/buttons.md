@@ -1,6 +1,8 @@
 # Buttons
 Button Box provides fields whose options are presented visually, such as buttons, colour swatches, stars and layout widths. The option label tells the editor what a choice means; its stored value is what your template uses.
 
+![Button Box controls in an entry field layout](../../screenshots/button-box-controls.png)
+
 For example, create a Buttons field with the handle `layoutStyle` and two options: **Compact** with value `compact`, and **Detailed** with value `detailed`. Add it to an entry layout, select an option and save the entry. In that entry's template, use the selected value to choose the output:
 
 ```twig

@@ -7,7 +7,7 @@ Button Box replaces fiddly free-text settings with compact, visual Craft fields.
 
 Present approved options as recognisable controls instead of asking editors to remember class names or magic values. The stored value remains predictable for templates while the field itself communicates what each choice means.
 
-![Button Box fields showing button groups, widths, star ratings, colours and text sizes.](../screenshots/output/feature-tour/button-box-controls.png)
+![Button Box fields showing button groups, widths, star ratings, colours and text sizes.](../screenshots/button-box-controls.png)
 <!-- feature-section-end -->
 
 <!-- feature-grid -->
