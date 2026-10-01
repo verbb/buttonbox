@@ -32,4 +32,3 @@ class ButtonBoxAsset extends AssetBundle
         parent::init();
     }
 }
-
