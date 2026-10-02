@@ -2,7 +2,7 @@
     "name": "verbb/buttonbox",
     "description": "A collection of visual Craft CMS fields for buttons, colours, widths, ratings and other preset choices.",
     "type": "craft-plugin",
-    "version": "5.0.3",
+    "version": "5.0.4",
     "keywords": [
         "craft",
         "cms",
