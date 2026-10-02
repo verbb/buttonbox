@@ -1,10 +1,10 @@
 <?php
-namespace verbb\buttonbox\assetbundles;
+namespace verbb\buttonbox\web\assets\cp;
 
 use craft\web\AssetBundle;
 use craft\web\assets\cp\CpAsset;
 
-use verbb\base\assetbundles\CpAsset as VerbbCpAsset;
+use verbb\base\web\assets\cp\CpAsset as VerbbCpAsset;
 
 class ButtonBoxAsset extends AssetBundle
 {
@@ -13,7 +13,7 @@ class ButtonBoxAsset extends AssetBundle
 
     public function init(): void
     {
-        $this->sourcePath = "@verbb/buttonbox/resources/dist";
+        $this->sourcePath = '@verbb/buttonbox/web/assets/cp/dist';
 
         $this->depends = [
             VerbbCpAsset::class,
@@ -21,12 +21,12 @@ class ButtonBoxAsset extends AssetBundle
         ];
 
         $this->css = [
-            'css/buttonbox.css',
+            'buttonbox.css',
         ];
 
         $this->js = [
-            'js/buttonbox.js',
-            'js/settings-triggers.js',
+            'buttonbox.js',
+            'settings-triggers.js',
         ];
 
         parent::init();

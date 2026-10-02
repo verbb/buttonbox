@@ -1,7 +1,7 @@
 <?php
 namespace verbb\buttonbox\fields;
 
-use verbb\buttonbox\assetbundles\ButtonBoxAsset;
+use verbb\buttonbox\web\assets\cp\ButtonBoxAsset;
 
 use Craft;
 use craft\base\ElementInterface;

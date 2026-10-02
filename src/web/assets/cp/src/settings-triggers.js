@@ -18,6 +18,9 @@ function configureTriggers() {
   });
 }
 
+// Preserve the classic-script global exposed by the previous CodeKit build.
+window.configureTriggers = configureTriggers;
+
 // On page load
 $(function () {
   configureTriggers();

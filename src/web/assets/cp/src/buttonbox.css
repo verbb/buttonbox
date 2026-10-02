@@ -1,14 +1,7 @@
-// ==========================================================================
-
-// Button Box for Craft CMS
-// Author: Verbb - https://verbb.io/
-
-// ==========================================================================
-
 .buttonbox-buttons input {
     position: absolute;
     left: -9999px;
-    clip: rect(0,0,0,0);
+    clip: rect(0, 0, 0, 0);
 }
 
 .buttonbox-buttons__label {
@@ -39,11 +32,6 @@
     flex-direction: column-reverse;
 }
 
-
-// ==========================================================================
-// Colours
-// ==========================================================================
-
 .buttonbox-colours select {
     display: none;
 }
@@ -66,7 +54,7 @@
     width: 18px;
     height: 18px;
     margin-right: 8px;
-    border: 2px solid #ffffff;
+    border: 2px solid #fff;
     display: inline-block;
     zoom: 1;
     vertical-align: middle;
@@ -81,11 +69,6 @@
     padding-top: 2px;
     font-size: 13px;
 }
-
-
-// ==========================================================================
-// Text Size
-// ==========================================================================
 
 .buttonbox-textsize select {
     display: none;
@@ -102,12 +85,6 @@
 .buttonbox-textsize .buttonbox__btn:hover span {
     color: #0d78f2;
 }
-
-
-
-// ==========================================================================
-// Fancy Options
-// ==========================================================================
 
 .buttonbox-fancyoptions-menu a {
     position: relative;
@@ -130,12 +107,6 @@
     margin-right: 5px;
 }
 
-
-
-// ==========================================================================
-// Stars
-// ==========================================================================
-
 .buttonbox-stars {
     display: flex;
     align-items: center;
@@ -144,60 +115,48 @@
 .buttonbox-stars input {
     position: absolute;
     left: -9999px;
-    clip: rect(0,0,0,0);
+    clip: rect(0, 0, 0, 0);
 }
 
 .buttonbox-stars label {
     float: left;
     width: 1em;
-    padding: 0 .1em;
+    padding: 0 0.1em;
     overflow: hidden;
     white-space: nowrap;
     cursor: pointer;
     font-size: 1.5em;
     line-height: 1.2;
     color: #ddd;
+}
 
-    &:before {
-        content: '★ ';
-    }
+.buttonbox-stars label:before {
+    content: "\2605  ";
+}
 
-    &.active {
-        color: #F4B638;
-    }
+.buttonbox-stars label.active {
+    color: #f4b638;
+}
 
-    &.hover {
-        color: #5286d9;
-    }
+.buttonbox-stars label.hover {
+    color: #5286d9;
 }
 
 .buttonbox-stars__cancel {
     margin-left: 10px;
 }
 
-
-
-// ==========================================================================
-// Button sizing (replaces Craft .big)
-// ==========================================================================
-
-.buttonbox-btngroup--big .btn,
-.buttonbox-btn--big.btn {
+.buttonbox-btngroup--big .btn, .buttonbox-btn--big.btn {
     padding-block: 0;
     padding-inline: 14px;
     font-size: 14px;
     line-height: 36px;
-    min-height: calc(36rem / 16);
+    min-height: 2.25rem;
 }
 
 .buttonbox-buttons .buttonbox-btn--big.btn {
     height: auto !important;
 }
-
-
-// ==========================================================================
-// Width
-// ==========================================================================
 
 .buttonbox-width {
     height: 16px;
@@ -234,20 +193,19 @@
     border-color: #3c6da5 !important;
 }
 
-.buttonbox-width .btn.active,
-.buttonbox-width .btn.hover {
+.buttonbox-width .btn.active, .buttonbox-width .btn.hover {
     box-shadow: 0 0 0 1px #2a4c75, 0 1px 2px -1px rgba(0, 0, 0, 0.1) !important;
 }
 
 .buttonbox-width .btn input {
     position: absolute;
     left: -9999px;
-    clip: rect(0,0,0,0);
+    clip: rect(0, 0, 0, 0);
 }
 
 .buttonbox-width .btn span {
     white-space: nowrap;
-    color: transparent;
+    color: rgba(0, 0, 0, 0);
     font-size: 0;
     width: 12px;
     display: block;

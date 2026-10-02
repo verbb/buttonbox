@@ -1,0 +1,14 @@
+{
+    "name": "buttonbox",
+    "private": true,
+    "scripts": {
+        "build": "npm run build:css && npm run build:buttonbox && npm run build:settings-triggers",
+        "build:buttonbox": "vite build --mode buttonbox",
+        "build:css": "vite build --mode css",
+        "build:settings-triggers": "vite build --mode settings-triggers"
+    },
+    "devDependencies": {
+        "esbuild": "^0.28.2",
+        "vite": "^8.2.0"
+    }
+}
