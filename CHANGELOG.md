@@ -3,18 +3,19 @@
 ## Unreleased
 
 ### Added
-- Added Visual Choice and Visual Multi-Choice fields with selection limits, custom options and typed option metadata.
-- Added Buttons, Button group, Chips, List, Tiles, Cards, Swatches and Visual samples presentations, plus Dropdown for single choices.
-- Added option descriptions, icons, images, colours, split colours, foreground/background pairs, gradients, width, aspect-ratio, typography and shape previews.
-- Added Position fields with configurable spatial arrangements, grid columns, presets and keyboard navigation.
-- Added a separate Width field with percentage stops, Bar and Width samples styles, Halves, Thirds, Quarters and Grid columns presets, and configurable labels and tooltips.
-- Added Rating fields with whole-number values, configurable limits, defaults, clearing and four symbol presets.
-- Added reusable Action Links fields with labelled destinations, icons or images, button styles and layout visibility conditions.
-- Added reusable option sets managed in the control panel and project config, with field-level creation, editing and conversion to custom options, plus dynamic PHP option providers.
-- Added customisable presets for visual choices, Position, Width and Rating, shared Appearance controls and live field previews.
-- Added configurable icon and image galleries, with Craft’s asset selector for asset images.
-- Added Button Box value objects and collections for Twig, including visual metadata, position coordinates and width percentages, plus GraphQL access and field-specific previews, search, conditions, sorting and inline editing.
-- Added command-line conversion previews and optional conversions for Buttons, Colours, Text Size, Width, Stars and Triggers.
+- Added Visual Choice and Visual Multi-Choice fields for single and multiple selections, with configurable options and selection limits.
+- Added Position fields with configurable spatial arrangements and keyboard navigation.
+- Added a new Width field with explicit percentage stops, Bar and Width samples styles, and configurable labels and tooltips.
+- Added Rating fields with whole-number values, configurable limits and defaults, optional clearing, and star, heart, circle or diamond symbols.
+- Added reusable Action Links fields for conditional editor links, with configurable labels, icons, images and button styles.
+- Added Buttons, Button group, Chips, List, Tiles, Cards, Swatches and Visual samples presentations for visual choices, plus Dropdown for single choices.
+- Added visual option metadata for descriptions, icons, images, colours, split colours, foreground/background pairs, gradients, width, aspect ratio, typography and shapes.
+- Added shared option sets managed in the control panel or configuration files, with project-config support and the option to copy choices into individual fields. Visual choices can also receive options dynamically through PHP events.
+- Added built-in and customisable presets for visual choices, Position, Width and Rating, with appearance settings and live field previews.
+- Added configurable icon and image galleries, with support for selecting Craft assets.
+- Added typed Twig values for visual choices, Position and Width, typed GraphQL output for visual choices and Position, and integer GraphQL output for Rating.
+- Added element previews, search, conditions, sorting and inline editing for the new content fields, according to each field’s capabilities.
+- Added command-line previews and optional conversion of existing Buttons, Colours, Text Size, Width, Stars and Triggers fields to their replacements.
 
 ### Changed
 - Button Box now requires Craft CMS 5.10.11 or greater.
@@ -23,7 +24,7 @@
 - Fixed the plugin bootstrap handle used during application configuration.
 
 ### Deprecated
-- Deprecated the original Buttons, Colours, Text Size, Width, Stars and Triggers fields. They are labelled Legacy and record a Craft deprecation notice when rendered for an element in the control panel. Existing settings, inputs and stored values are retained; fields are not automatically converted.
+- Deprecated the original Buttons, Colours, Text Size, Width, Stars and Triggers fields, which now display a Legacy label and log control-panel deprecation notices. Existing fields retain their settings, stored values and template behaviour; conversion is optional.
 
 ## 5.0.5 - 2026-10-22
 
