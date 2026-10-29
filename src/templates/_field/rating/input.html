@@ -1,0 +1,28 @@
+{% set symbols = {
+    star: '★',
+    heart: '♥',
+    circle: '●',
+    diamond: '◆',
+} %}
+
+<div {{ attr({
+    class: ['buttonbox-rating', static ? 'buttonbox-rating--static' : false] | filter,
+    style: '--buttonbox-rating-active:' ~ activeColor ~ ';--buttonbox-rating-inactive:' ~ inactiveColor,
+}) }}>
+    {% for rating in 1..max %}
+        <label class="buttonbox-rating__option{% if rating <= value %} is-selected{% endif %}" title="{{ rating }} {{ 'of' | t('buttonbox') }} {{ max }}">
+            <input class="buttonbox-rating__input" type="radio" name="{{ name }}" value="{{ rating }}"{% if rating == value %} checked{% endif %}{% if static %} disabled{% endif %}>
+            <span class="buttonbox-rating__star" aria-hidden="true">{{ symbols[symbol] ?? symbols.star }}</span>
+            {% if showLabels %}<span class="buttonbox-rating__label" aria-hidden="true">{{ rating }}</span>{% endif %}
+            <span class="visually-hidden">{{ rating }} {{ 'of' | t('buttonbox') }} {{ max }}</span>
+        </label>
+    {% endfor %}
+
+    {% if allowClear and not static %}
+        <label class="buttonbox-rating__clear">
+            <input class="buttonbox-rating__input" type="radio" name="{{ name }}" value=""{% if value is null %} checked{% endif %}>
+            <span class="delete icon" aria-hidden="true"></span>
+            <span class="visually-hidden">{{ 'Clear rating' | t('buttonbox') }}</span>
+        </label>
+    {% endif %}
+</div>

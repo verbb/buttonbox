@@ -1,20 +1,25 @@
-Button Box replaces fiddly free-text settings with compact, visual Craft fields. Give authors clear choices for buttons, colours, widths, text sizes, ratings, and trigger-style options.
+Button Box gives authors clear, visual choices while keeping stored values stable and predictable. Build a compact dropdown or button group, a descriptive card picker, a colour or gradient palette, a semantic position grid, a dedicated width control, a whole-number rating, or a multi-choice set without handing editors free-text design tokens.
 
-Present approved options as recognisable controls instead of asking editors to remember class names or magic values. The stored value remains predictable for templates while the field itself communicates what each choice means.
+The plugin styles the Craft control panel only. Your templates remain in charge of public-site markup and CSS, with documented Twig and GraphQL values for each field type.
 
 ## Features
 
-- Present labelled options in a compact button group.
-- Give authors a visual palette backed by stable template values.
-- Offer the typography sizes your design system actually supports.
-- Capture familiar rating-style values with an immediate visual control.
-- Let authors choose from approved width or alignment options.
-- Model small on-or-off or action-oriented choices without a generic dropdown.
+- Build single- and multi-choice fields with Buttons, Button group, Chips, List, Tiles, Cards, Swatches and Visual samples, plus Dropdown for single choices.
+- Attach descriptions, icons, colours, images, categories, disabled states, explanations and typed surface metadata to stable option values.
+- Create and customise presets for visual choices, Position, Width and Rating, then copy their settings into independent fields.
+- Manage shared option sets in the control panel and project config, convert a reference to local options, or supply options at runtime through PHP events.
+- Configure width stops with Bar or Width samples, useful presets and optional labels.
+- Capture named positions with spatial metadata and whole-number ratings as nullable integers.
+- Reuse conditional Action Links across field layouts with shared button settings.
+- Use stored choices in element indexes, cards, search, conditions, sorting and inline editing, with numeric queries for Rating.
+- Read typed option and position objects in Twig and GraphQL while Width and legacy fields retain their scalar contracts.
+- Preview explicit conversions from Buttons, Colours, Text Size, Width, Stars and Triggers before choosing whether to apply them.
 
-## Available Buttons
-- Buttons
-- Colours
-- Text Size
-- Stars
+## Field Types
+
+- Visual Choice
+- Visual Multi-Choice
+- Position
 - Width
-- Triggers
+- Rating
+- Action Links

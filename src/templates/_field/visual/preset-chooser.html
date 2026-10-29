@@ -1,0 +1,18 @@
+{% if not (presetEditor ?? false) %}
+<template data-bb-presets-template>
+    <pk-dialog class="buttonbox-preset-dialog" label="{{ 'Choose a preset' | t('buttonbox') }}">
+        <p class="buttonbox-preset-help light">
+            <span data-bb-preset-help="empty">{{ 'Choose a starting point, then make it your own.' | t('buttonbox') }}</span>
+            <span data-bb-preset-help="filled">{{ (presetReplacementMessage ?? 'Choosing a preset replaces the current options, presentation and any saved appearance settings.') | t('buttonbox') }}</span>
+        </p>
+        <div class="buttonbox-preset-grid">
+            {% for key, preset in presets %}
+                <div class="buttonbox-preset-card">
+                    <div class="buttonbox-preset-card__preview" aria-hidden="true" inert>{{ presetPreviews[key] | raw }}</div>
+                    <button type="button" class="buttonbox-preset-card__button" data-bb-choose-preset="{{ key }}">{{ preset.label }}</button>
+                </div>
+            {% endfor %}
+        </div>
+    </pk-dialog>
+</template>
+{% endif %}

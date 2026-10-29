@@ -1,0 +1,33 @@
+{% extends 'buttonbox/_layouts/settings' %}
+{% import '_includes/forms' as forms %}
+{% set title = preset.id ? preset.name : 'New Preset' | t('buttonbox') %}
+{% set fullPageForm = not readOnly %}
+{% set selectedTab = 'presets-' ~ preset.family %}
+{% set crumbs = [{label: (preset.family == 'visual' ? 'Visual Choice' | t('buttonbox') : familyLabel), url: url('buttonbox/settings/presets/' ~ preset.family)}] %}
+{% if preset.id and not preset.builtIn and not readOnly %}
+    {% set formActions = [{
+        destructive: true,
+        label: 'Delete preset' | t('buttonbox'),
+        action: 'buttonbox/presets/remove',
+        confirm: 'Delete this preset? Existing fields will not change.' | t('buttonbox'),
+    }] %}
+{% endif %}
+{% block blockContent %}
+    <h2>{{ familyLabel }}</h2>
+    <p>{{ 'Applying this preset copies its settings into a field. Changes here do not update existing fields or change the defaults for new fields.' | t('buttonbox') }}</p>
+    {% if preset.builtIn %}<p class="light">{{ 'Save a project-specific version of this built-in preset. You can restore the original later.' | t('buttonbox') }}</p>{% endif %}
+    {% if preset.family == 'rating' %}<p class="light">{{ 'Rating presets copy only the symbol and colours. Maximum, default rating, clearing and numeric labels stay with the field.' | t('buttonbox') }}</p>{% endif %}
+    {{ actionInput('buttonbox/presets/save') }}
+    {{ hiddenInput('id', preset.id) }}
+    {{ hiddenInput('family', preset.family) }}
+    <fieldset {{ readOnly ? 'disabled' }}>
+        {{ forms.textField({label: 'Name' | t('app'), id: 'name', name: 'name', value: preset.name, required: true, first: true, errors: preset.getErrors('name')}) }}
+        {{ forms.errorList(preset.getErrors('settings')) }}
+        <hr>
+        {{ editorHtml | raw }}
+    </fieldset>
+    {% if preset.id and not readOnly and preset.builtIn and preset.customized %}
+        <hr>
+        <button type="button" class="btn formsubmit" data-action="buttonbox/presets/remove" data-confirm="{{ 'Restore the original preset? Existing fields will not change.' | t('buttonbox') }}">{{ 'Restore original' | t('buttonbox') }}</button>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,91 @@
+{% macro settingLabel(label, info = null) %}
+    <span data-bb-appearance-label class="buttonbox-appearance__label">
+        {{ label | t('buttonbox') }}
+        {% if info %}
+            <pk-tooltip content="{{ info | t('buttonbox') }}">
+                <pk-button class="buttonbox-appearance__info" slot="trigger" type="button" variant="none" size="xs" icon aria-label="{{ 'About {setting}' | t('buttonbox', {setting: label | t('buttonbox')}) }}"><span slot="start">{{ svg('@app/icons/solid/circle-info.svg') }}</span></pk-button>
+            </pk-tooltip>
+        {% endif %}
+    </span>
+{% endmacro %}
+
+{% import '_includes/forms' as forms %}
+{% set positionAppearance = positionAppearance ?? false %}
+{% set appearanceErrors = field.hasErrors('appearance') %}
+{% set imageErrors = not positionAppearance and (field.hasErrors('imageSize') or field.hasErrors('imageFit')) %}
+<section class="field buttonbox-appearance" data-bb-appearance aria-labelledby="{{ settingsId }}-appearance-heading">
+    <details class="buttonbox-appearance__disclosure" data-bb-appearance-disclosure {% if appearanceErrors or imageErrors %}open{% endif %}>
+        <summary class="buttonbox-appearance__summary">
+            <span id="{{ settingsId }}-appearance-heading" class="buttonbox-appearance__title">{{ 'Appearance' | t('buttonbox') }}</span>
+            <span class="light buttonbox-appearance__summary-text" data-bb-appearance-summary data-labels="{{ {
+                default: 'Default' | t('buttonbox'),
+                labels: 'Labels hidden' | t('buttonbox'),
+                tooltips: 'Label tooltips on' | t('buttonbox'),
+                tooltipsOff: 'Tooltips off' | t('buttonbox'),
+                colours: 'Custom colours' | t('buttonbox'),
+                borders: 'Custom borders' | t('buttonbox'),
+                images: 'Custom image sizing' | t('buttonbox'),
+            } | json_encode | e('html_attr') }}">{{ 'Default' | t('buttonbox') }}</span>
+        </summary>
+        <div class="buttonbox-appearance__body">
+    <div class="instructions"><p>{{ 'Style all choices consistently. Leave overrides empty to use the defaults.' | t('buttonbox') }}</p></div>
+    {{ forms.errorList(field.getErrors('appearance')) }}
+    <pk-editable-table class="buttonbox-appearance__table" data-bb-appearance-table data-appearance-errors="{{ appearanceErrors ? '1' : '0' }}" data-image-errors="{{ imageErrors ? '1' : '0' }}" aria-label="{{ 'Appearance' | t('buttonbox') }}">
+            {% if positionAppearance %}
+            <div data-bb-appearance-row="showTooltips" data-bb-appearance-group="content">
+                {{ _self.settingLabel('Show tooltips', 'Show position labels and unavailable reasons on hover or keyboard focus.') }}
+                <div data-bb-appearance-control class="buttonbox-appearance__value">
+                    {{ hiddenInput('showTooltips', '0') }}
+                    <pk-lightswitch class="buttonbox-appearance__labels-switch" name="showTooltips" data-bb-show-tooltips value="1" size="sm" label="{{ 'Show tooltips' | t('buttonbox') }}" {% if field.showTooltips %}checked{% endif %}></pk-lightswitch>
+                </div>
+            </div>
+            {% else %}
+            <div data-bb-appearance-row="showLabels" data-bb-appearance-group="content">
+                {{ _self.settingLabel('Show labels', 'Labels remain available to screen readers. Options without a visual always show their label.') }}
+                <div data-bb-appearance-control class="buttonbox-appearance__value">
+                    {{ hiddenInput('appearance[showLabels]', '0') }}
+                    <pk-lightswitch class="buttonbox-appearance__labels-switch" name="appearance[showLabels]" data-bb-appearance-key="showLabels" value="1" size="sm" label="{{ 'Show labels' | t('buttonbox') }}" {% if field.appearance.showLabels ?? true %}checked{% endif %}></pk-lightswitch>
+                </div>
+            </div>
+            <div data-bb-appearance-row="labelTooltips" data-bb-appearance-group="content">
+                {{ _self.settingLabel('Label tooltips', 'Show option labels on hover and keyboard focus.') }}
+                <div data-bb-appearance-control class="buttonbox-appearance__value">
+                    {{ hiddenInput('appearance[labelTooltips]', '0') }}
+                    <pk-lightswitch class="buttonbox-appearance__labels-switch" name="appearance[labelTooltips]" data-bb-appearance-key="labelTooltips" value="1" size="sm" label="{{ 'Label tooltips' | t('buttonbox') }}" {% if field.appearance.labelTooltips ?? false %}checked{% endif %}></pk-lightswitch>
+                </div>
+            </div>
+            {% endif %}
+            <div data-bb-appearance-row="size" data-bb-appearance-group="button">
+                {{ _self.settingLabel('Size', (positionAppearance ? 'Cells and dots scale together.' : 'Text, icons and spacing scale together.')) }}
+                <div data-bb-appearance-control class="buttonbox-appearance__value"><pk-select name="appearance[size]" data-bb-appearance-key="size" value="{{ field.appearance.size ?? 'default' }}" size="sm" aria-label="{{ 'Size' | t('buttonbox') }}">
+                    {% for value, label in {xxs: 'Extra extra small', xs: 'Extra small', sm: 'Small', default: 'Default', lg: 'Large', xl: 'Extra large'} %}<pk-option value="{{ value }}">{{ label | t('buttonbox') }}</pk-option>{% endfor %}
+                </pk-select></div>
+            </div>
+            {% for key, label in (positionAppearance ? {backgroundColor: 'Background', textColor: 'Dot colour', selectionColor: 'Selection colour'} : {textColor: 'Text colour', backgroundColor: 'Background', borderColor: 'Border colour', selectionColor: 'Selection colour'}) %}
+                <div data-bb-appearance-row="{{ key }}" data-bb-appearance-group="button">
+                    {{ _self.settingLabel(label, key == 'selectionColor' ? (positionAppearance ? 'Used for the selected dot and a subtle background tint.' : 'Controls the selected fill, border or checkmark, depending on presentation.') : (positionAppearance and key == 'textColor' ? 'The colour of unselected dots.' : null)) }}
+                    <div data-bb-appearance-control class="buttonbox-appearance__value"><div class="buttonbox-appearance__controls"><pk-color-input name="appearance[{{ key }}]" data-bb-appearance-key="{{ key }}" value="{{ attribute(field.appearance, key) ?? '' }}" size="sm" aria-label="{{ label | t('buttonbox') }}"></pk-color-input><pk-button type="button" size="sm" data-bb-reset-appearance="{{ key }}" aria-label="{{ 'Reset {label}' | t('buttonbox', {label: label | t('buttonbox')}) }}">{{ 'Reset' | t('buttonbox') }}</pk-button></div></div>
+                </div>
+            {% endfor %}
+            {% if not positionAppearance %}
+            {% for key, label in {borderWidth: 'Border width', radius: 'Corner radius'} %}
+                <div data-bb-appearance-row="{{ key }}" data-bb-appearance-group="button">
+                    {{ _self.settingLabel(label) }}
+                    <div data-bb-appearance-control class="buttonbox-appearance__value"><pk-input name="appearance[{{ key }}]" data-bb-appearance-key="{{ key }}" value="{{ attribute(field.appearance, key) ?? '' }}" label="{{ label | t('buttonbox') }}" type="number" min="0" max="{{ key == 'radius' ? 100 : 8 }}" step="1" placeholder="{{ 'Default' | t('buttonbox') }}" size="sm" aria-label="{{ label | t('buttonbox') }}"><span slot="end">px</span></pk-input></div>
+                </div>
+            {% endfor %}
+            <div data-bb-appearance-row="imageSize" data-bb-appearance-group="image">
+                {{ _self.settingLabel('Image size', 'Shared by all images. Automatic follows the presentation.') }}
+                <div data-bb-appearance-control class="buttonbox-appearance__value"><pk-select name="imageSize" value="{{ field.imageSize }}" size="sm" aria-label="{{ 'Image size' | t('buttonbox') }}">
+                    {% for value, label in {auto: 'Automatic', small: 'Small', medium: 'Medium', large: 'Large'} %}<pk-option value="{{ value }}">{{ label | t('buttonbox') }}</pk-option>{% endfor %}
+                </pk-select>{{ forms.errorList(field.getErrors('imageSize')) }}</div>
+            </div>
+            <div data-bb-appearance-row="imageFit" data-bb-appearance-group="image">
+                {{ _self.settingLabel('Image fit', 'Fit shows the whole image; Fill crops it.') }}
+                <div data-bb-appearance-control class="buttonbox-appearance__value"><pk-select name="imageFit" value="{{ field.imageFit }}" size="sm" aria-label="{{ 'Image fit' | t('buttonbox') }}"><pk-option value="contain">{{ 'Fit' | t('buttonbox') }}</pk-option><pk-option value="cover">{{ 'Fill' | t('buttonbox') }}</pk-option></pk-select>{{ forms.errorList(field.getErrors('imageFit')) }}</div>
+            </div>
+            {% endif %}
+    </pk-editable-table>
+        </div>
+    </details>
+</section>

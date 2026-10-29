@@ -1,15 +1,13 @@
 <?php
 namespace verbb\buttonbox\fields;
 
-use verbb\buttonbox\web\assets\cp\ButtonBoxAsset;
+use verbb\buttonbox\helpers\Compatibility;
+use verbb\buttonbox\web\assets\cp\LegacyAsset;
 
 use Craft;
 use craft\base\ElementInterface;
 use craft\events\DefineInputOptionsEvent;
 use craft\fields\BaseOptionsField;
-use craft\fields\data\OptionData;
-use craft\fields\data\SingleOptionFieldData;
-use craft\helpers\ArrayHelper;
 use craft\helpers\Cp;
 
 use yii\db\Schema;
@@ -21,7 +19,7 @@ class Width extends BaseOptionsField
 
     public static function displayName(): string
     {
-        return Craft::t('buttonbox', 'Button Box - Width');
+        return Craft::t('buttonbox', 'Button Box - Width (Legacy)');
     }
 
     public static function icon(): string
@@ -35,8 +33,33 @@ class Width extends BaseOptionsField
     }
 
 
+    // Properties
+    // =========================================================================
+
+    private array $_preReleaseSettings = [];
+
+
     // Public Methods
     // =========================================================================
+
+    public function __construct($config = [])
+    {
+        // Early 5.1 builds used this class for the expanded field. Keep their
+        // settings dormant until an explicit conversion, without changing legacy inputs.
+        foreach (['appearance', 'displayStyle', 'labelDisplay', 'showTooltips'] as $name) {
+            if (array_key_exists($name, $config)) {
+                $this->_preReleaseSettings[$name] = $config[$name];
+                unset($config[$name]);
+            }
+        }
+
+        parent::__construct($config);
+    }
+
+    public function getSettings(): array
+    {
+        return array_merge($this->_preReleaseSettings, parent::getSettings());
+    }
 
     public function getSettingsHtml(): ?string
     {
@@ -88,6 +111,8 @@ class Width extends BaseOptionsField
 
     protected function inputHtml(mixed $value, ?ElementInterface $element, bool $inline): string
     {
+        Compatibility::logInput($this, $element);
+
         $name = $this->handle;
         $options = $this->translatedOptions(true, $value, $element);
 
@@ -102,10 +127,10 @@ class Width extends BaseOptionsField
             }
         }
 
-        Craft::$app->getView()->registerAssetBundle(ButtonBoxAsset::class);
+        Craft::$app->getView()->registerAssetBundle(LegacyAsset::class);
         Craft::$app->getView()->registerJs('new Craft.ButtonBoxHovers("' . Craft::$app->getView()->namespaceInputId($name) . '");');
 
-        return Craft::$app->getView()->renderTemplate('buttonbox/_field/width/input', [
+        return Craft::$app->getView()->renderTemplate('buttonbox/_field/legacy-width/input', [
             'name' => $name,
             'value' => $this->encodeValue($value),
             'options' => $options,

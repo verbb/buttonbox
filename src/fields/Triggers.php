@@ -1,13 +1,14 @@
 <?php
 namespace verbb\buttonbox\fields;
 
-use verbb\buttonbox\web\assets\cp\ButtonBoxAsset;
+use verbb\buttonbox\helpers\Compatibility;
+use verbb\buttonbox\web\assets\cp\LegacyAsset;
+use verbb\buttonbox\web\assets\cp\TriggersSettingsAsset;
 
 use Craft;
 use craft\base\ElementInterface;
 use craft\events\DefineInputOptionsEvent;
 use craft\fields\BaseOptionsField;
-use craft\helpers\ArrayHelper;
 use craft\helpers\Cp;
 use craft\helpers\UrlHelper;
 
@@ -18,7 +19,7 @@ class Triggers extends BaseOptionsField
 
     public static function displayName(): string
     {
-        return Craft::t('buttonbox', 'Button Box - Triggers');
+        return Craft::t('buttonbox', 'Button Box - Triggers (Legacy)');
     }
 
     public static function icon(): string
@@ -39,6 +40,8 @@ class Triggers extends BaseOptionsField
 
     public function getSettingsHtml(): ?string
     {
+        Craft::$app->getView()->registerAssetBundle(TriggersSettingsAsset::class);
+
         $options = $this->translatedOptions();
 
         if (!$options) {
@@ -124,7 +127,7 @@ class Triggers extends BaseOptionsField
             'checked' => $this->displayFullwidth,
         ]);
 
-        return $displayAsGraphic . $displayFullwidth . $table;
+        return Compatibility::settingsNotice(Craft::t('buttonbox', 'the Action Links field')) . $displayAsGraphic . $displayFullwidth . $table;
     }
 
 
@@ -133,6 +136,8 @@ class Triggers extends BaseOptionsField
 
     protected function inputHtml(mixed $value, ?ElementInterface $element, bool $inline): string
     {
+        Compatibility::logInput($this, $element);
+
         $name = $this->handle;
         $options = $this->translatedOptions(true, $value, $element);
 
@@ -147,7 +152,7 @@ class Triggers extends BaseOptionsField
             }
         }
 
-        Craft::$app->getView()->registerAssetBundle(ButtonBoxAsset::class);
+        Craft::$app->getView()->registerAssetBundle(LegacyAsset::class);
         Craft::$app->getView()->registerJs('new Craft.ButtonBoxButtons("' . Craft::$app->getView()->namespaceInputId($name) . '");');
 
         // Parse element tags in links

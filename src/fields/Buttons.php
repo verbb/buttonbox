@@ -1,15 +1,13 @@
 <?php
 namespace verbb\buttonbox\fields;
 
-use verbb\buttonbox\web\assets\cp\ButtonBoxAsset;
+use verbb\buttonbox\helpers\Compatibility;
+use verbb\buttonbox\web\assets\cp\LegacyAsset;
 
 use Craft;
 use craft\base\ElementInterface;
 use craft\events\DefineInputOptionsEvent;
 use craft\fields\BaseOptionsField;
-use craft\fields\data\OptionData;
-use craft\fields\data\SingleOptionFieldData;
-use craft\helpers\ArrayHelper;
 use craft\helpers\Cp;
 use craft\helpers\UrlHelper;
 
@@ -22,7 +20,7 @@ class Buttons extends BaseOptionsField
 
     public static function displayName(): string
     {
-        return Craft::t('buttonbox', 'Button Box - Buttons');
+        return Craft::t('buttonbox', 'Button Box - Buttons (Legacy)');
     }
 
     public static function icon(): string
@@ -133,7 +131,7 @@ class Buttons extends BaseOptionsField
             'checked' => $this->displayFullwidth,
         ]);
 
-        return $displayAsGraphic . $displayFullwidth . $table;
+        return Compatibility::settingsNotice(Craft::t('buttonbox', 'Visual Choice')) . $displayAsGraphic . $displayFullwidth . $table;
     }
 
 
@@ -142,6 +140,8 @@ class Buttons extends BaseOptionsField
 
     protected function inputHtml(mixed $value, ?ElementInterface $element, bool $inline): string
     {
+        Compatibility::logInput($this, $element);
+
         $name = $this->handle;
         $options = $this->translatedOptions(true, $value, $element);
 
@@ -156,7 +156,7 @@ class Buttons extends BaseOptionsField
             }
         }
 
-        Craft::$app->getView()->registerAssetBundle(ButtonBoxAsset::class);
+        Craft::$app->getView()->registerAssetBundle(LegacyAsset::class);
         Craft::$app->getView()->registerJs('new Craft.ButtonBoxButtons("' . Craft::$app->getView()->namespaceInputId($name) . '");');
 
         return Craft::$app->getView()->renderTemplate('buttonbox/_field/buttons/input', [

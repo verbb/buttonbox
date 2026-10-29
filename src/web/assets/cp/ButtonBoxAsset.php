@@ -26,7 +26,6 @@ class ButtonBoxAsset extends AssetBundle
 
         $this->js = [
             'buttonbox.js',
-            'settings-triggers.js',
         ];
 
         parent::init();

@@ -1,0 +1,598 @@
+.buttonbox-visual-settings table.editable {
+    display: block;
+    max-inline-size: 100%;
+    overflow-x: auto;
+}
+
+.buttonbox-visual-settings {
+    container-type: inline-size;
+}
+
+.buttonbox-visual-settings [hidden],
+.buttonbox-action-settings [hidden],
+.buttonbox-option-dialog [hidden] {
+    display: none !important;
+}
+
+.buttonbox-presentations__choices {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.buttonbox-presentations__choice {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.buttonbox-presentations__sample {
+    --illustration-stroke: #cdd8e4;
+    --illustration-fill: #f3f7fd;
+    display: grid;
+    place-items: center;
+    inline-size: 96px;
+    block-size: 76px;
+    padding: 7px;
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+}
+
+.buttonbox-presentations__choice:has(input:checked) .buttonbox-presentations__sample {
+    --illustration-stroke: var(--blue-500);
+    --illustration-fill: var(--blue-050);
+    background: var(--blue-050);
+    border-color: var(--blue-500);
+    box-shadow: 0 0 0 1px var(--blue-500);
+}
+
+.buttonbox-presentations__choice:has(input:focus-visible) .buttonbox-presentations__sample {
+    outline: 2px solid var(--blue-500);
+    outline-offset: 3px;
+}
+
+.buttonbox-presentations__illustration {
+    display: block;
+    stroke: var(--illustration-stroke);
+    stroke-width: 1;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.buttonbox-presentations__illustration rect {
+    fill: var(--illustration-fill);
+}
+
+.buttonbox-presentations__illustration .buttonbox-presentations__detail {
+    fill: var(--white);
+}
+
+.buttonbox-option-visual {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 8px;
+}
+
+.buttonbox-option-visual > pk-select[data-bb-key=visualType] {
+    inline-size: 120px;
+    flex: 0 0 120px;
+}
+
+.buttonbox-option-visual > pk-image-browser {
+    inline-size: 12.5rem;
+    flex-shrink: 0;
+}
+
+.buttonbox-option-visual > pk-tooltip {
+    inline-size: 170px;
+}
+
+.buttonbox-option-visual > pk-select[data-bb-shape] {
+    inline-size: 170px;
+}
+
+.buttonbox-option-colours {
+    display: flex;
+    gap: 6px;
+    inline-size: 220px;
+}
+
+.buttonbox-option-colours pk-color-input {
+    flex: 1;
+    min-inline-size: 0;
+}
+
+.buttonbox-option-visual pk-input::part(header) {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    -webkit-clip-path: inset(50%);
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+.buttonbox-option-ratio {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.buttonbox-option-ratio pk-input {
+    flex: 1;
+    min-inline-size: 0;
+}
+
+.buttonbox-option-catalog-error {
+    flex-basis: 100%;
+    color: var(--error-color);
+    font-size: 12px;
+}
+
+.buttonbox-option-details {
+    display: grid;
+    gap: 24px;
+}
+
+.buttonbox-preview-panel {
+    margin-block-start: 24px;
+    padding: 16px;
+    border: 1px solid var(--border-hairline);
+    border-radius: 5px;
+}
+
+.buttonbox-preview-panel__label {
+    margin: 0;
+    color: var(--gray-600);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    line-height: 1.5;
+    text-transform: uppercase;
+}
+
+.buttonbox-preview-panel [data-bb-status] {
+    margin-block: 12px 0;
+}
+
+.buttonbox-preview-panel [data-bb-status]:empty {
+    display: none;
+}
+
+.buttonbox-visual-settings__preview {
+    max-inline-size: 100%;
+    margin-block-start: 12px;
+}
+
+.buttonbox-visual-settings__preview .buttonbox-visual {
+    container-type: inline-size;
+}
+
+.buttonbox-preset-start {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    border: 1px solid var(--border-hairline);
+    border-radius: var(--radius-md);
+    background: var(--white);
+}
+
+.buttonbox-preset-start__copy {
+    flex: 1 1 280px;
+    min-inline-size: 0;
+}
+
+.buttonbox-preset-start__copy h3 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.buttonbox-preset-start__copy .instructions {
+    margin-block: 4px 0;
+}
+
+.buttonbox-preset-start__copy .instructions p {
+    margin: 0;
+}
+
+.buttonbox-preset-start > .btn {
+    flex: none;
+}
+
+.buttonbox-preset-dialog {
+    --pk-dialog-width: min(880px, calc(100vw - 40px) );
+    --pk-dialog-max-height: calc(100dvh - 40px) ;
+}
+
+.buttonbox-preset-help {
+    margin-block: 0 16px;
+}
+
+.buttonbox-preset-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 270px), 1fr));
+    gap: 12px;
+}
+
+.buttonbox-preset-card {
+    position: relative;
+    container-type: inline-size;
+    min-inline-size: 0;
+    border: 1px solid var(--pk-color-gray-150);
+    border-radius: var(--pk-radius-md);
+}
+
+.buttonbox-preset-card:hover {
+    border-color: var(--blue-500);
+    box-shadow: inset 0 0 0 1px var(--blue-500);
+}
+
+.buttonbox-preset-card:has(:focus-visible) {
+    outline: 2px solid var(--pk-color-sky-600);
+    outline-offset: 2px;
+}
+
+.buttonbox-preset-card__preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    block-size: 112px;
+    padding: 8px;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.buttonbox-preset-card__preview .buttonbox-visual {
+    zoom: .85;
+    flex-wrap: nowrap;
+    justify-content: center;
+}
+
+.buttonbox-preset-card__preview .buttonbox-visual--chip {
+    zoom: .8;
+}
+
+.buttonbox-preset-card__preview .buttonbox-visual--swatch {
+    zoom: .6;
+}
+
+.buttonbox-preset-card__preview .buttonbox-visual--generated {
+    zoom: .7;
+}
+
+.buttonbox-preset-card__preview .buttonbox-visual--generated .buttonbox-visual__option {
+    inline-size: 84px;
+}
+
+.buttonbox-preset-card__preview .buttonbox-visual--generated .buttonbox-visual__control {
+    padding: 5px;
+    gap: 6px;
+}
+
+.buttonbox-preset-card__preview .buttonbox-visual--generated .buttonbox-visual__sample {
+    block-size: 40px;
+}
+
+.buttonbox-preset-card__preview .buttonbox-visual--generated .buttonbox-visual__label {
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.buttonbox-preset-card__preview .buttonbox-visual--list {
+    zoom: .65;
+    inline-size: 260px;
+    gap: 3px;
+}
+
+.buttonbox-preset-card__preview .buttonbox-visual--list .buttonbox-visual__control {
+    min-block-size: 32px;
+    padding-block: 2px;
+}
+
+.buttonbox-preset-card__preview .buttonbox-visual--list .buttonbox-visual__label {
+    font-size: 12px;
+}
+
+.buttonbox-preset-card__preview .buttonbox-visual--list .buttonbox-visual__description {
+    font-size: 10px;
+}
+
+.buttonbox-preset-card__preview .buttonbox-visual__option {
+    cursor: default;
+}
+
+.buttonbox-preset-card__button {
+    display: block;
+    inline-size: 100%;
+    padding: 8px 12px 12px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.buttonbox-preset-card__button:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: var(--pk-radius-md);
+}
+
+@container (max-width: 260px) {
+    .buttonbox-preset-card__preview .buttonbox-visual {
+        zoom: .75;
+    }
+    .buttonbox-preset-card__preview .buttonbox-visual--generated {
+        zoom: .6;
+    }
+    .buttonbox-preset-card__preview .buttonbox-visual--swatch {
+        zoom: .52;
+    }
+    .buttonbox-preset-card__preview .buttonbox-visual--list {
+        zoom: .6;
+    }
+}
+
+.buttonbox-preset-card__preview .buttonbox-visual__geometry {
+    inline-size: 40px;
+    block-size: 40px;
+}
+
+.buttonbox-preset-card__preview .buttonbox-visual__geometry--width {
+    inline-size: 100%;
+    block-size: 24px;
+}
+
+.buttonbox-option-details [data-bb-custom-angle] {
+    margin-block-start: 24px;
+}
+
+.buttonbox-appearance__table p {
+    margin: 5px 0 0;
+    font-size: 12px;
+}
+
+.buttonbox-appearance__summary {
+    padding: 12px 0;
+    cursor: pointer;
+    border-block: 1px solid var(--border-hairline);
+}
+
+.buttonbox-appearance__summary:focus-visible {
+    outline: 2px solid var(--blue-500);
+    outline-offset: 3px;
+    border-radius: 3px;
+}
+
+.buttonbox-appearance__title {
+    font-weight: 600;
+}
+
+.buttonbox-appearance__summary-text {
+    margin-inline-start: 10px;
+    font-weight: 400;
+    overflow-wrap: anywhere;
+}
+
+.buttonbox-appearance__body {
+    padding-block-start: 16px;
+}
+
+.buttonbox-appearance .instructions {
+    margin-block-end: 12px;
+}
+
+.buttonbox-appearance__table pk-select,
+.buttonbox-appearance__table pk-input,
+.buttonbox-appearance__table pk-color-input {
+    inline-size: 220px;
+    max-inline-size: 100%;
+}
+
+.buttonbox-appearance__controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.buttonbox-appearance__table pk-input::part(header) {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    -webkit-clip-path: inset(50%);
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+.buttonbox-appearance__label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    font-weight: 500;
+}
+
+.buttonbox-appearance__label pk-tooltip {
+    align-self: center;
+}
+
+.buttonbox-appearance__info {
+    opacity: .5;
+}
+
+.buttonbox-appearance__info::part(base) {
+    padding-inline: 0;
+}
+
+.buttonbox-appearance__label svg {
+    width: var(--pk-btn-icon-size);
+    height: var(--pk-btn-icon-size);
+    fill: currentColor;
+}
+
+.buttonbox-appearance__value {
+    padding: 6px 8px;
+}
+
+.buttonbox-position-arrangement {
+    display: grid;
+    grid-template-columns: repeat(3, 12px);
+    gap: 2px;
+}
+
+.buttonbox-position-arrangement--vertical {
+    grid-template-columns: 12px;
+}
+
+.buttonbox-position-arrangement i {
+    display: grid;
+    place-items: center;
+    width: 12px;
+    height: 12px;
+    border: 1px solid var(--gray-300);
+    border-radius: 2px;
+    background: var(--gray-050);
+}
+
+.buttonbox-position-arrangement i:after {
+    content: "";
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--gray-400);
+}
+
+.buttonbox-preset-card__preview .buttonbox-position {
+    zoom: .9;
+}
+
+.buttonbox-action-cell {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 8px;
+}
+
+.buttonbox-action-cell > pk-select {
+    width: 120px;
+    flex-shrink: 0;
+}
+
+.buttonbox-action-cell > pk-input {
+    min-width: 140px;
+    flex: 1;
+}
+
+.buttonbox-action-cell > pk-image-browser {
+    width: 12.5rem;
+    flex-shrink: 0;
+}
+
+.buttonbox-action-details {
+    display: grid;
+    gap: 24px;
+}
+
+.buttonbox-preset-card__preview .buttonbox-visual__check {
+    display: none;
+}
+
+.buttonbox-preset-card__preview .buttonbox-visual--swatch .buttonbox-visual__option {
+    flex: none;
+    inline-size: 78px;
+    min-inline-size: 0;
+}
+
+.buttonbox-preset-card__preview .buttonbox-visual--swatch .buttonbox-visual__control {
+    padding: 8px 6px;
+}
+
+.buttonbox-preset-card__preview .buttonbox-visual--generated .buttonbox-visual__control {
+    padding: 5px;
+}
+
+.buttonbox-preset-card__preview .buttonbox-visual--generated .buttonbox-visual__sample > .buttonbox-visual__icon,
+.buttonbox-preset-card__preview .buttonbox-visual--generated .buttonbox-visual__sample > .buttonbox-visual__icon svg {
+    inline-size: 36px;
+    block-size: 36px;
+}
+
+.buttonbox-preset-card__preview .buttonbox-width-choice {
+    zoom: .85;
+}
+
+.buttonbox-preset-card__preview .buttonbox-width-choice .buttonbox-visual {
+    zoom: 1;
+}
+
+.buttonbox-width-style {
+    display: flex;
+    inline-size: 100%;
+    gap: 1px;
+}
+
+.buttonbox-width-style i {
+    flex: 1;
+    block-size: 12px;
+    background: var(--gray-100);
+    border: 1px solid var(--border-hairline);
+}
+
+.buttonbox-width-style i:first-child {
+    background: var(--gray-300);
+}
+
+.buttonbox-width-style i:nth-child(2) {
+    background: var(--blue-500);
+}
+
+.buttonbox-width-style--samples {
+    gap: 5px;
+}
+
+.buttonbox-width-style--samples i {
+    block-size: 22px;
+    border-radius: 3px;
+}
+
+.buttonbox-preset-card__preview .buttonbox-width-field {
+    zoom: .85;
+}
+
+.buttonbox-width-settings [data-bb-visual-cell] {
+    inline-size: 100px;
+}
+
+.buttonbox-width-settings [data-bb-key="percentage"]::part(base) {
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    padding-inline: .5rem;
+}
+
+/* Keep the percentage input labelled without repeating the table heading visually. */
+.buttonbox-width-settings [data-bb-visual-cell] pk-input::part(header) {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+.buttonbox-appearance__labels-switch::part(label) {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}

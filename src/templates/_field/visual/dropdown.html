@@ -1,0 +1,47 @@
+{% set metadata = {} %}
+{% set selectedOption = null %}
+{% for option in options %}
+    {% if option.selected ?? false %}{% set value = option.value %}{% endif %}
+    {% set size = (option.surface.mode ?? '') == 'text' ? min(64, max(10, option.surface.size ?? 16)) : null %}
+    {% set metadata = metadata | merge({ (option.value): {
+        label: option.label,
+        size: size,
+        unavailable: option.disabled or (option.invalid ?? false),
+        reason: option.disabled ? option.explanation : (option.invalid ?? false ? option.description : ''),
+    } }) %}
+    {% if option.value == value %}{% set selectedOption = option %}{% endif %}
+{% endfor %}
+{% set selectedMetadata = metadata[value ?? ''] ?? null %}
+{% set warningId = 'buttonbox-dropdown-warning-' ~ random() %}
+<buttonbox-dropdown class="buttonbox-dropdown" style="{{ field.appearanceStyle }};{{ selectedMetadata.size ?? false ? '--buttonbox-dropdown-font:' ~ selectedMetadata.size ~ 'px' : '' }}" data-options="{{ metadata | json_encode | e('html_attr') }}" data-label="{{ field.name }}" data-placeholder="{{ 'Select an option' | t('buttonbox') }}">
+    {# A native input owns submission and Craft's change tracking; the Select remains nameless. #}
+    {{ hiddenInput(name, value ?? '', { disabled: static, 'data-dropdown-value': true }) }}
+    <pk-select class="buttonbox-dropdown__select" value="{{ value ?? '' }}" default-value="{{ value ?? '' }}" size="{{ field.appearance.size ?? 'default' }}" placeholder="{{ 'Select an option' | t('buttonbox') }}" aria-label="{{ field.name }}: {{ selectedOption.label ?? ('Select an option' | t('buttonbox')) }}" {% if static %}disabled{% endif %} {% if selectedMetadata.unavailable ?? false %}invalid{% endif %}>
+        <pk-option value="" label="{{ 'Select an option' | t('buttonbox') }}">{{ 'None' | t('buttonbox') }}</pk-option>
+        {% for option in options %}
+            {% set typography = (option.surface.mode ?? '') == 'text' %}
+            <pk-option class="buttonbox-dropdown__option" style="{{ field.appearanceStyle }}" value="{{ option.value }}" label="{{ option.label }}" {% if option.disabled or (option.invalid ?? false) %}disabled{% endif %}>
+                {# Inline artwork styles survive the Select's supported decoration mirroring and popup portal. #}
+                {% if option.imageUrl %}
+                    <img slot="start" src="{{ option.imageUrl }}" alt="{{ option.imageAlt }}" style="display:block;width:22px;height:22px;object-fit:contain;border-radius:3px">
+                {% elseif option.iconSvg %}
+                    <span slot="start" aria-hidden="true" style="display:flex;width:18px;height:18px">{{ option.iconSvg | raw }}</span>
+                {% elseif (option.surface.mode ?? '') == 'width' %}
+                    <span slot="start" aria-hidden="true" style="display:flex;align-items:stretch;width:24px;height:16px;border:1px solid currentColor;{{ option.surfaceStyle }}"><span style="display:block;width:var(--buttonbox-visual-width);background:currentColor"></span></span>
+                {% elseif (option.surface.mode ?? '') == 'ratio' %}
+                    <span slot="start" aria-hidden="true" style="display:flex;align-items:center;justify-content:center;width:22px;height:22px;{{ option.surfaceStyle }}"><span style="display:block;width:var(--buttonbox-visual-ratio-width);height:var(--buttonbox-visual-ratio-height);border:1px solid currentColor;box-sizing:border-box"></span></span>
+                {% elseif (option.surface.mode ?? '') == 'shape' %}
+                    <span slot="start" aria-hidden="true" style="display:flex;align-items:center;justify-content:center;width:22px;height:22px;{{ option.surfaceStyle }}"><span style="display:block;width:100%;height:var(--buttonbox-visual-shape-height,70%);border:1px solid currentColor;border-radius:var(--buttonbox-visual-radius);box-sizing:border-box"></span></span>
+                {% elseif not typography and (option.surfaceStyle or option.color) %}
+                    <span slot="start" aria-hidden="true" style="display:block;width:20px;height:20px;flex:none;border:2px solid white;border-radius:3px;box-sizing:border-box;{{ option.surfaceStyle }}"></span>
+                {% endif %}
+                <span class="buttonbox-dropdown__copy">
+                    <span {% if typography %}style="{{ option.surfaceStyle }};font-size:var(--buttonbox-visual-font-size);line-height:1.2"{% endif %}>{{ option.label }}</span>
+                    {% if option.description %}<span class="buttonbox-dropdown__description">{{ option.description }}</span>{% endif %}
+                    {% if option.disabled and option.explanation %}<span class="buttonbox-dropdown__description">{{ option.explanation }}</span>{% endif %}
+                </span>
+            </pk-option>
+        {% endfor %}
+    </pk-select>
+    <p id="{{ warningId }}" class="warning buttonbox-dropdown__warning" data-dropdown-warning role="status" aria-live="polite" {% if not (selectedMetadata.unavailable ?? false) %}hidden{% endif %}>{{ selectedMetadata.unavailable ?? false ? (selectedMetadata.reason ?: selectedMetadata.label) : '' }}</p>
+</buttonbox-dropdown>

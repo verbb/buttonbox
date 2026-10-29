@@ -1,8 +1,8 @@
 {
     "name": "verbb/buttonbox",
-    "description": "A collection of visual Craft CMS fields for buttons, colours, widths, ratings and other preset choices.",
+    "description": "Visual choice, position, width, rating and editor action fields for Craft CMS.",
     "type": "craft-plugin",
-    "version": "5.0.5",
+    "version": "5.1.0",
     "keywords": [
         "craft",
         "cms",
@@ -15,7 +15,7 @@
         "issues": "https://github.com/verbb/buttonbox/issues?state=open",
         "source": "https://github.com/verbb/buttonbox",
         "docs": "https://github.com/verbb/buttonbox",
-        "rss": "https://github.com/verbb/buttonbox/commits/v2.atom"
+        "rss": "https://github.com/verbb/buttonbox/commits/craft-5.atom"
     },
     "license": "MIT",
     "authors": [
@@ -30,7 +30,7 @@
     ],
     "require": {
         "php": "^8.2",
-        "craftcms/cms": "^5.0.0",
+        "craftcms/cms": "^5.10.11",
         "verbb/base": "^3.0.19"
     },
     "autoload": {

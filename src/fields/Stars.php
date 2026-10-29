@@ -1,7 +1,8 @@
 <?php
 namespace verbb\buttonbox\fields;
 
-use verbb\buttonbox\web\assets\cp\ButtonBoxAsset;
+use verbb\buttonbox\helpers\Compatibility;
+use verbb\buttonbox\web\assets\cp\LegacyAsset;
 
 use Craft;
 use craft\base\ElementInterface;
@@ -16,7 +17,7 @@ class Stars extends Field
 
     public static function displayName(): string
     {
-        return Craft::t('buttonbox', 'Button Box - Stars');
+        return Craft::t('buttonbox', 'Button Box - Stars (Legacy)');
     }
 
     public static function icon(): string
@@ -41,7 +42,7 @@ class Stars extends Field
 
     public function getSettingsHtml(): ?string
     {
-        return Craft::$app->getView()->renderTemplate('buttonbox/_field/stars/settings', [
+        return Compatibility::settingsNotice(Craft::t('buttonbox', 'Rating')) . Craft::$app->getView()->renderTemplate('buttonbox/_field/stars/settings', [
             'settings' => $this->getSettings(),
         ]);
     }
@@ -62,9 +63,11 @@ class Stars extends Field
 
     protected function inputHtml(mixed $value, ?ElementInterface $element, bool $inline): string
     {
+        Compatibility::logInput($this, $element);
+
         $name = $this->handle;
 
-        Craft::$app->getView()->registerAssetBundle(ButtonBoxAsset::class);
+        Craft::$app->getView()->registerAssetBundle(LegacyAsset::class);
         Craft::$app->getView()->registerJs('new Craft.ButtonBoxHovers("' . Craft::$app->getView()->namespaceInputId($name) . '");');
 
         return Craft::$app->getView()->renderTemplate('buttonbox/_field/stars/input', [

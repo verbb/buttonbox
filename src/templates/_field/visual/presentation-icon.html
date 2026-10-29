@@ -1,0 +1,51 @@
+<svg class="buttonbox-presentations__illustration" width="80" height="60" viewBox="0 0 80 60" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true">
+    {% if presentation == 'buttons' %}
+        {% for x in [0.5, 28.5, 56.5] %}
+            <rect x="{{ x }}" y="18.5" width="23" height="23" rx="5" />
+        {% endfor %}
+    {% elseif presentation == 'segmented' %}
+        <rect x="0.5" y="18.5" width="79" height="23" rx="5" />
+        <path d="M27 19V41M53 19V41" />
+    {% elseif presentation == 'dropdown' %}
+        <rect x="0.5" y="18.5" width="79" height="23" rx="5" />
+        <rect class="buttonbox-presentations__detail" x="8" y="25" width="10" height="10" rx="2" />
+        <path d="M25 30H51M62 28L66 32L70 28" />
+    {% elseif presentation == 'width' %}
+        <rect x="0.5" y="22.5" width="79" height="15" rx="4" />
+        <path d="M20 23V37M40 23V37M60 23V37" />
+        <path d="M3 25H38V35H3Z" fill="currentColor" />
+    {% elseif presentation == 'chip' %}
+        {% for y in [7.5, 33.5] %}
+            {% for x in [0.5, 43.5] %}
+                <rect x="{{ x }}" y="{{ y }}" width="36" height="19" rx="9.5" />
+            {% endfor %}
+        {% endfor %}
+    {% elseif presentation == 'list' %}
+        {% for y in [0.5, 21.5, 42.5] %}
+            <rect x="0.5" y="{{ y }}" width="79" height="17" rx="5" />
+        {% endfor %}
+    {% elseif presentation == 'tile' %}
+        {% for y in [0.5, 32.5] %}
+            {% for x in [0.5, 28.5, 56.5] %}
+                <rect x="{{ x }}" y="{{ y }}" width="23" height="27" rx="5" />
+            {% endfor %}
+        {% endfor %}
+    {% elseif presentation == 'card' %}
+        {% for x in [0.5, 43.5] %}
+            <rect x="{{ x }}" y="0.5" width="36" height="59" rx="5" />
+            <rect class="buttonbox-presentations__detail" x="{{ x + 6 }}" y="7.5" width="24" height="25" rx="2" />
+            <path d="M{{ x + 7 }} 42H{{ x + 29 }}M{{ x + 7 }} 49H{{ x + 23 }}" />
+        {% endfor %}
+    {% elseif presentation == 'swatch' %}
+        {% for x in [0.5, 28.5, 56.5] %}
+            <rect x="{{ x }}" y="12.5" width="23" height="35" rx="5" />
+            <path d="M{{ x + 1 }} 37H{{ x + 22 }}" />
+        {% endfor %}
+    {% else %}
+        {% for x in [0.5, 28.5, 56.5] %}
+            <rect x="{{ x }}" y="7.5" width="23" height="45" rx="5" />
+            <rect class="buttonbox-presentations__detail" x="{{ x + 3 }}" y="21.5" width="{{ loop.index * 5 }}" height="8" rx="2" />
+            <path d="M{{ x + 1 }} 39H{{ x + 22 }}" />
+        {% endfor %}
+    {% endif %}
+</svg>

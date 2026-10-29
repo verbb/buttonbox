@@ -1,0 +1,18 @@
+{% import '_includes/forms' as forms %}
+<div {{ slideout ? 'data-bb-option-set-slideout' }}>
+    {% if slideout %}<h2>{{ optionSet.uid ? optionSet.name : 'New Option Set' | t('buttonbox') }}</h2>{% endif %}
+    {{ hiddenInput('uid', optionSet.uid) }}
+    <fieldset {{ readOnly ? 'disabled' }}>
+        {{ forms.textField({ label: 'Name' | t('app'), id: 'name', name: 'name', value: optionSet.name, required: true, first: true, errors: optionSet.getErrors('name') }) }}
+        {{ forms.textField({ label: 'Handle' | t('app'), id: 'handle', name: 'handle', value: optionSet.handle, required: true, class: 'code', errors: optionSet.getErrors('handle') }) }}
+        {% if slideout %}
+            <p class="warning">{{ 'Changes apply to every field using this set. Saving the set does not save the field.' | t('buttonbox') }}</p>
+        {% endif %}
+        {% if usages %}
+            <div class="field"><p class="warning">{{ 'Changes affect these fields:' | t('buttonbox') }} {% for field in usages %}<a href="{{ url('settings/fields/edit/' ~ field.id) }}">{{ field.name }}</a>{{ not loop.last ? ', ' }}{% endfor %}</p></div>
+        {% endif %}
+        <hr>
+        {{ field.getOptionEditorHtml() | raw }}
+    </fieldset>
+</div>
+{% if not optionSet.uid %}{% js %}new Craft.HandleGenerator('#{{ 'name' | namespaceInputId }}', '#{{ 'handle' | namespaceInputId }}');{% endjs %}{% endif %}

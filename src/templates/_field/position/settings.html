@@ -1,0 +1,54 @@
+{% import '_includes/forms' as forms %}
+{% set config = { presets: presets, multi: false, position: true, rows: rows } %}
+<div id="{{ settingsId }}" class="buttonbox-position-settings" data-config="{{ config | json_encode | e('html_attr') }}">
+    {% if not (presetEditor ?? false) %}
+    <div class="field">
+        <section class="buttonbox-preset-start" aria-labelledby="{{ settingsId }}-preset-heading">
+            <div class="buttonbox-preset-start__copy">
+                <h3 id="{{ settingsId }}-preset-heading">{{ 'Start with a preset' | t('buttonbox') }}</h3>
+                <div class="instructions" id="{{ settingsId }}-preset-instructions"><p>{{ 'Choose a starting point for arrangement and positions.' | t('buttonbox') }}</p></div>
+            </div>
+            <button type="button" class="btn" data-bb-presets aria-haspopup="dialog" aria-describedby="{{ settingsId }}-preset-instructions">{{ 'Browse presets…' | t('buttonbox') }}</button>
+        </section>
+    </div>
+    {% endif %}
+    {% embed '_includes/forms/field.twig' with {
+        label: 'Arrangement' | t('buttonbox'), instructions: 'How positions are arranged for authors. Options fill the grid in table order.' | t('buttonbox'),
+        id: settingsId ~ '-mode', fieldset: true, fieldClass: 'buttonbox-presentations', errors: field.getErrors('mode'),
+    } %}
+        {% block input %}
+            <div class="buttonbox-presentations__choices">
+                {% for mode, label in {horizontal: 'Horizontal', vertical: 'Vertical', grid: 'Grid'} %}
+                    <label class="buttonbox-presentations__choice">
+                        <span class="buttonbox-presentations__sample" aria-hidden="true"><span class="buttonbox-position-arrangement buttonbox-position-arrangement--{{ mode }}">{% for cell in 1..(mode == 'grid' ? 9 : 3) %}<i></i>{% endfor %}</span></span>
+                        <span class="flex gap-xs">{{ input('radio', 'mode', mode, { id: loop.first ? settingsId ~ '-mode' : null, checked: field.mode == mode, 'aria-describedby': describedBy }) }} {{ label | t('buttonbox') }}</span>
+                    </label>
+                {% endfor %}
+            </div>
+        {% endblock %}
+    {% endembed %}
+    <div data-bb-columns {{ field.mode != 'grid' ? 'hidden' }}>
+        {{ forms.textField({label: 'Columns' | t('buttonbox'), instructions: 'Rows are added automatically to fit the options.' | t('buttonbox'), id: settingsId ~ '-columns', name: 'columns', value: field.columns, type: 'number', disabled: field.mode != 'grid', min: 1, max: 12, size: 3, errors: field.getErrors('columns')}) }}
+    </div>
+    <div class="field">
+        <div class="heading"><label>{{ 'Positions' | t('buttonbox') }}</label></div>
+        <div class="instructions"><p>{{ 'Define labels and stored values, then choose a default for new elements. Disabled positions keep their place in the layout.' | t('buttonbox') }}</p></div>
+        {{ forms.errorList(field.getErrors('options')) }}
+        {{ hiddenInput('options', '', { 'data-bb-options-name': true }) }}
+        <div data-bb-option-values></div>
+        <pk-editable-table data-bb-table aria-label="{{ 'Positions' | t('buttonbox') }}" add-row-label="{{ 'Add a position' | t('buttonbox') }}"></pk-editable-table>
+        <template data-bb-row-template>
+            <div class="buttonbox-option-details" data-bb-details-content>
+                <pk-checkbox data-bb-key="disabled" hint="{{ 'Keep this option visible but prevent authors from selecting it.' | t('buttonbox') }}">{{ 'Disable this option' | t('buttonbox') }}</pk-checkbox>
+                <pk-input data-bb-disabled-details label="{{ 'Unavailable reason' | t('buttonbox') }}" instructions="{{ 'Explain why this option cannot be selected. Shown in a tooltip when tooltips are enabled.' | t('buttonbox') }}" data-bb-key="explanation"></pk-input>
+            </div>
+        </template>
+    </div>
+    {% include 'buttonbox/_field/visual/preset-chooser' with { presetReplacementMessage: 'Choosing a preset replaces the current positions, arrangement and any saved appearance settings.' } %}
+    {% include 'buttonbox/_field/visual/appearance' with { positionAppearance: true } %}
+    <section class="buttonbox-preview-panel" aria-labelledby="{{ settingsId }}-preview-label">
+        <h3 id="{{ settingsId }}-preview-label" class="buttonbox-preview-panel__label">{{ 'Preview' | t('buttonbox') }}</h3>
+        <div class="buttonbox-visual-settings__preview" data-bb-preview></div>
+        <p class="light" role="status" aria-live="polite" data-bb-status></p>
+    </section>
+</div>

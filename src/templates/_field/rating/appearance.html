@@ -1,0 +1,53 @@
+{% import '_includes/forms' as forms %}
+{% import 'buttonbox/_field/visual/appearance' as appearance %}
+{% set appearanceErrors = field.hasErrors('symbol') or field.hasErrors('activeColor') or field.hasErrors('inactiveColor') or field.hasErrors('showLabels') %}
+<section class="field buttonbox-appearance" aria-labelledby="{{ settingsId }}-appearance-heading">
+    <details class="buttonbox-appearance__disclosure" {% if appearanceErrors or (presetEditor ?? false) %}open{% endif %}>
+        <summary class="buttonbox-appearance__summary">
+            <span id="{{ settingsId }}-appearance-heading" class="buttonbox-appearance__title">{{ 'Appearance' | t('buttonbox') }}</span>
+            <span class="light buttonbox-appearance__summary-text" data-bb-appearance-summary data-labels="{{ {
+                star: 'Star' | t('buttonbox'),
+                heart: 'Heart' | t('buttonbox'),
+                circle: 'Circle' | t('buttonbox'),
+                diamond: 'Diamond' | t('buttonbox'),
+                numeric: 'Numeric labels' | t('buttonbox'),
+                colours: 'Custom colours' | t('buttonbox'),
+            } | json_encode | e('html_attr') }}"></span>
+        </summary>
+        <div class="buttonbox-appearance__body">
+            <div class="instructions"><p>{{ 'Choose how each rating step looks.' | t('buttonbox') }}</p></div>
+            <pk-editable-table class="buttonbox-appearance__table" data-bb-appearance-table aria-label="{{ 'Appearance' | t('buttonbox') }}">
+                <div data-bb-appearance-row="symbol">
+                    {{ appearance.settingLabel('Symbol', 'Choose a symbol for the rating.') }}
+                    <div data-bb-appearance-control class="buttonbox-appearance__value">
+                        <pk-select name="symbol" value="{{ field.symbol }}" size="sm" aria-label="{{ 'Symbol' | t('buttonbox') }}">
+                            {% for value, option in {star: ['★', 'Star'], heart: ['♥', 'Heart'], circle: ['●', 'Circle'], diamond: ['◆', 'Diamond']} %}
+                                <pk-option value="{{ value }}">{{ option[0] }} {{ option[1] | t('buttonbox') }}</pk-option>
+                            {% endfor %}
+                        </pk-select>
+                        {{ forms.errorList(field.getErrors('symbol')) }}
+                    </div>
+                </div>
+                {% for key, label in {activeColor: 'Active colour', inactiveColor: 'Inactive colour'} %}
+                    <div data-bb-appearance-row="{{ key }}">
+                        {{ appearance.settingLabel(label, key == 'activeColor' ? 'The colour of selected rating steps.' : 'The colour of unselected rating steps.') }}
+                        <div data-bb-appearance-control class="buttonbox-appearance__value">
+                            <pk-color-input name="{{ key }}" value="{{ attribute(field, key) }}" size="sm" aria-label="{{ label | t('buttonbox') }}"></pk-color-input>
+                            {{ forms.errorList(field.getErrors(key)) }}
+                        </div>
+                    </div>
+                {% endfor %}
+                {% if not (presetEditor ?? false) %}
+                <div data-bb-appearance-row="showLabels">
+                    {{ appearance.settingLabel('Show numeric labels', 'Display the step number with each symbol. Numeric names remain available to screen readers.') }}
+                    <div data-bb-appearance-control class="buttonbox-appearance__value">
+                        {{ hiddenInput('showLabels', '0') }}
+                        <pk-lightswitch class="buttonbox-appearance__labels-switch" name="showLabels" data-bb-show-labels value="1" size="sm" label="{{ 'Show numeric labels' | t('buttonbox') }}" {% if field.showLabels %}checked{% endif %}></pk-lightswitch>
+                        {{ forms.errorList(field.getErrors('showLabels')) }}
+                    </div>
+                </div>
+                {% endif %}
+            </pk-editable-table>
+        </div>
+    </details>
+</section>

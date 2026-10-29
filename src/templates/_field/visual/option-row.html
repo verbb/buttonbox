@@ -1,0 +1,64 @@
+{% set rowId = editorId ~ '-row-' ~ key %}
+<div data-bb-visual-cell class="buttonbox-option-visual">
+    <pk-select size="xs" data-bb-key="visualType" aria-label="{{ 'Type' | t('buttonbox') }}" placeholder="{{ 'None' | t('buttonbox') }}">
+        {% for value, label in {'': 'None', icon: 'Icon', image: 'Image', solid: 'Colour', split: 'Split colours', foregroundBackground: 'Foreground/background', gradient: 'Gradient', width: 'Width', ratio: 'Aspect ratio', text: 'Typography', shape: 'Shape'} %}
+            <pk-option value="{{ value }}">{{ label | t('buttonbox') }}</pk-option>
+        {% endfor %}
+    </pk-select>
+    <pk-image-browser data-bb-visual="icon" data-bb-key="icon" mode="icon" size="xs" with-clear aria-label="{{ 'Choose icon' | t('buttonbox') }}" placeholder="{{ 'Choose icon' | t('buttonbox') }}"></pk-image-browser>
+    <pk-image-browser data-bb-visual="image" data-bb-key="imageUrl" mode="image" size="xs" with-clear aria-label="{{ 'Choose image' | t('buttonbox') }}" placeholder="{{ 'Choose image' | t('buttonbox') }}" empty-message="{{ 'No images available. Configure Images Path in Button Box settings, choose an asset, or enter a URL in Edit option.' | t('buttonbox') }}"></pk-image-browser>
+    <button type="button" class="btn small" data-bb-visual="image" data-bb-asset-image>{{ 'Choose asset…' | t('buttonbox') }}</button>
+    <div data-bb-visual="solid split foregroundBackground gradient" class="buttonbox-option-colours">
+        <pk-color-input size="xs" data-bb-key="surfaceValue" aria-label="{{ 'Colour' | t('buttonbox') }}"></pk-color-input>
+        <pk-color-input size="xs" data-bb-visual="split foregroundBackground gradient" data-bb-key="surfaceSecondary" aria-label="{{ 'Second colour' | t('buttonbox') }}"></pk-color-input>
+    </div>
+    <pk-tooltip data-bb-visual="width" content="{{ 'Width of the visual sample, from 5% to 100%.' | t('buttonbox') }}">
+        <pk-input slot="trigger" size="xs" type="number" min="5" max="100" data-bb-key="surfaceValue" label="{{ 'Sample width (%)' | t('buttonbox') }}"><span slot="end">%</span></pk-input>
+    </pk-tooltip>
+    <pk-tooltip data-bb-visual="text" content="{{ 'Size of the sample text, from 10 to 64 pixels.' | t('buttonbox') }}">
+        <pk-input slot="trigger" size="xs" type="number" min="10" max="64" data-bb-key="surfaceValue" label="{{ 'Sample text size (px)' | t('buttonbox') }}"><span slot="start">Aa</span><span slot="end">px</span></pk-input>
+    </pk-tooltip>
+    <pk-tooltip data-bb-visual="ratio" content="{{ 'Sample proportions, such as 1:1 for square or 16:9 for widescreen.' | t('buttonbox') }}">
+        <div slot="trigger" class="buttonbox-option-ratio">
+            <pk-input size="xs" type="number" min="0.01" step="any" data-bb-ratio="width" label="{{ 'Aspect ratio width' | t('buttonbox') }}"></pk-input>
+            <span aria-hidden="true">:</span>
+            <pk-input size="xs" type="number" min="0.01" step="any" data-bb-ratio="height" label="{{ 'Aspect ratio height' | t('buttonbox') }}"></pk-input>
+        </div>
+    </pk-tooltip>
+    <pk-select size="xs" data-bb-visual="shape" data-bb-shape aria-label="{{ 'Shape' | t('buttonbox') }}">
+        {% for value, label in {square: 'Square', rounded: 'Rounded', pill: 'Pill', circle: 'Circle', custom: 'Custom'} %}
+            <pk-option value="{{ value }}"><span slot="start" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="16" viewBox="0 0 24 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                {% if value == 'square' %}<rect x="4" y="2" width="16" height="16"/>{% elseif value == 'circle' %}<circle cx="12" cy="10" r="8"/>{% elseif value == 'custom' %}<path d="M2 18V10a8 8 0 0 1 8-8h12v8a8 8 0 0 1-8 8Z"/>{% else %}<rect x="2" y="4" width="20" height="12" rx="{{ value == 'pill' ? 6 : value == 'rounded' ? 3 : 0 }}"/>{% endif %}
+            </svg></span>{{ label | t('buttonbox') }}</pk-option>
+        {% endfor %}
+    </pk-select>
+    <span class="buttonbox-option-catalog-error" data-bb-catalog-error role="status" hidden></span>
+</div>
+<div data-bb-details-content class="buttonbox-option-details">
+    <pk-input label="{{ 'Description' | t('buttonbox') }}" instructions="{{ 'Supporting text shown beneath the option label.' | t('buttonbox') }}" data-bb-key="description"></pk-input>
+    <section data-bb-visual-settings class="buttonbox-option-details" aria-label="{{ 'Visual settings' | t('buttonbox') }}">
+        <pk-input data-bb-visual="image" label="{{ 'Image URL' | t('buttonbox') }}" instructions="{{ 'Use a custom image URL instead of an asset-library image. Aliases and environment variables are supported.' | t('buttonbox') }}" data-bb-key="imageUrl"></pk-input>
+        <pk-input data-bb-visual="image" label="{{ 'Image alternative text' | t('buttonbox') }}" instructions="{{ 'Describe what the image communicates. Leave blank to use the option label.' | t('buttonbox') }}" data-bb-key="imageAlt"></pk-input>
+        <pk-input data-bb-visual="shape" label="{{ 'Corner radius (px)' | t('buttonbox') }}" instructions="{{ 'Round the sample’s corners. Use 0 for square corners, or 999 for fully rounded ends.' | t('buttonbox') }}" data-bb-key="surfaceValue" type="number" min="0" max="999"></pk-input>
+        <pk-input data-bb-visual="shape" label="{{ 'Aspect ratio' | t('buttonbox') }}" instructions="{{ 'Use 1:1 for a square or circle. Leave blank for a wide shape.' | t('buttonbox') }}" data-bb-key="surfaceSecondary" placeholder="1:1"></pk-input>
+        <div data-bb-visual="split gradient">
+            <pk-field label="{{ 'Direction' | t('buttonbox') }}" instructions="{{ 'The direction from the first colour to the second.' | t('buttonbox') }}">
+                <pk-select data-bb-direction aria-label="{{ 'Direction' | t('buttonbox') }}">
+                    {% for value, direction in {0: ['↑', 'Up'], 45: ['↗', 'Up right'], 90: ['→', 'Right'], 135: ['↘', 'Down right'], 180: ['↓', 'Down'], 225: ['↙', 'Down left'], 270: ['←', 'Left'], 315: ['↖', 'Up left']} %}
+                        <pk-option value="{{ value }}"><span slot="start" aria-hidden="true">{{ direction[0] }}</span>{{ direction[1] | t('buttonbox') }}</pk-option>
+                    {% endfor %}
+                    <pk-option value="custom">{{ 'Custom angle' | t('buttonbox') }}</pk-option>
+                </pk-select>
+            </pk-field>
+            <pk-input data-bb-custom-angle label="{{ 'Angle (degrees)' | t('buttonbox') }}" instructions="{{ '0 points up; 90 points right. Values run clockwise from 0 to 360.' | t('buttonbox') }}" data-bb-key="surfaceAngle" type="number" min="0" max="360"></pk-input>
+        </div>
+        <div data-bb-visual="foregroundBackground">
+            <p>{{ 'The first colour is the foreground; the second is the background.' | t('buttonbox') }}</p>
+            <button type="button" class="btn" data-bb-swap-colours>{{ 'Swap colours' | t('buttonbox') }}</button>
+        </div>
+    </section>
+    <section class="buttonbox-option-details" aria-label="{{ 'Availability' | t('buttonbox') }}">
+        <pk-checkbox data-bb-key="disabled" hint="{{ 'Keep this option visible but prevent authors from selecting it.' | t('buttonbox') }}">{{ 'Disable this option' | t('buttonbox') }}</pk-checkbox>
+        <pk-input data-bb-disabled-details label="{{ 'Unavailable reason' | t('buttonbox') }}" instructions="{{ 'Shown in a tooltip when this option is disabled. Explain why it cannot be selected.' | t('buttonbox') }}" data-bb-key="explanation"></pk-input>
+    </section>
+</div>

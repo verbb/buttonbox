@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import { positionTarget } from '../src/web/assets/cp/src/position-navigation.js';
+const cells = [false, true, false, false, true, false, false, false, false];
+assert.equal(positionTarget(0, 3, cells, 'ArrowRight'), 2);
+assert.equal(positionTarget(2, 3, cells, 'ArrowRight'), 2);
+assert.equal(positionTarget(3, 3, cells, 'ArrowLeft'), 3);
+assert.equal(positionTarget(1, 3, cells, 'ArrowDown'), 7);
+assert.equal(positionTarget(8, 3, cells, 'ArrowDown'), 8);
+assert.equal(positionTarget(8, 3, cells, 'ArrowUp'), 5);
+assert.equal(positionTarget(0, 4, [false, true, false, false], 'ArrowRight'), 2);
+assert.equal(positionTarget(0, 1, [false, true, false], 'ArrowDown'), 2);
+assert.equal(positionTarget(2, 3, [false, false, false, false], 'ArrowDown'), 2);
+assert.equal(positionTarget(0, 8, Array(16).fill(false), 'ArrowDown'), 8);
+console.log('Position navigation tests passed.');

@@ -1,0 +1,38 @@
+{% extends 'buttonbox/_layouts/settings' %}
+{% set title = familyLabel %}
+{% set selectedTab = 'presets-' ~ family %}
+{% block actionButton %}
+    {% if not readOnly %}<a class="btn submit add icon" href="{{ url('buttonbox/settings/presets/new', {family: family}) }}">{{ 'New preset' | t('buttonbox') }}</a>{% endif %}
+{% endblock %}
+{% block settingsContent %}
+    <div id="presets-admin-table"></div>
+{% endblock %}
+
+{% do view.registerAssetBundle('craft\\web\\assets\\admintable\\AdminTableAsset') %}
+{% set tableData = [] %}
+{% for preset in presets %}
+    {% set duplicateHtml %}
+        {% if not readOnly %}<a class="cp-icon" href="{{ url('buttonbox/settings/presets/' ~ preset.id, {duplicate: 1}) }}" title="{{ 'Duplicate' | t('app') }}" aria-label="{{ 'Duplicate {name}' | t('buttonbox', {name: preset.name}) }}"><span class="cp-icon puny" style="--icon-color: var(--ui-control-color)">{{ iconSvg('clone') }}</span></a>{% endif %}
+    {% endset %}
+    {% set tableData = tableData | merge([{
+        id: preset.id,
+        title: preset.name,
+        url: url('buttonbox/settings/presets/' ~ preset.id),
+        source: (preset.customized ? 'Customised built-in' : (preset.builtIn ? 'Built-in' : 'Custom')) | t('buttonbox'),
+        duplicate: duplicateHtml,
+        _showDelete: not readOnly and not preset.builtIn,
+    }]) %}
+{% endfor %}
+{% js %}
+    new Craft.VueAdminTable({
+        container: '#{{ 'presets-admin-table' | namespaceInputId('settings') }}',
+        columns: [
+            {name: '__slot:title', title: Craft.t('app', 'Name')},
+            {name: 'source', title: Craft.t('app', 'Source')},
+            {% if not readOnly %}{name: 'duplicate', title: '', titleClass: 'thin', dataClass: 'thin'}{% endif %}
+        ],
+        deleteAction: {{ (readOnly ? null : 'buttonbox/presets/delete') | json_encode | raw }},
+        deleteConfirmationMessage: {{ 'Delete “{name}”? Existing fields will not change.' | t('buttonbox') | json_encode | raw }},
+        tableData: {{ tableData | json_encode(15) | raw }},
+    });
+{% endjs %}

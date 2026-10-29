@@ -1,0 +1,52 @@
+{% import '_includes/forms' as forms %}
+{% set config = { presets: presets, multi: false, width: true, rows: rows } %}
+<div id="{{ settingsId }}" class="buttonbox-width-settings" data-config="{{ config | json_encode | e('html_attr') }}">
+    {% if not (presetEditor ?? false) %}
+    <div class="field">
+        <section class="buttonbox-preset-start" aria-labelledby="{{ settingsId }}-preset-heading">
+            <div class="buttonbox-preset-start__copy">
+                <h3 id="{{ settingsId }}-preset-heading">{{ 'Start with a preset' | t('buttonbox') }}</h3>
+                <div class="instructions" id="{{ settingsId }}-preset-instructions"><p>{{ 'Choose a set of width stops, then adjust their labels and stored values.' | t('buttonbox') }}</p></div>
+            </div>
+            <button type="button" class="btn" data-bb-presets aria-haspopup="dialog" aria-describedby="{{ settingsId }}-preset-instructions">{{ 'Browse presets…' | t('buttonbox') }}</button>
+        </section>
+    </div>
+    {% endif %}
+    {% embed '_includes/forms/field.twig' with {
+        label: 'Style' | t('buttonbox'), instructions: 'How widths appear to authors.' | t('buttonbox'),
+        id: settingsId ~ '-style', fieldset: true, fieldClass: 'buttonbox-presentations', errors: field.getErrors('displayStyle'),
+    } %}
+        {% block input %}
+            <div class="buttonbox-presentations__choices">
+                {% for style, label in {bar: 'Bar', samples: 'Width samples'} %}
+                    <label class="buttonbox-presentations__choice">
+                        <span class="buttonbox-presentations__sample" aria-hidden="true"><span class="buttonbox-width-style buttonbox-width-style--{{ style }}"><i></i><i></i><i></i><i></i></span></span>
+                        <span class="flex gap-xs">{{ input('radio', 'displayStyle', style, {id: loop.first ? settingsId ~ '-style' : null, checked: field.displayStyle == style, 'aria-describedby': describedBy}) }} {{ label | t('buttonbox') }}</span>
+                    </label>
+                {% endfor %}
+            </div>
+        {% endblock %}
+    {% endembed %}
+    <div class="field">
+        <div class="heading"><label>{{ 'Widths' | t('buttonbox') }}</label></div>
+        <div class="instructions"><p>{{ 'Define widths in increasing order, up to 100%. Labels and stored values can be different from their percentage.' | t('buttonbox') }}</p></div>
+        {{ forms.errorList(field.getErrors('options')) }}
+        {{ hiddenInput('options', '', { 'data-bb-options-name': true }) }}
+        <div data-bb-option-values></div>
+        <pk-editable-table data-bb-table aria-label="{{ 'Widths' | t('buttonbox') }}" add-row-label="{{ 'Add a width' | t('buttonbox') }}"></pk-editable-table>
+        <template data-bb-row-template>
+            <div data-bb-visual-cell><pk-input data-bb-key="percentage" label="{{ 'Width (%)' | t('buttonbox') }}" type="number" min="0.0001" max="100" step="any" size="sm"><span slot="end">%</span></pk-input></div>
+            <div class="buttonbox-option-details" data-bb-details-content>
+                <pk-checkbox data-bb-key="disabled" hint="{{ 'Keep this option visible but prevent authors from selecting it.' | t('buttonbox') }}">{{ 'Disable this option' | t('buttonbox') }}</pk-checkbox>
+                <pk-input data-bb-disabled-details label="{{ 'Unavailable reason' | t('buttonbox') }}" instructions="{{ 'Explain why this option cannot be selected. Shown in a tooltip when tooltips are enabled.' | t('buttonbox') }}" data-bb-key="explanation"></pk-input>
+            </div>
+        </template>
+    </div>
+    {% include 'buttonbox/_field/visual/preset-chooser' with { presetReplacementMessage: 'Choosing a preset replaces the current widths, style and any saved appearance settings.' } %}
+    {% include 'buttonbox/_field/width/appearance' %}
+    <section class="buttonbox-preview-panel" aria-labelledby="{{ settingsId }}-preview-label">
+        <h3 id="{{ settingsId }}-preview-label" class="buttonbox-preview-panel__label">{{ 'Preview' | t('buttonbox') }}</h3>
+        <div class="buttonbox-visual-settings__preview" data-bb-preview></div>
+        <p class="light" role="status" aria-live="polite" data-bb-status></p>
+    </section>
+</div>

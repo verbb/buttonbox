@@ -1,0 +1,27 @@
+{% extends 'buttonbox/_layouts/settings' %}
+{% import '_includes/forms' as forms %}
+{% import 'verbb-base/_macros' as macros %}
+{% set pageTitle = 'General Settings' | t('buttonbox') %}
+{% set fullPageForm = not readOnly %}
+{% set selectedTab = 'general' %}
+{% set pageAction = 'buttonbox/settings/save-settings' %}
+{% set pageUrl = 'buttonbox/settings' %}
+{% block settingsContent %}
+    <fieldset {{ readOnly ? 'disabled' }}>
+        {{ forms.autosuggestField({
+            label: 'Icons Path' | t('buttonbox'),
+            instructions: 'Folder of custom SVG icons for the icon gallery. Includes the folder and one level of subfolders. Craft’s built-in icons remain available.' | t('buttonbox'),
+            name: 'iconsPath', value: settings.iconsPath,
+            suggestEnvVars: true, suggestAliases: true,
+            errors: settings.getErrors('iconsPath'), warning: macros.configWarning('iconsPath', 'buttonbox'),
+        }) }}
+        {{ forms.autosuggestField({
+            label: 'Images Path' | t('buttonbox'),
+            instructions: 'Folder of PNG, JPEG, WebP, GIF or AVIF images for the image gallery. Includes the folder and one level of subfolders. Gallery images are published as public files; asset images remain available.' | t('buttonbox'),
+            name: 'imagesPath', value: settings.imagesPath,
+            suggestEnvVars: true, suggestAliases: true,
+            errors: settings.getErrors('imagesPath'), warning: macros.configWarning('imagesPath', 'buttonbox'),
+        }) }}
+        <p class="light">{{ 'Paths support aliases and environment variables. Leave a path empty to disable its custom gallery. Missing folders show no custom files.' | t('buttonbox') }}</p>
+    </fieldset>
+{% endblock %}

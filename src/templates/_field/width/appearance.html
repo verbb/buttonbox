@@ -1,0 +1,48 @@
+{% import '_includes/forms' as forms %}
+{% import 'buttonbox/_field/visual/appearance' as appearance %}
+<section class="field buttonbox-appearance" aria-labelledby="{{ settingsId }}-appearance-heading">
+    <details class="buttonbox-appearance__disclosure" {% if field.hasErrors('appearance') or field.hasErrors('labelDisplay') %}open{% endif %}>
+        <summary class="buttonbox-appearance__summary">
+            <span id="{{ settingsId }}-appearance-heading" class="buttonbox-appearance__title">{{ 'Appearance' | t('buttonbox') }}</span>
+            <span class="light buttonbox-appearance__summary-text" data-bb-appearance-summary data-labels="{{ {default: 'Default' | t('buttonbox'), hidden: 'Labels hidden' | t('buttonbox'), all: 'All labels' | t('buttonbox'), tooltipsOff: 'Tooltips off' | t('buttonbox'), colours: 'Custom colours' | t('buttonbox'), borders: 'Custom borders' | t('buttonbox')} | json_encode | e('html_attr') }}">{{ 'Default' | t('buttonbox') }}</span>
+        </summary>
+        <div class="buttonbox-appearance__body">
+            {{ forms.errorList(field.getErrors('appearance')) }}
+            <pk-editable-table class="buttonbox-appearance__table" data-bb-appearance-table aria-label="{{ 'Appearance' | t('buttonbox') }}">
+                <div data-bb-appearance-row="labels">
+                    {{ appearance.settingLabel('Labels', 'Accessible labels remain available in every mode.') }}
+                    <div data-bb-appearance-control class="buttonbox-appearance__value">
+                        <pk-select name="labelDisplay" value="{{ field.labelDisplay }}" size="sm" aria-label="{{ 'Labels' | t('buttonbox') }}">
+                            {% for value, label in {selected: 'Selected value', all: 'Every option', hidden: 'Hidden'} %}<pk-option value="{{ value }}">{{ label | t('buttonbox') }}</pk-option>{% endfor %}
+                        </pk-select>{{ forms.errorList(field.getErrors('labelDisplay')) }}
+                    </div>
+                </div>
+                <div data-bb-appearance-row="showTooltips">
+                    {{ appearance.settingLabel('Show tooltips', 'Show width labels and unavailable reasons on hover or keyboard focus.') }}
+                    <div data-bb-appearance-control class="buttonbox-appearance__value">
+                        {{ hiddenInput('showTooltips', '0') }}
+                        <pk-lightswitch name="showTooltips" data-bb-show-tooltips value="1" size="sm" label="{{ 'Show tooltips' | t('buttonbox') }}" {% if field.showTooltips %}checked{% endif %}></pk-lightswitch>
+                    </div>
+                </div>
+                <div data-bb-appearance-row="size">
+                    {{ appearance.settingLabel('Size', 'Scales the width control and its labels together.') }}
+                    <div data-bb-appearance-control class="buttonbox-appearance__value"><pk-select name="appearance[size]" data-bb-appearance-key="size" value="{{ field.appearance.size ?? 'default' }}" size="sm" aria-label="{{ 'Size' | t('buttonbox') }}">
+                        {% for value, label in {xxs: 'Extra extra small', xs: 'Extra small', sm: 'Small', default: 'Default', lg: 'Large', xl: 'Extra large'} %}<pk-option value="{{ value }}">{{ label | t('buttonbox') }}</pk-option>{% endfor %}
+                    </pk-select></div>
+                </div>
+                {% for key, label in {textColor: 'Text colour', backgroundColor: 'Background', fillColor: 'Fill colour', selectionColor: 'Selection colour', borderColor: 'Border colour'} %}
+                    <div data-bb-appearance-row="{{ key }}">
+                        {{ appearance.settingLabel(label, key == 'fillColor' ? 'The fill inside unselected width samples.' : (key == 'selectionColor' ? 'The entire filled bar, or the selected width sample.' : null)) }}
+                        <div data-bb-appearance-control class="buttonbox-appearance__value"><div class="buttonbox-appearance__controls"><pk-color-input name="appearance[{{ key }}]" data-bb-appearance-key="{{ key }}" value="{{ attribute(field.appearance, key) ?? '' }}" size="sm" aria-label="{{ label | t('buttonbox') }}"></pk-color-input><pk-button type="button" size="sm" data-bb-reset-appearance="{{ key }}" aria-label="{{ 'Reset {label}' | t('buttonbox', {label: label | t('buttonbox')}) }}">{{ 'Reset' | t('buttonbox') }}</pk-button></div></div>
+                    </div>
+                {% endfor %}
+                {% for key, label in {borderWidth: 'Border width', radius: 'Corner radius'} %}
+                    <div data-bb-appearance-row="{{ key }}">
+                        {{ appearance.settingLabel(label) }}
+                        <div data-bb-appearance-control class="buttonbox-appearance__value"><pk-input name="appearance[{{ key }}]" data-bb-appearance-key="{{ key }}" value="{{ attribute(field.appearance, key) ?? '' }}" label="{{ label | t('buttonbox') }}" type="number" min="0" max="{{ key == 'radius' ? 100 : 8 }}" step="1" placeholder="{{ 'Default' | t('buttonbox') }}" size="sm"><span slot="end">px</span></pk-input></div>
+                    </div>
+                {% endfor %}
+            </pk-editable-table>
+        </div>
+    </details>
+</section>

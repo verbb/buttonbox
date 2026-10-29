@@ -1,0 +1,96 @@
+{%- set optionTooltips = [] -%}
+{%- set widthBar = field.presentation == 'width' and not multi -%}
+{%- set selectedLabel = '' -%}
+{%- set outlined = field.presentation not in ['buttons', 'segmented', 'chip', 'width'] -%}
+{%- set selectedValues = multi ? (value ?? []) : [value] -%}
+{%- set showLabels = field.appearance.showLabels ?? true -%}
+{%- set labelTooltips = field.appearance.labelTooltips ?? false -%}
+{# Submit an explicit empty value when every checkbox is cleared. #}
+{% if multi and not static %}{{ hiddenInput(name, '') }}{% endif %}
+{% if widthBar %}<div class="buttonbox-width-choice" style="{{ field.appearanceStyle }}">{% endif %}
+
+<div {{ attr({
+    class: [
+        'buttonbox-visual',
+        'buttonbox-visual--' ~ field.presentation,
+        outlined ? 'buttonbox-visual--outlined' : false,
+        (field.appearance.size ?? 'default') == 'default' ? 'buttonbox-visual--size-default' : false,
+        (field.appearance.borderColor ?? '') is not empty ? 'buttonbox-visual--custom-border' : false,
+        (field.appearance.selectionColor ?? '') is not empty ? 'buttonbox-visual--custom-selection' : false,
+        'buttonbox-visual--icons-' ~ (field.iconSize ?? 'medium'),
+        'buttonbox-visual--images-' ~ (field.imageSize ?? 'auto'),
+        'buttonbox-visual--image-fit-' ~ (field.imageFit ?? 'cover'),
+        inline ? 'buttonbox-visual--inline' : false,
+        static ? 'buttonbox-visual--static' : false,
+    ] | filter,
+    style: field.appearanceStyle ~ (field.presentation in ['tile', 'card'] ? ';--buttonbox-visual-columns:' ~ field.columns : ''),
+}) }}>
+    {% for option in options %}
+        {% set selected = option.selected ?? (option.value in selectedValues) %}
+        {% if selected %}{% set selectedLabel = option.label %}{% endif %}
+        {% set optionDisabled = option.disabled or static %}
+        {% set hasVisual = option.imageUrl or option.iconSvg or option.surfaceStyle or option.color %}
+        {% set labelVisible = showLabels or not hasVisual %}
+        {% set reason = option.disabled ? option.explanation | trim : '' %}
+        {% set tooltipContent = (labelTooltips ? [option.label] : []) | merge(reason is not empty ? [reason] : []) | join(' — ') %}
+        {% set optionId = 'buttonbox-option-' ~ random() %}
+        {% set tooltipId = tooltipContent is not empty ? optionId ~ '-tooltip' : null %}
+        {% set description = [option.description, reason] | filter | join(' — ') %}
+        {% set descriptionId = description ? optionId ~ '-description' : null %}
+        {% if tooltipId %}{% set optionTooltips = optionTooltips | merge([{ id: tooltipId, target: optionId, content: tooltipContent }]) %}{% endif %}
+
+        <label {{ attr({
+            class: [
+                'buttonbox-visual__option',
+                selected ? 'is-selected' : false,
+                option.disabled ? 'is-disabled' : false,
+                option.invalid ?? false ? 'is-invalid' : false,
+            ] | filter,
+            id: optionId,
+            tabindex: option.disabled and tooltipId and not static ? 0 : false,
+            aria: { disabled: option.disabled ? 'true' : false, label: option.disabled ? option.label : false },
+        }) }}>
+            <input {{ attr({
+                class: 'buttonbox-visual__input',
+                type: multi ? 'checkbox' : 'radio',
+                name: multi ? name ~ '[]' : name,
+                value: option.value,
+                checked: selected,
+                disabled: optionDisabled,
+                'data-bb-tooltip': tooltipId ? true : false,
+                aria: { label: option.label, describedby: descriptionId, invalid: option.invalid ?? false ? 'true' : false },
+            }) }}>
+
+            <span class="buttonbox-visual__control">
+                {% if outlined %}<span class="buttonbox-visual__check" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" focusable="false"><path d="m4 8 2.5 2.5L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg></span>{% endif %}
+                {% if field.presentation == 'generated' %}<span class="buttonbox-visual__sample buttonbox-visual__sample--{{ option.surface.mode ?? 'none' }}">{% endif %}
+                {% if option.imageUrl %}
+                    <span class="buttonbox-visual__image-wrap">
+                        <img class="buttonbox-visual__image" src="{{ option.imageUrl }}" alt="{{ option.imageAlt ?: option.label }}">
+                    </span>
+                {% elseif option.iconSvg %}
+                    <span class="buttonbox-visual__icon">{{ option.iconSvg | raw }}</span>
+                {% elseif option.surfaceStyle or option.color %}
+                    {% set geometry = (option.surface.mode ?? '') in ['width', 'ratio', 'shape'] %}
+                    {% if geometry %}<span class="buttonbox-visual__geometry buttonbox-visual__geometry--{{ option.surface.mode }}" style="{{ option.surfaceStyle }}">{% endif %}
+                    <span class="buttonbox-visual__surface buttonbox-visual__surface--{{ option.surface.mode ?? 'solid' }}"{% if option.surfaceStyle %} style="{{ option.surfaceStyle }}"{% endif %}>{{ (option.surface.mode ?? null) == 'text' ? 'Aa' }}</span>
+                    {% if geometry %}</span>{% endif %}
+                {% endif %}
+
+                {% if field.presentation == 'generated' %}</span>{% endif %}
+
+                {% if labelVisible or option.description %}
+                <span class="buttonbox-visual__copy">
+                    {% if labelVisible %}<span class="buttonbox-visual__label">{{ option.label }}</span>{% endif %}
+                    {% if option.description %}<span class="buttonbox-visual__description">{{ option.description }}</span>{% endif %}
+                </span>
+                {% endif %}
+            </span>
+            {% if descriptionId %}<span id="{{ descriptionId }}" hidden>{{ description }}</span>{% endif %}
+        </label>
+    {% endfor %}
+</div>
+{% if widthBar %}<span class="buttonbox-width-choice__value" {% if not showLabels %}hidden{% endif %}>{{ selectedLabel ?: '—' }}</span></div>{% endif %}
+{% for tooltip in optionTooltips %}
+    <pk-tooltip class="buttonbox-visual__tooltip" id="{{ tooltip.id }}" for="{{ tooltip.target }}" content="{{ tooltip.content }}"></pk-tooltip>
+{% endfor %}

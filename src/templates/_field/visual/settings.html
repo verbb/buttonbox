@@ -1,0 +1,83 @@
+{% import '_includes/forms' as forms %}
+{% set config = { presets: presets, sets: sets, multi: multi, rows: rows, editableSetUids: editableSetUids, canManageSets: canManageSets } %}
+<div id="{{ settingsId }}" class="buttonbox-visual-settings" data-config="{{ config | json_encode | e('html_attr') }}">
+    {% if includeSource %}
+        {{ forms.selectField({ label: 'Options Type' | t('buttonbox'), instructions: 'Define options here, reuse an option set, or provide them dynamically through code.' | t('buttonbox'), id: settingsId ~ '-source', name: 'optionSource', value: field.optionSource,
+            options: [{ label: 'Custom' | t('buttonbox'), value: 'local' }, { label: 'Option set' | t('buttonbox'), value: 'projectSet' }, { label: 'Dynamic (PHP)' | t('buttonbox'), value: 'provider' }],
+            inputAttributes: { 'data-bb-source': true }, errors: field.getErrors('optionSource') }) }}
+        <div data-source="projectSet" {{ field.optionSource != 'projectSet' ? 'hidden' }}>
+            {% set setOptions = [{ label: 'Choose an option set…' | t('buttonbox'), value: '' }] %}
+            {% for key, set in sets %}{% set setOptions = setOptions | merge([{ label: set.label ?? key, value: key }]) %}{% endfor %}
+            {% if field.projectSet and sets[field.projectSet] is not defined %}{% set setOptions = setOptions | merge([{ label: 'Unavailable: {value}' | t('buttonbox', { value: field.projectSet }), value: field.projectSet }]) %}{% endif %}
+            {% embed '_includes/forms/field.twig' with {
+                label: 'Option set' | t('buttonbox'),
+                instructions: 'Reusable options shared between fields. [Manage option sets]({url}).' | t('buttonbox', { url: url('buttonbox/settings/option-sets') }),
+                id: settingsId ~ '-set',
+                errors: field.getErrors('projectSet'),
+            } %}
+                {% block input %}
+                    {% import '_includes/forms' as forms %}
+                    <div class="flex">
+                        {{ forms.select({ id: settingsId ~ '-set', name: 'projectSet', value: field.projectSet, options: setOptions }) }}
+                        {% if canManageSets %}<button type="button" class="btn" data-bb-action="new-set">{{ 'New' | t('app') }}</button>{% endif %}
+                        {% set canEditSet = canManageSets and sets[field.projectSet] is defined and field.projectSet in editableSetUids %}
+                        {% if canManageSets %}<button type="button" class="btn{{ not canEditSet ? ' hidden' }}" data-bb-action="edit-set" {{ not canEditSet ? 'disabled' }}>{{ 'Edit' | t('app') }}</button>{% endif %}
+                    </div>
+                    <p data-bb-set-customise class="{{ sets[field.projectSet] is not defined ? 'hidden' }}"><a href="#" data-bb-action="customise-set">{{ 'Convert to Custom' | t('buttonbox') }}</a></p>
+                {% endblock %}
+            {% endembed %}
+        </div>
+        <div class="field" data-source="provider" {{ field.optionSource != 'provider' ? 'hidden' }}>
+            <pk-alert variant="info">{{ 'Provide options through a module or plugin. Available choices can depend on the entry being edited.' | t('buttonbox') }}</pk-alert>
+        </div>
+    {% endif %}
+    {% if not (presetEditor ?? false) %}
+    <div class="field" data-source="local" {{ includeSource and field.optionSource != 'local' ? 'hidden' }}>
+        <section class="buttonbox-preset-start" aria-labelledby="{{ settingsId }}-preset-heading">
+            <div class="buttonbox-preset-start__copy">
+                <h3 id="{{ settingsId }}-preset-heading">{{ 'Start with a preset' | t('buttonbox') }}</h3>
+                <div class="instructions" id="{{ settingsId }}-preset-instructions"><p>{{ 'Choose a starting point for presentation and options.' | t('buttonbox') }}</p></div>
+            </div>
+            <button type="button" class="btn" data-bb-action="presets" aria-haspopup="dialog" aria-describedby="{{ settingsId }}-preset-instructions">{{ 'Browse presets…' | t('buttonbox') }}</button>
+        </section>
+    </div>
+    {% endif %}
+    {% embed '_includes/forms/field.twig' with {
+        label: 'Presentation' | t('buttonbox'),
+        instructions: 'How these options appear to authors.' | t('buttonbox'),
+        id: settingsId ~ '-presentation',
+        fieldset: true,
+        fieldClass: 'buttonbox-presentations',
+        errors: field.getErrors('presentation'),
+    } %}
+        {% block input %}
+            <div class="buttonbox-presentations__choices">
+                {% for value, label in presentations | filter((label, value) => not multi or value not in ['width', 'dropdown']) %}
+                    <label class="buttonbox-presentations__choice">
+                        <span class="buttonbox-presentations__sample" aria-hidden="true">{% include 'buttonbox/_field/visual/presentation-icon' with { presentation: value } only %}</span>
+                        <span class="flex gap-xs">{{ input('radio', 'presentation', value, { id: loop.first ? settingsId ~ '-presentation' : null, checked: field.presentation == value, 'aria-describedby': describedBy }) }} {{ label }}</span>
+                    </label>
+                {% endfor %}
+            </div>
+        {% endblock %}
+    {% endembed %}
+    <div data-bb-columns {{ field.presentation not in ['tile', 'card'] ? 'hidden' }}>
+        {{ forms.selectField({ label: 'Columns' | t('buttonbox'), id: settingsId ~ '-columns', name: 'columns', value: field.columns, options: [1,2,3,4,5,6] | map(value => {label: value, value: value}), errors: field.getErrors('columns') }) }}
+    </div>
+    <div class="field" data-source="local" {{ includeSource and field.optionSource != 'local' ? 'hidden' }}>
+        <div class="heading"><label>{{ 'Options' | t('buttonbox') }}</label></div>
+        <div class="instructions"><p>{{ 'Define the choices authors can select, their stored values, and any defaults.' | t('buttonbox') }}</p></div>
+        {{ forms.errorList(field.getErrors('options')) }}
+        {{ hiddenInput('options', '', { 'data-bb-options-name': true }) }}
+        <div data-bb-option-values></div>
+        <pk-editable-table data-bb-table aria-label="{{ 'Options' | t('buttonbox') }}" add-row-label="{{ 'Add an option' | t('buttonbox') }}"></pk-editable-table>
+        <template data-bb-row-template>{% include 'buttonbox/_field/visual/option-row' with { row: {}, key: '__ROW__', editorId: settingsId } %}</template>
+    </div>
+    {% include 'buttonbox/_field/visual/appearance' %}
+    {% include 'buttonbox/_field/visual/preset-chooser' %}
+    <section class="buttonbox-preview-panel" aria-labelledby="{{ settingsId }}-preview-label">
+        <h3 id="{{ settingsId }}-preview-label" class="buttonbox-preview-panel__label">{{ 'Preview' | t('buttonbox') }}</h3>
+        <div class="buttonbox-visual-settings__preview" data-bb-preview></div>
+        <p class="light" role="status" aria-live="polite" data-bb-status></p>
+    </section>
+</div>

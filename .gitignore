@@ -6,6 +6,7 @@
 # COMPOSER
 /vendor
 /composer.lock
+/tests/runtime/vendor/
 
 # BUILD FILES
 /bower_components/*

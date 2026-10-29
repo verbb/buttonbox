@@ -1,0 +1,49 @@
+{% import '_includes/forms' as forms %}
+<div id="{{ settingsId }}" class="buttonbox-action-settings" data-config="{{ {rows: field.actionConfig.settingsActions} | json_encode | e('html_attr') }}">
+    <div class="field">
+        <div class="heading"><h3>{{ 'Actions' | t('buttonbox') }}</h3></div>
+        <div class="instructions"><p>{{ 'Configure reusable control-panel links. Changes apply wherever this field is used. Enter a path such as /admin/my-page or /my-page, or a full URL. Paths use the current domain. URLs can include element reference tags, such as {url}.' | t('buttonbox') }}</p></div>
+        {{ forms.errorList(field.getErrors('actions')) }}
+        <input type="hidden" name="actions" value="" data-actions-name>
+        <div data-actions-values></div>
+        <pk-editable-table data-actions-table aria-label="{{ 'Actions' | t('buttonbox') }}" add-row-label="{{ 'Add an action' | t('buttonbox') }}"></pk-editable-table>
+    </div>
+    <template data-actions-row>
+        <div data-action-cell="visual" class="buttonbox-action-cell">
+            <pk-select data-action-key="visualType" size="xs" aria-label="{{ 'Visual type' | t('buttonbox') }}"><pk-option value="none">{{ 'None' | t('buttonbox') }}</pk-option><pk-option value="icon">{{ 'Icon' | t('buttonbox') }}</pk-option><pk-option value="image">{{ 'Image' | t('buttonbox') }}</pk-option></pk-select>
+            <pk-image-browser data-action-key="icon" mode="icon" size="xs" placeholder="{{ 'Choose icon' | t('buttonbox') }}" aria-label="{{ 'Icon' | t('buttonbox') }}"></pk-image-browser>
+            <pk-image-browser data-action-key="imageUrl" mode="image" size="xs" placeholder="{{ 'Choose image' | t('buttonbox') }}" aria-label="{{ 'Image' | t('buttonbox') }}"></pk-image-browser>
+            <button type="button" class="btn small" data-action-asset-image hidden>{{ 'Choose asset…' | t('buttonbox') }}</button>
+            <span data-gallery-error class="error" hidden></span>
+        </div>
+        <div data-action-cell="style" class="buttonbox-action-cell">
+            <pk-select data-action-key="style" size="xs" aria-label="{{ 'Button style' | t('buttonbox') }}">{% for value, label in {default: 'Default', primary: 'Primary', secondary: 'Secondary', outline: 'Outline', dashed: 'Dashed', transparent: 'Transparent', link: 'Link', none: 'None'} %}<pk-option value="{{ value }}">{{ label | t('buttonbox') }}</pk-option>{% endfor %}</pk-select>
+        </div>
+        <div data-action-details class="buttonbox-action-details">
+            <pk-field label="{{ 'Icon or image placement' | t('buttonbox') }}" instructions="{{ 'Show the visual before or after the label. Its size follows the shared button size.' | t('buttonbox') }}"><pk-select data-action-key="iconPosition" aria-label="{{ 'Icon or image placement' | t('buttonbox') }}"><pk-option value="start">{{ 'Before label' | t('buttonbox') }}</pk-option><pk-option value="end">{{ 'After label' | t('buttonbox') }}</pk-option></pk-select></pk-field>
+            <pk-field data-image-alt label="{{ 'Image alternative text' | t('buttonbox') }}" instructions="{{ 'Leave empty when the label already describes the image.' | t('buttonbox') }}"><pk-input data-action-key="imageAlt" aria-label="{{ 'Image alternative text' | t('buttonbox') }}"></pk-input></pk-field>
+            <pk-checkbox data-action-key="newWindow">{{ 'Open in a new window' | t('buttonbox') }}</pk-checkbox>
+        </div>
+    </template>
+    <div class="field buttonbox-appearance">
+        <details class="buttonbox-appearance__disclosure" data-actions-appearance-disclosure {% if field.hasErrors('size') or field.hasErrors('alignment') or field.hasErrors('spacing') %}open{% endif %}>
+            <summary class="buttonbox-appearance__summary">
+                <span class="buttonbox-appearance__title">{{ 'Appearance' | t('buttonbox') }}</span>
+                <span class="light buttonbox-appearance__summary-text" data-actions-appearance-summary data-default="{{ 'Default' | t('buttonbox') }}">{{ 'Default' | t('buttonbox') }}</span>
+            </summary>
+            <div class="buttonbox-appearance__body">
+        <div class="instructions"><p>{{ 'Use a shared size and layout for all actions. Each action has its own button style.' | t('buttonbox') }}</p></div>
+        <pk-editable-table data-actions-appearance aria-label="{{ 'Appearance' | t('buttonbox') }}" class="buttonbox-appearance__table">
+            {% for key, choices in {
+                size: {xxs: 'Extra extra small', xs: 'Extra small', sm: 'Small', default: 'Default', lg: 'Large', xl: 'Extra large'},
+                alignment: {start: 'Start', center: 'Centre', end: 'End'},
+                spacing: {compact: 'Compact', normal: 'Normal', relaxed: 'Relaxed'}
+            } %}
+                <div data-appearance-row="{{ key }}"><span data-appearance-label class="buttonbox-appearance__label">{{ {size: 'Button size', alignment: 'Alignment', spacing: 'Spacing'}[key] | t('buttonbox') }}</span><div data-appearance-control class="buttonbox-appearance__value"><pk-select name="{{ key }}" value="{{ attribute(field, key) }}" size="sm" data-action-appearance="{{ key }}" aria-label="{{ {size: 'Button size', alignment: 'Alignment', spacing: 'Spacing'}[key] | t('buttonbox') }}">{% for value, label in choices %}<pk-option value="{{ value }}">{{ label | t('buttonbox') }}</pk-option>{% endfor %}</pk-select>{{ forms.errorList(field.getErrors(key)) }}</div></div>
+            {% endfor %}
+        </pk-editable-table>
+            </div>
+        </details>
+    </div>
+    <section class="buttonbox-preview-panel" aria-label="{{ 'Preview' | t('buttonbox') }}"><h3 class="buttonbox-preview-panel__label">{{ 'Preview' | t('buttonbox') }}</h3><div class="buttonbox-visual-settings__preview" data-actions-preview></div><p class="light" data-actions-status role="status"></p></section>
+</div>

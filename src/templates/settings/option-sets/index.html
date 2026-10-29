@@ -1,0 +1,53 @@
+{% extends 'buttonbox/_layouts/settings' %}
+{% set title = 'Option Sets' | t('buttonbox') %}
+{% set selectedTab = 'sets' %}
+{% block actionButton %}
+    {% if not readOnly %}<a class="btn submit add icon" href="{{ url('buttonbox/settings/option-sets/new') }}">{{ 'New option set' | t('buttonbox') }}</a>{% endif %}
+{% endblock %}
+{% block settingsContent %}
+    <div id="option-sets-admin-table"></div>
+{% endblock %}
+
+{% do view.registerAssetBundle('craft\\web\\assets\\admintable\\AdminTableAsset') %}
+{% set tableData = [] %}
+{% macro duplicateLink(url, name) %}
+    <a class="cp-icon" href="{{ url }}" title="{{ 'Duplicate' | t('app') }}" aria-label="{{ 'Duplicate {name}' | t('buttonbox', {name: name}) }}"><span class="cp-icon puny" style="--icon-color: var(--ui-control-color)">{{ iconSvg('clone') }}</span></a>
+{% endmacro %}
+{% for uid, set in sets %}
+    {% set tableData = tableData | merge([{
+        id: uid,
+        title: set.name,
+        url: url('buttonbox/settings/option-sets/' ~ uid),
+        handle: set.handle | e,
+        options: set.options | length,
+        managed: 'Control panel' | t('buttonbox'),
+        duplicate: not readOnly ? _self.duplicateLink(url('buttonbox/settings/option-sets/' ~ uid, {duplicate: 1}), set.name) : '',
+        _showDelete: not readOnly and uid in deletableUids,
+    }]) %}
+{% endfor %}
+{% for handle, set in configuredSets %}
+    {% set tableData = tableData | merge([{
+        id: 'config-' ~ handle,
+        title: set.label ?? handle,
+        handle: handle | e,
+        options: set.options | length,
+        managed: '<code>config/buttonbox.php</code>',
+        duplicate: not readOnly ? _self.duplicateLink(url('buttonbox/settings/option-sets/new', {duplicateHandle: handle}), set.label ?? handle) : '',
+        _showDelete: false,
+    }]) %}
+{% endfor %}
+{% js %}
+    new Craft.VueAdminTable({
+        container: '#{{ 'option-sets-admin-table' | namespaceInputId('settings') }}',
+        columns: [
+            {name: '__slot:title', title: Craft.t('app', 'Name')},
+            {name: '__slot:handle', title: Craft.t('app', 'Handle')},
+            {name: 'options', title: Craft.t('buttonbox', 'Options')},
+            {name: 'managed', title: Craft.t('buttonbox', 'Managed in')},
+            {% if not readOnly %}{name: 'duplicate', title: '', titleClass: 'thin', dataClass: 'thin'}{% endif %}
+        ],
+        deleteAction: {{ (readOnly ? null : 'buttonbox/option-sets/delete') | json_encode | raw }},
+        emptyMessage: {{ 'No option sets yet.' | t('buttonbox') | json_encode | raw }},
+        tableData: {{ tableData | json_encode(15) | raw }},
+    });
+{% endjs %}

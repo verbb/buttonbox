@@ -1,212 +1,1055 @@
-.buttonbox-buttons input {
-    position: absolute;
-    left: -9999px;
-    clip: rect(0, 0, 0, 0);
+@import '@verbb/plugin-kit-web/plugin-kit.css';
+
+.buttonbox-dropdown {
+    display: block;
+    max-inline-size: 100%;
 }
 
-.buttonbox-buttons__label {
-    line-height: 1.4;
+.buttonbox-dropdown__select {
+    max-inline-size: 100%;
 }
 
-.buttonbox-button {
+.buttonbox-dropdown__select::part(control) {
+    color: var(--buttonbox-choice-text, var(--text-color));
+    background: var(--buttonbox-choice-background, var(--button-bg));
+    border-color: var(--buttonbox-choice-border, transparent);
+    border-width: var(--buttonbox-choice-border-width, 1px);
+    border-radius: var(--buttonbox-choice-radius, var(--button-border-radius));
+    font-size: var(--buttonbox-dropdown-font, var(--buttonbox-choice-font, 14px));
+    line-height: 1.2;
+}
+
+.buttonbox-dropdown__select:not([disabled])::part(control):hover {
+    background: var(--buttonbox-choice-background, var(--button-bg--hover));
+}
+
+.buttonbox-dropdown__option::part(option) {
+    color: var(--buttonbox-choice-text, var(--text-color));
+}
+
+.buttonbox-dropdown__option[selected]::part(option) {
+    background: var(--buttonbox-choice-selected-background, var(--gray-100));
+}
+
+.buttonbox-dropdown__option::part(check) {
+    color: var(--buttonbox-choice-accent, var(--text-color));
+}
+
+.buttonbox-dropdown__copy {
     display: flex;
-    align-items: center;
-    gap: 5px;
-    height: auto !important;
-    align-self: stretch;
+    flex-direction: column;
+    gap: 2px;
+    white-space: normal;
+    overflow-wrap: anywhere;
 }
 
-.buttonbox-button__img-align-top {
+.buttonbox-dropdown__description {
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--light-text-color);
+}
+
+.buttonbox-dropdown__warning {
+    margin-block-start: 8px;
+}
+
+.buttonbox-dropdown__warning[hidden] {
+    display: none;
+}
+
+.buttonbox-visual {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.buttonbox-visual__tooltip {
+    position: absolute;
+}
+
+.buttonbox-visual__option {
+    position: relative;
+    display: flex;
+    cursor: pointer;
+}
+
+.buttonbox-visual__input {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+.buttonbox-visual__control {
+    box-sizing: border-box;
+    display: flex;
+    flex: 1;
+    align-items: center;
+    gap: 8px;
+    min-block-size: max(var(--buttonbox-choice-height, var(--input-height, 34px)), calc(var(--buttonbox-icon-box, 24px) + 14px));
+    padding: 6px var(--buttonbox-choice-padding-inline, 10px);
+    font-size: var(--buttonbox-choice-font, 14px);
+    border: var(--buttonbox-choice-border-width, 1px) solid var(--buttonbox-choice-border, var(--border-hairline));
+    border-radius: var(--buttonbox-choice-radius, var(--button-border-radius, 5px));
+    background: var(--buttonbox-choice-background, var(--gray-050));
+    color: var(--buttonbox-choice-text, var(--text-color));
+    box-shadow: inset 0 0 0 1px transparent;
+    transition:
+        border-color .1s linear,
+        box-shadow .1s linear,
+        background .1s linear;
+}
+
+.buttonbox-visual--outlined .buttonbox-visual__option:not(.is-invalid, .is-selected):has(.buttonbox-visual__input:not(:disabled)):hover .buttonbox-visual__control {
+    border-color: var(--buttonbox-choice-accent, var(--gray-500));
+    box-shadow: inset 0 0 0 1px var(--buttonbox-choice-accent, var(--gray-500));
+}
+
+.buttonbox-visual__option:focus-visible .buttonbox-visual__control,
+.buttonbox-visual__input:focus-visible + .buttonbox-visual__control {
+    outline: 2px solid var(--blue-500);
+    outline-offset: 2px;
+}
+
+.buttonbox-visual__option.is-selected .buttonbox-visual__control {
+    border-color: var(--buttonbox-choice-accent, var(--gray-500));
+    background: var(--buttonbox-choice-background, var(--gray-050));
+    box-shadow: inset 0 0 0 1px var(--buttonbox-choice-accent, var(--gray-500));
+}
+
+.buttonbox-visual__option.is-disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+}
+
+.buttonbox-visual__option.is-invalid .buttonbox-visual__control {
+    border-color: var(--red-500);
+    background: var(--red-050);
+}
+
+.buttonbox-visual__copy {
+    display: flex;
+    flex-direction: column;
+    min-inline-size: 0;
+}
+
+.buttonbox-visual__label {
+    color: var(--buttonbox-choice-text, var(--text-color));
+    font-weight: 500;
+    line-height: 1.25;
+}
+
+.buttonbox-visual__description {
+    color: var(--buttonbox-choice-text, var(--light-text-color));
+    font-size: .857143em;
+    line-height: 1.35;
+}
+
+.buttonbox-visual__icon,
+.buttonbox-visual__surface {
+    display: grid;
+    flex: none;
+    place-items: center;
+    inline-size: 24px;
+    block-size: 24px;
+    border-radius: 5px;
+}
+
+.buttonbox-visual__icon {
+    inline-size: var(--buttonbox-icon-box, 24px);
+    block-size: var(--buttonbox-icon-box, 24px);
+}
+
+.buttonbox-visual__icon svg {
+    fill: currentColor;
+    inline-size: var(--buttonbox-icon-size, 18px);
+    block-size: var(--buttonbox-icon-size, 18px);
+}
+
+.buttonbox-visual--icons-small {
+    --buttonbox-icon-size: 14px;
+    --buttonbox-icon-box: 20px;
+}
+
+.buttonbox-visual--icons-large {
+    --buttonbox-icon-size: 24px;
+    --buttonbox-icon-box: 30px;
+}
+
+.buttonbox-visual--images-small {
+    --buttonbox-image-size: 32px;
+}
+
+.buttonbox-visual--images-medium {
+    --buttonbox-image-size: 48px;
+}
+
+.buttonbox-visual--images-large {
+    --buttonbox-image-size: 64px;
+}
+
+.buttonbox-visual--image-fit-contain {
+    --buttonbox-image-fit: contain;
+}
+
+.buttonbox-visual__image-wrap {
+    display: block;
+    flex: none;
+    inline-size: var(--buttonbox-image-size, 48px);
+    block-size: var(--buttonbox-image-size, 48px);
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+.buttonbox-visual__image {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: var(--buttonbox-image-fit, cover);
+}
+
+.buttonbox-visual--segmented,
+.buttonbox-visual--chip {
+    gap: 0;
+}
+
+.buttonbox-visual--segmented .buttonbox-visual__option.is-selected {
+    z-index: 1;
+}
+
+.buttonbox-visual--segmented .buttonbox-visual__option:hover {
+    z-index: 2;
+}
+
+.buttonbox-visual--segmented .buttonbox-visual__option:has(.buttonbox-visual__input:focus-visible) {
+    z-index: 3;
+}
+
+.buttonbox-visual--segmented .buttonbox-visual__option:not(:first-child) .buttonbox-visual__control {
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+}
+
+.buttonbox-visual--segmented .buttonbox-visual__option:not(:last-child) .buttonbox-visual__control {
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
+}
+
+.buttonbox-visual--chip {
+    --buttonbox-default-radius: 999px;
+    gap: 8px;
+}
+
+.buttonbox-visual--chip .buttonbox-visual__control {
+    border-radius: var(--buttonbox-choice-radius, 999px);
+}
+
+.buttonbox-visual--list {
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.buttonbox-visual--tile,
+.buttonbox-visual--card {
+    display: grid;
+    grid-template-columns: repeat(var(--buttonbox-visual-columns, 3), minmax(0, 1fr));
+}
+
+.buttonbox-visual--tile .buttonbox-visual__control,
+.buttonbox-visual--card .buttonbox-visual__control {
+    align-items: flex-start;
+    block-size: 100%;
+}
+
+.buttonbox-visual--tile .buttonbox-visual__image-wrap,
+.buttonbox-visual--card .buttonbox-visual__image-wrap {
+    inline-size: var(--buttonbox-image-size, 64px);
+    block-size: var(--buttonbox-image-size, 64px);
+}
+
+.buttonbox-visual--card .buttonbox-visual__control {
     flex-direction: column;
 }
 
-.buttonbox-button__img-align-left {
-    flex-direction: row;
+.buttonbox-visual--card .buttonbox-visual__image-wrap {
+    inline-size: 100%;
+    block-size: var(--buttonbox-image-size, 96px);
 }
 
-.buttonbox-button__img-align-right {
-    flex-direction: row-reverse;
+.buttonbox-visual--swatch .buttonbox-visual__control {
+    flex-direction: column;
 }
 
-.buttonbox-button__img-align-bottom {
-    flex-direction: column-reverse;
+.buttonbox-visual--swatch .buttonbox-visual__surface {
+    inline-size: 48px;
+    block-size: 32px;
+    border: 1px solid var(--border-hairline);
 }
 
-.buttonbox-colours select {
-    display: none;
+.buttonbox-visual--generated .buttonbox-visual__option {
+    inline-size: 124px;
+    max-inline-size: 100%;
 }
 
-.buttonbox-colours .buttonbox__btn {
-    display: inline-block;
-    zoom: 1;
-    color: #586673;
+.buttonbox-visual--generated .buttonbox-visual__control {
+    flex-direction: column;
+    align-items: stretch;
+    block-size: 100%;
+    padding: 10px var(--buttonbox-choice-padding-inline, 11px);
 }
 
-.buttonbox-colours .buttonbox__btn:hover {
-    text-decoration: none;
-}
-
-.buttonbox-colours .buttonbox__btn:hover .buttonbox-colours__label {
-    color: #0d78f2;
-}
-
-.buttonbox-colours__block {
-    width: 18px;
-    height: 18px;
-    margin-right: 8px;
-    border: 2px solid #fff;
-    display: inline-block;
-    zoom: 1;
-    vertical-align: middle;
-    border-radius: 4px;
-    box-shadow: 0 0 18px -2px rgba(0, 0, 0, 0.1);
-}
-
-.buttonbox-colours__label {
-    display: inline-block;
-    zoom: 1;
-    vertical-align: middle;
-    padding-top: 2px;
-    font-size: 13px;
-}
-
-.buttonbox-textsize select {
-    display: none;
-}
-
-.buttonbox-textsize .buttonbox__btn {
-    color: #586673;
-}
-
-.buttonbox-textsize .buttonbox__btn:hover {
-    text-decoration: none;
-}
-
-.buttonbox-textsize .buttonbox__btn:hover span {
-    color: #0d78f2;
-}
-
-.buttonbox-fancyoptions-menu a {
-    position: relative;
-}
-
-.buttonbox-fancyoptions-menu a:before {
-    margin-top: -6px !important;
-    top: 50%;
-    position: absolute;
-}
-
-.buttonbox-fancyoptions-menu a span {
-    display: inline-block;
-    zoom: 1;
-    padding: 6px 0 3px 0;
-    font-size: 13px;
-}
-
-.buttonbox-fancyoptions-menu .buttonbox-colours__block {
-    margin-right: 5px;
-}
-
-.buttonbox-stars {
+.buttonbox-visual__sample {
     display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    inline-size: 100%;
+    block-size: 64px;
+}
+
+.buttonbox-visual__sample--width {
+    justify-content: flex-start;
+}
+
+.buttonbox-visual--generated .buttonbox-visual__copy {
+    text-align: center;
+}
+
+.buttonbox-visual--generated .buttonbox-visual__surface {
+    inline-size: 48px;
+    block-size: 24px;
+    border: 2px solid var(--gray-500);
+    border-radius: var(--buttonbox-visual-radius, 3px);
+}
+
+.buttonbox-visual--generated .buttonbox-visual__surface--text {
+    inline-size: auto;
+    block-size: auto;
+    border: 0;
+    font-size: var(--buttonbox-visual-font-size, 16px);
+    line-height: 1;
+}
+
+.buttonbox-visual--static .buttonbox-visual__control {
+    cursor: default;
+}
+
+@media (max-width: 700px) {
+    .buttonbox-visual--tile,
+    .buttonbox-visual--card {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+.buttonbox-position {
+    --buttonbox-position-cell-size: calc(var(--buttonbox-choice-height, 34px) - 2px);
+    display: grid;
+    grid-template-columns: repeat(var(--buttonbox-position-columns, 3), var(--buttonbox-position-cell-size));
+    gap: 1px;
+    inline-size: max-content;
+    overflow: hidden;
+    border: 1px solid var(--border-hairline);
+    border-radius: var(--radius-md);
+    background: var(--border-hairline);
+}
+
+.buttonbox-position--vertical {
+    grid-template-columns: var(--buttonbox-position-cell-size);
+}
+
+.buttonbox-position__option {
+    position: relative;
+    display: grid;
+    place-items: center;
+    inline-size: var(--buttonbox-position-cell-size);
+    block-size: var(--buttonbox-position-cell-size);
+    cursor: pointer;
+    background: var(--buttonbox-choice-background, var(--gray-050));
+}
+
+.buttonbox-position__option.is-disabled {
+    cursor: default;
+    background: var(--buttonbox-choice-background, var(--gray-100));
+}
+
+.buttonbox-position__option.is-disabled .buttonbox-position__dot {
+    opacity: .25;
+}
+
+.buttonbox-position__option:focus-visible {
+    outline: 2px solid var(--focus-ring-color);
+    outline-offset: -2px;
+}
+
+.buttonbox-position-field {
+    max-inline-size: 100%;
+    overflow-x: auto;
+}
+
+.buttonbox-position__input {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+}
+
+.buttonbox-position__dot {
+    inline-size: calc(var(--buttonbox-position-cell-size) * .25);
+    block-size: calc(var(--buttonbox-position-cell-size) * .25);
+    border-radius: 50%;
+    background: var(--buttonbox-choice-text, var(--gray-400));
+}
+
+.buttonbox-position:not(.buttonbox-position--static) .buttonbox-position__option:not(.is-disabled, .is-selected):hover .buttonbox-position__dot {
+    background: var(--buttonbox-choice-text, var(--gray-600));
+}
+
+.buttonbox-position__option.is-selected {
+    background: var(--buttonbox-choice-selected-background, var(--blue-050));
+}
+
+.buttonbox-position__option.is-selected .buttonbox-position__dot {
+    inline-size: calc(var(--buttonbox-position-cell-size) * .34375);
+    block-size: calc(var(--buttonbox-position-cell-size) * .34375);
+    background: var(--buttonbox-choice-accent, var(--blue-500));
+}
+
+.buttonbox-position__input:focus-visible + .buttonbox-position__dot {
+    box-shadow: 0 0 0 3px var(--focus-ring-color);
+}
+
+.buttonbox-position--static .buttonbox-position__option {
+    cursor: default;
+}
+
+.buttonbox-rating {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.buttonbox-rating__option,
+.buttonbox-rating__clear {
+    position: relative;
+    cursor: pointer;
+}
+
+.buttonbox-rating__input {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+}
+
+.buttonbox-rating__star {
+    display: block;
+    color: var(--buttonbox-rating-inactive, var(--gray-300));
+    font-size: 26px;
+    line-height: 1;
+    transition: color 100ms linear, transform 100ms linear;
+}
+
+.buttonbox-rating__option:hover .buttonbox-rating__star,
+.buttonbox-rating__option:has(~ .buttonbox-rating__option:hover) .buttonbox-rating__star {
+    color: var(--buttonbox-rating-active, var(--yellow-500));
+}
+
+.buttonbox-rating__option.is-selected .buttonbox-rating__star {
+    color: var(--buttonbox-rating-active, var(--yellow-500));
+}
+
+.buttonbox-rating__label {
+    display: block;
+    color: var(--light-text-color);
+    font-size: 10px;
+    line-height: 1;
+    text-align: center;
+}
+
+.buttonbox-rating__input:focus-visible + .buttonbox-rating__star {
+    border-radius: 3px;
+    box-shadow: 0 0 0 3px var(--focus-ring-color);
+}
+
+.buttonbox-rating__clear {
+    margin-inline-start: 6px;
+}
+
+.buttonbox-rating--static .buttonbox-rating__option {
+    cursor: default;
+}
+
+.buttonbox-action-links__heading {
+    margin-block-end: 8px;
+    color: var(--fg-subtle);
+    font-weight: 600;
+}
+
+.buttonbox-action-links__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.buttonbox-action-links__actions .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.buttonbox-action-links__image {
+    inline-size: 18px;
+    block-size: 18px;
+    object-fit: contain;
+}
+
+.buttonbox-visual__control {
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+}
+
+.buttonbox-visual__surface--text {
+    font-size: var(--buttonbox-visual-font-size, 16px);
+    inline-size: auto;
+    min-inline-size: 32px;
+    block-size: auto;
+}
+
+.buttonbox-visual__surface--shape {
+    border: 2px solid var(--gray-500);
+    border-radius: var(--buttonbox-visual-radius, 3px);
+}
+
+.buttonbox-visual__geometry {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    inline-size: 24px;
+    block-size: 24px;
+}
+
+.buttonbox-visual__geometry--width {
+    box-sizing: border-box;
+    inline-size: 48px;
+    justify-content: flex-start;
+    overflow: hidden;
+    border: 1px solid var(--gray-300);
+    border-radius: 3px;
+    background: var(--white);
+}
+
+.buttonbox-visual__geometry--shape {
+    inline-size: 32px;
+    block-size: 32px;
+}
+
+.buttonbox-visual--generated .buttonbox-visual__geometry {
+    inline-size: 64px;
+    block-size: 64px;
+}
+
+.buttonbox-visual--generated .buttonbox-visual__geometry--width {
+    inline-size: 100%;
+    block-size: 36px;
+}
+
+.buttonbox-visual--swatch .buttonbox-visual__geometry {
+    inline-size: 48px;
+    block-size: 48px;
+}
+
+.buttonbox-visual__geometry > .buttonbox-visual__surface--width {
+    inline-size: var(--buttonbox-visual-width, 50%);
+    block-size: 100%;
+    min-inline-size: 0;
+    border: 0;
+    border-radius: 0;
+    background: var(--gray-500);
+}
+
+.buttonbox-visual__geometry > .buttonbox-visual__surface--ratio {
+    inline-size: var(--buttonbox-visual-ratio-width, 100%);
+    block-size: var(--buttonbox-visual-ratio-height, 100%);
+    border: 2px solid var(--gray-500);
+}
+
+.buttonbox-visual__geometry > .buttonbox-visual__surface--shape {
+    inline-size: 100%;
+    block-size: var(--buttonbox-visual-shape-height, 50%);
+    border: 2px solid var(--gray-500);
+}
+
+.buttonbox-visual:is(.buttonbox-visual--buttons, .buttonbox-visual--segmented, .buttonbox-visual--chip) {
+    --buttonbox-icon-size: var(--buttonbox-choice-icon-size, var(--pk-btn-icon-size-default));
+    --buttonbox-icon-box: var(--buttonbox-icon-size);
+}
+
+.buttonbox-visual:is(.buttonbox-visual--buttons, .buttonbox-visual--segmented, .buttonbox-visual--chip) .buttonbox-visual__control {
+    min-block-size: var(--buttonbox-choice-height, var(--pk-btn-height-default));
+    padding: 3px var(--buttonbox-choice-padding-inline, var(--pk-btn-padding-inline-default));
+    font-size: var(--buttonbox-choice-font, var(--pk-btn-font-default));
+    gap: var(--buttonbox-choice-icon-gap, var(--pk-btn-icon-gap-default));
+}
+
+.buttonbox-visual:is(.buttonbox-visual--buttons, .buttonbox-visual--segmented, .buttonbox-visual--chip) .buttonbox-visual__surface,
+.buttonbox-visual:is(.buttonbox-visual--buttons, .buttonbox-visual--segmented, .buttonbox-visual--chip) .buttonbox-visual__geometry {
+    inline-size: var(--buttonbox-icon-size);
+    block-size: var(--buttonbox-icon-size);
+}
+
+.buttonbox-visual:is(.buttonbox-visual--buttons, .buttonbox-visual--segmented, .buttonbox-visual--chip) .buttonbox-visual__geometry--width {
+    inline-size: calc(var(--buttonbox-icon-size) * 2);
+}
+
+.buttonbox-visual:is(.buttonbox-visual--buttons, .buttonbox-visual--segmented, .buttonbox-visual--chip) .buttonbox-visual__geometry > .buttonbox-visual__surface--width {
+    inline-size: var(--buttonbox-visual-width, 50%);
+    block-size: 100%;
+}
+
+.buttonbox-visual:is(.buttonbox-visual--buttons, .buttonbox-visual--segmented, .buttonbox-visual--chip) .buttonbox-visual__geometry > .buttonbox-visual__surface--ratio {
+    inline-size: var(--buttonbox-visual-ratio-width, 100%);
+    block-size: var(--buttonbox-visual-ratio-height, 100%);
+}
+
+.buttonbox-visual:is(.buttonbox-visual--buttons, .buttonbox-visual--segmented, .buttonbox-visual--chip) .buttonbox-visual__geometry > .buttonbox-visual__surface--shape {
+    inline-size: 100%;
+    block-size: var(--buttonbox-visual-shape-height, 50%);
+}
+
+.buttonbox-visual:is(.buttonbox-visual--buttons, .buttonbox-visual--segmented, .buttonbox-visual--chip) .buttonbox-visual__image-wrap {
+    inline-size: var(--buttonbox-image-size, var(--buttonbox-icon-size));
+    block-size: var(--buttonbox-image-size, var(--buttonbox-icon-size));
+}
+
+.buttonbox-visual--buttons {
+    gap: 8px;
+}
+
+.buttonbox-visual--segmented {
+    gap: 1px;
+}
+
+:is(.buttonbox-visual--buttons, .buttonbox-visual--segmented, .buttonbox-visual--chip).buttonbox-visual--custom-border {
+    --buttonbox-default-border-width: 1px;
+}
+
+:is(.buttonbox-visual--buttons, .buttonbox-visual--segmented, .buttonbox-visual--chip) .buttonbox-visual__control {
+    justify-content: center;
+    border-width: var(--buttonbox-choice-border-width, var(--buttonbox-default-border-width, 0px));
+    border-color: var(--buttonbox-choice-border, var(--border-hairline));
+    border-radius: var(--buttonbox-choice-radius, var(--buttonbox-default-radius, var(--button-border-radius, var(--radius-lg))));
+    background: var(--buttonbox-choice-background, var(--button-bg, var(--ui-control-bg)));
+    color: var(--buttonbox-choice-text, var(--text-color));
+    box-shadow: none;
+}
+
+:is(.buttonbox-visual--buttons, .buttonbox-visual--segmented, .buttonbox-visual--chip) .buttonbox-visual__label {
+    color: inherit;
+    font-weight: 400;
+    line-height: inherit;
+}
+
+:is(.buttonbox-visual--buttons, .buttonbox-visual--segmented, .buttonbox-visual--chip).buttonbox-visual--size-default {
+    --buttonbox-icon-size: var(--icon-size, 16px);
+}
+
+:is(.buttonbox-visual--buttons, .buttonbox-visual--segmented, .buttonbox-visual--chip).buttonbox-visual--size-default .buttonbox-visual__control {
+    min-block-size: var(--input-height, 34px);
+    padding-inline: var(--button-padding, 10px);
+    gap: var(--s, 8px);
+}
+
+:is(.buttonbox-visual--buttons, .buttonbox-visual--segmented, .buttonbox-visual--chip):not(.buttonbox-visual--static) .buttonbox-visual__option:not(.is-disabled, .is-invalid, .is-selected):hover .buttonbox-visual__control {
+    background: var(--buttonbox-choice-background, var(--button-bg--hover, var(--ui-control-bg-hover)));
+}
+
+:is(.buttonbox-visual--buttons, .buttonbox-visual--segmented, .buttonbox-visual--chip):not(.buttonbox-visual--static) .buttonbox-visual__option:not(.is-disabled, .is-invalid, .is-selected):active .buttonbox-visual__control {
+    background: var(--buttonbox-choice-background, var(--button-bg--active, var(--ui-control-bg-active)));
+}
+
+:is(.buttonbox-visual--buttons, .buttonbox-visual--segmented, .buttonbox-visual--chip) .buttonbox-visual__option.is-selected .buttonbox-visual__control {
+    background: var(--buttonbox-choice-selected-background, var(--gray-500));
+    color: var(--buttonbox-choice-text, var(--white));
+    border-color: var(--buttonbox-choice-accent, var(--buttonbox-choice-border, var(--border-hairline)));
+    box-shadow: none;
+}
+
+:is(.buttonbox-visual--buttons, .buttonbox-visual--segmented, .buttonbox-visual--chip).buttonbox-visual--custom-selection .buttonbox-visual__option.is-selected .buttonbox-visual__control {
+    color: var(--buttonbox-choice-text, var(--text-color));
+    box-shadow: inset 0 0 0 1px var(--buttonbox-choice-accent);
+}
+
+:is(.buttonbox-visual--buttons, .buttonbox-visual--segmented, .buttonbox-visual--chip) .buttonbox-visual__description {
+    color: inherit;
+}
+
+:is(.buttonbox-visual--buttons, .buttonbox-visual--segmented, .buttonbox-visual--chip) .buttonbox-visual__option:focus-visible .buttonbox-visual__control,
+:is(.buttonbox-visual--buttons, .buttonbox-visual--segmented, .buttonbox-visual--chip) .buttonbox-visual__input:focus-visible + .buttonbox-visual__control {
+    outline: none;
+    box-shadow: var(--focus-ring);
+}
+
+:is(.buttonbox-visual--buttons, .buttonbox-visual--segmented, .buttonbox-visual--chip) .buttonbox-visual__option.is-selected:focus-visible .buttonbox-visual__control,
+:is(.buttonbox-visual--buttons, .buttonbox-visual--segmented, .buttonbox-visual--chip) .buttonbox-visual__option.is-selected:has(.buttonbox-visual__input:focus-visible) .buttonbox-visual__control {
+    box-shadow: var(--focus-ring-outset);
+}
+
+:is(.buttonbox-visual--buttons, .buttonbox-visual--segmented, .buttonbox-visual--chip) .buttonbox-visual__option.is-invalid .buttonbox-visual__control {
+    border-width: max(1px, var(--buttonbox-choice-border-width, 0px));
+    border-color: var(--red-500);
+    background: var(--red-050);
+    color: var(--buttonbox-choice-text, var(--text-color));
+}
+
+.buttonbox-visual:is(.buttonbox-visual--buttons, .buttonbox-visual--segmented, .buttonbox-visual--chip) .buttonbox-visual__icon svg {
+    fill: currentColor;
+}
+
+.buttonbox-action-links--start {
+    justify-content: flex-start;
+}
+
+.buttonbox-action-links--center {
+    justify-content: center;
+}
+
+.buttonbox-action-links--end {
+    justify-content: flex-end;
+}
+
+.buttonbox-action-links--compact {
+    gap: 4px;
+}
+
+.buttonbox-action-links--normal {
+    gap: 8px;
+}
+
+.buttonbox-action-links--relaxed {
+    gap: 16px;
+}
+
+.buttonbox-visual--outlined .buttonbox-visual__control {
+    position: relative;
+    padding-inline-end: calc(var(--buttonbox-choice-padding-inline, 10px) + 22px);
+    gap: var(--buttonbox-choice-icon-gap, 8px);
+}
+
+.buttonbox-visual--outlined:not(.buttonbox-visual--size-default) {
+    --buttonbox-icon-size: calc(var(--buttonbox-choice-icon-size) + 4px);
+    --buttonbox-icon-box: calc(var(--buttonbox-icon-size) + 6px);
+}
+
+.buttonbox-visual__check {
+    position: absolute;
+    inset-block-start: 8px;
+    inset-inline-end: 8px;
+    display: grid;
+    place-items: center;
+    inline-size: 16px;
+    block-size: 16px;
+    border-radius: 50%;
+    background: var(--buttonbox-choice-accent, var(--gray-500));
+    color: var(--white);
+    visibility: hidden;
+}
+
+.buttonbox-visual__check svg {
+    inline-size: 14px;
+    block-size: 14px;
+}
+
+.buttonbox-visual__option.is-selected .buttonbox-visual__check {
+    visibility: visible;
+}
+
+.buttonbox-visual__option.is-invalid .buttonbox-visual__check {
+    background: var(--red-500);
+}
+
+.buttonbox-visual--swatch .buttonbox-visual__option {
+    min-inline-size: 104px;
+    max-inline-size: 100%;
+}
+
+.buttonbox-visual:is(.buttonbox-visual--swatch, .buttonbox-visual--generated) .buttonbox-visual__control {
+    padding-inline: max(12px, var(--buttonbox-choice-padding-inline, 12px));
+    padding-block: 10px;
+}
+
+.buttonbox-visual--swatch .buttonbox-visual__copy {
+    inline-size: 100%;
+    text-align: center;
+}
+
+.buttonbox-visual:is(.buttonbox-visual--swatch, .buttonbox-visual--generated) .buttonbox-visual__label {
+    overflow-wrap: break-word;
+}
+
+.buttonbox-visual--generated .buttonbox-visual__sample > .buttonbox-visual__icon,
+.buttonbox-visual--generated .buttonbox-visual__sample > .buttonbox-visual__icon svg {
+    inline-size: 48px;
+    block-size: 48px;
+}
+
+.buttonbox-width-choice {
+    color: var(--buttonbox-choice-text, var(--text-color));
+    font-size: var(--buttonbox-choice-font, 14px);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-inline-size: 100%;
+}
+
+.buttonbox-visual--width {
+    flex-wrap: nowrap;
+    gap: 0;
+    inline-size: 224px;
+    max-inline-size: 100%;
+}
+
+.buttonbox-visual--width .buttonbox-visual__option {
+    flex: 1;
+    min-inline-size: 0;
+    min-block-size: var(--buttonbox-choice-height, 34px);
     align-items: center;
 }
 
-.buttonbox-stars input {
-    position: absolute;
-    left: -9999px;
-    clip: rect(0, 0, 0, 0);
+.buttonbox-visual--width .buttonbox-visual__option .buttonbox-visual__control {
+    min-block-size: max(12px, calc(var(--buttonbox-choice-height, 34px) - 18px));
+    padding: 0;
+    border-width: var(--buttonbox-choice-border-width, 1px);
+    border-color: var(--buttonbox-choice-border, transparent);
+    border-radius: 0;
+    background: var(--buttonbox-choice-background, var(--ui-control-bg));
+    box-shadow: none;
 }
 
-.buttonbox-stars label {
-    float: left;
-    width: 1em;
-    padding: 0 0.1em;
-    overflow: hidden;
+.buttonbox-visual--width .buttonbox-visual__option + .buttonbox-visual__option .buttonbox-visual__control {
+    border-inline-start-color: var(--buttonbox-choice-border, var(--white));
+}
+
+.buttonbox-visual--width .buttonbox-visual__option:first-child .buttonbox-visual__control {
+    border-start-start-radius: var(--buttonbox-choice-radius, 5px);
+    border-end-start-radius: var(--buttonbox-choice-radius, 5px);
+}
+
+.buttonbox-visual--width .buttonbox-visual__option:last-child .buttonbox-visual__control {
+    border-start-end-radius: var(--buttonbox-choice-radius, 5px);
+    border-end-end-radius: var(--buttonbox-choice-radius, 5px);
+}
+
+.buttonbox-visual--width .buttonbox-visual__control > * {
+    display: none;
+}
+
+.buttonbox-visual--width .buttonbox-visual__option.is-selected:not(.is-invalid) .buttonbox-visual__control,
+.buttonbox-visual--width .buttonbox-visual__option:not(.is-invalid):has(~ .buttonbox-visual__option.is-selected:not(.is-invalid)) .buttonbox-visual__control {
+    background: var(--buttonbox-choice-accent, #527caa);
+}
+
+.buttonbox-visual--width .buttonbox-visual__option:has(input:focus-visible) {
+    z-index: 1;
+}
+
+.buttonbox-visual--width .buttonbox-visual__option.is-invalid .buttonbox-visual__control {
+    background: var(--red-050);
+    border-color: var(--red-500);
+}
+
+.buttonbox-width-choice__value {
+    min-inline-size: 4ch;
     white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+.buttonbox-width-field {
+    --width-height: max(12px, calc(var(--buttonbox-choice-height, 34px) - 18px));
+    --width-background: var(--buttonbox-choice-background, var(--gray-050));
+    --width-fill: var(--buttonbox-width-fill, color-mix(in srgb, var(--blue-500) 15%, var(--gray-300)));
+    --width-selected: var(--buttonbox-choice-accent, var(--blue-500));
+    color: var(--buttonbox-choice-text, var(--text-color));
+    font-size: var(--buttonbox-choice-font, 14px);
+    max-inline-size: 100%;
+}
+
+.buttonbox-width-field__layout {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-inline-size: 100%;
+}
+
+.buttonbox-width-field__choices {
+    display: flex;
+    inline-size: calc(var(--buttonbox-choice-height, 34px) * 280 / 34);
+    max-inline-size: 100%;
+}
+
+.buttonbox-width-field__option {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-inline-size: 0;
     cursor: pointer;
-    font-size: 1.5em;
-    line-height: 1.2;
-    color: #ddd;
 }
 
-.buttonbox-stars label:before {
-    content: "\2605  ";
-}
-
-.buttonbox-stars label.active {
-    color: #f4b638;
-}
-
-.buttonbox-stars label.hover {
-    color: #5286d9;
-}
-
-.buttonbox-stars__cancel {
-    margin-left: 10px;
-}
-
-.buttonbox-btngroup--big .btn, .buttonbox-btn--big.btn {
-    padding-block: 0;
-    padding-inline: 14px;
-    font-size: 14px;
-    line-height: 36px;
-    min-height: 2.25rem;
-}
-
-.buttonbox-buttons .buttonbox-btn--big.btn {
-    height: auto !important;
-}
-
-.buttonbox-width {
-    height: 16px;
-}
-
-.buttonbox-width.btngroup {
-    display: inline-flex;
-    width: auto;
-    max-width: 100%;
-}
-
-.buttonbox-width.btngroup .buttonbox-btn--width.btn {
-    --input-height: 16px;
-    flex: none;
-    cursor: pointer !important;
-    height: 16px !important;
-    min-height: 16px !important;
-    max-height: 16px !important;
-    padding-block: 0 !important;
-    padding-inline: 14px !important;
-    line-height: 16px !important;
-    font-size: 0 !important;
-}
-
-.buttonbox-width .btn.active {
-    background-color: #5286d9 !important;
-    background-image: linear-gradient(#659cdc, #5286d9) !important;
-    border-color: #5286d9 !important;
-}
-
-.buttonbox-width .btn.hover {
-    background-color: #3c6da5 !important;
-    background-image: linear-gradient(#578dbc, #3c6da5) !important;
-    border-color: #3c6da5 !important;
-}
-
-.buttonbox-width .btn.active, .buttonbox-width .btn.hover {
-    box-shadow: 0 0 0 1px #2a4c75, 0 1px 2px -1px rgba(0, 0, 0, 0.1) !important;
-}
-
-.buttonbox-width .btn input {
+.buttonbox-width-field__input {
     position: absolute;
-    left: -9999px;
-    clip: rect(0, 0, 0, 0);
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
 }
 
-.buttonbox-width .btn span {
-    white-space: nowrap;
-    color: rgba(0, 0, 0, 0);
-    font-size: 0;
-    width: 12px;
+.buttonbox-width-field__sample {
+    box-sizing: border-box;
     display: block;
+    block-size: var(--width-height);
+    background: var(--width-background);
+    border: var(--buttonbox-choice-border-width, 1px) solid var(--buttonbox-choice-border, var(--border-hairline));
+}
+
+.buttonbox-width-field__fill {
+    display: block;
+    block-size: 100%;
+}
+
+.buttonbox-width-field--bar .buttonbox-width-field__option {
+    flex: 0 0 var(--width-span);
+    min-block-size: var(--buttonbox-choice-height, 34px);
+}
+
+.buttonbox-width-field--bar .buttonbox-width-field__option + .buttonbox-width-field__option .buttonbox-width-field__sample {
+    border-inline-start-width: 0;
+}
+
+.buttonbox-width-field--bar .buttonbox-width-field__option:first-child .buttonbox-width-field__sample {
+    border-start-start-radius: var(--buttonbox-choice-radius, 5px);
+    border-end-start-radius: var(--buttonbox-choice-radius, 5px);
+}
+
+.buttonbox-width-field--bar .buttonbox-width-field__choices:not(.has-tail) .buttonbox-width-field__option:last-child .buttonbox-width-field__sample {
+    border-start-end-radius: var(--buttonbox-choice-radius, 5px);
+    border-end-end-radius: var(--buttonbox-choice-radius, 5px);
+}
+
+.buttonbox-width-field--bar .buttonbox-width-field__option:is(.is-selected, :has(~ .is-selected)) {
+    --width-segment-background: var(--width-selected);
+    --width-segment-border: var(--width-selected);
+    --width-segment-divider: 1px solid color-mix(in srgb, var(--width-selected), var(--white) 35%);
+}
+
+/* Preview the hovered or keyboard-focused width without changing the stored selection. */
+.buttonbox-width-field--bar:not(.buttonbox-width-field--static) .buttonbox-width-field__choices:has(.buttonbox-width-field__option:not(.is-disabled):hover, input:focus-visible) .buttonbox-width-field__option {
+    --width-segment-background: var(--width-background);
+    --width-segment-border: var(--buttonbox-choice-border, var(--border-hairline));
+    --width-segment-divider: 0 solid transparent;
+}
+
+.buttonbox-width-field--bar:not(.buttonbox-width-field--static) .buttonbox-width-field__choices:has(.buttonbox-width-field__option:not(.is-disabled):hover) .buttonbox-width-field__option:is(:not(.is-disabled):hover, :has(~ .buttonbox-width-field__option:not(.is-disabled):hover)),
+.buttonbox-width-field--bar:not(.buttonbox-width-field--static) .buttonbox-width-field__choices:not(:has(.buttonbox-width-field__option:not(.is-disabled):hover)) .buttonbox-width-field__option:is(:has(input:focus-visible), :has(~ .buttonbox-width-field__option input:focus-visible)) {
+    --width-segment-background: var(--width-selected);
+    --width-segment-border: var(--width-selected);
+    --width-segment-divider: 1px solid color-mix(in srgb, var(--width-selected), var(--white) 35%);
+}
+
+.buttonbox-width-field--bar .buttonbox-width-field__option .buttonbox-width-field__sample {
+    background: var(--width-segment-background, var(--width-background));
+    border-color: var(--width-segment-border, var(--buttonbox-choice-border, var(--border-hairline)));
+}
+
+.buttonbox-width-field--bar .buttonbox-width-field__option + .buttonbox-width-field__option .buttonbox-width-field__sample {
+    border-inline-start: var(--width-segment-divider, 0 solid transparent);
+}
+
+.buttonbox-width-field--samples .buttonbox-width-field__option:not(.is-disabled):hover .buttonbox-width-field__sample {
+    box-shadow: inset 0 0 0 1px var(--width-selected);
+}
+
+.buttonbox-width-field__option:has(input:focus-visible) .buttonbox-width-field__sample,
+.buttonbox-width-field__option:focus-visible {
+    outline: 2px solid var(--focus-ring-color);
+    outline-offset: 2px;
+    z-index: 1;
+}
+
+.buttonbox-width-field__option.is-disabled {
+    opacity: .4;
+    cursor: default;
+}
+
+.buttonbox-width-field--static .buttonbox-width-field__option {
+    cursor: default;
+}
+
+.buttonbox-width-field__value {
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+.buttonbox-width-field__label {
+    text-align: center;
+    overflow-wrap: anywhere;
+    margin-block-start: 5px;
+    font-size: .85em;
+}
+
+.buttonbox-width-field--samples .buttonbox-width-field__choices {
+    inline-size: auto;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.buttonbox-width-field--samples .buttonbox-width-field__option {
+    inline-size: calc(var(--buttonbox-choice-height, 34px) * 92 / 34);
+    padding: 10px;
+    border: var(--buttonbox-choice-border-width, 1px) solid var(--buttonbox-choice-border, var(--border-hairline));
+    border-radius: var(--buttonbox-choice-radius, 5px);
+    background: var(--width-background);
+}
+
+.buttonbox-width-field--samples .buttonbox-width-field__sample {
+    block-size: calc(var(--width-height) + 6px);
+    overflow: hidden;
+    border-radius: 3px;
+    background: var(--white);
+}
+
+.buttonbox-width-field--samples .buttonbox-width-field__fill {
+    inline-size: var(--width-percentage);
+    background: var(--width-fill);
+}
+
+.buttonbox-width-field--samples .buttonbox-width-field__option.is-selected {
+    border-color: var(--width-selected);
+    background: var(--buttonbox-choice-selected-background, var(--blue-050));
+}
+
+.buttonbox-width-field--samples .buttonbox-width-field__option.is-selected .buttonbox-width-field__fill {
+    background: var(--width-selected);
+}
+
+.buttonbox-width-field__tail {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.buttonbox-width-field__tail .buttonbox-width-field__sample {
+    border-inline-start-width: 0;
+    border-start-end-radius: var(--buttonbox-choice-radius, 5px);
+    border-end-end-radius: var(--buttonbox-choice-radius, 5px);
+}
+
+.buttonbox-width-field--bar.buttonbox-width-field--labels-all .buttonbox-width-field__option,
+.buttonbox-width-field--bar.buttonbox-width-field--labels-all .buttonbox-width-field__tail {
+    justify-content: flex-start;
+    padding-block-start: 9px;
 }

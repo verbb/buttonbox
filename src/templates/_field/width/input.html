@@ -1,15 +1,24 @@
-<div id="{{ name }}" class="buttonbox-width  btngroup">
-    {%- set options = (options is defined ? options : []) %}
-    {%- set value = (value is defined ? value : null) %}
-
-    {% for key, option in options %}
-        {% set optionLabel = (option.label is defined ? option.label : option) %}
-        {% set optionValue = (option.value is defined ? option.value : key) %}
-        {% set optionDisabled = (option.disabled is defined ? option.disabled : false) %}
-
-        <label class="btn buttonbox-btn--width">
-            <input type="radio" name="{{ name }}" value="{{ optionValue }}"{% if optionValue == value %} checked="checked"{% endif %}{% if optionDisabled %} disabled{% endif %}>
-            <span>{{ optionLabel }}</span>
-        </label>
-    {% endfor %}
+{% set tooltips = [] %}
+{% set remainder = 100 - (options | last).percentage | default(100) %}
+<div class="buttonbox-width-field buttonbox-width-field--{{ displayStyle }} buttonbox-width-field--labels-{{ labelDisplay }}{% if static %} buttonbox-width-field--static{% endif %}" style="{{ appearanceStyle }}">
+    {% if not static %}{{ hiddenInput(name, invalid ? value : '') }}{% endif %}
+    {% if invalid %}<p class="warning" data-width-invalid>{{ 'Unavailable: {value}' | t('buttonbox', {value: rawValue}) }}</p>{% endif %}
+    <div class="buttonbox-width-field__layout">
+        <div class="buttonbox-width-field__choices{% if remainder > 0 %} has-tail{% endif %}">
+            {% for option in options %}
+                {% set id = 'buttonbox-width-option-' ~ random() %}
+                {% set selected = option.value == value and not option.disabled %}
+                {% set content = option.label ~ (option.disabled and option.explanation | trim is not empty ? ' — ' ~ option.explanation : '') %}
+                {% if showTooltips %}{% set tooltips = tooltips | merge([{id: id, content: content}]) %}{% endif %}
+                <label id="{{ id }}" class="buttonbox-width-field__option{% if selected %} is-selected{% endif %}{% if option.disabled %} is-disabled{% endif %}" style="--width-span:{{ option.span }}%;--width-percentage:{{ option.percentage }}%"{% if option.disabled %} aria-disabled="true" aria-label="{{ content }}"{% if not static %} tabindex="0"{% endif %}{% endif %}>
+                    <input class="buttonbox-width-field__input" type="radio" name="{{ name }}" value="{{ option.value }}" aria-label="{{ option.label }}"{% if selected %} checked{% endif %}{% if static or option.disabled %} disabled{% endif %}{% if showTooltips %} data-bb-tooltip{% endif %}>
+                    <span class="buttonbox-width-field__sample" aria-hidden="true"><span class="buttonbox-width-field__fill"></span></span>
+                    {% if labelDisplay == 'all' %}<span class="buttonbox-width-field__label" aria-hidden="true">{{ option.label }}</span>{% endif %}
+                </label>
+            {% endfor %}
+            {% if displayStyle == 'bar' and remainder > 0 %}<span class="buttonbox-width-field__tail" style="flex-basis:{{ remainder }}%" aria-hidden="true"><span class="buttonbox-width-field__sample"></span></span>{% endif %}
+        </div>
+        {% if labelDisplay == 'selected' %}<span class="buttonbox-width-field__value">{{ selectedLabel ?? '—' }}</span>{% endif %}
+    </div>
 </div>
+{% for tooltip in tooltips %}<pk-tooltip class="buttonbox-visual__tooltip" id="{{ tooltip.id }}-tooltip" for="{{ tooltip.id }}" content="{{ tooltip.content }}"></pk-tooltip>{% endfor %}

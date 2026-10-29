@@ -5,14 +5,44 @@
         "children": [
             "get-started/installation-setup",
             "get-started/requirements",
-            "get-started/configuration"
+            "get-started/configuration",
+            "get-started/upgrading-from-v5-0"
         ]
     },
     {
         "title": "Feature Tour",
         "collapsable": false,
         "children": [
-            "feature-tour/buttons"
+            "feature-tour/visual-choices",
+            "feature-tour/position",
+            "feature-tour/width",
+            "feature-tour/rating",
+            "feature-tour/action-links",
+            "feature-tour/presets",
+            "feature-tour/option-sets"
+        ]
+    },
+    {
+        "title": "Template Guides",
+        "collapsable": false,
+        "children": [
+            "template-guides/using-field-values",
+            "template-guides/querying-entries"
+        ]
+    },
+    {
+        "title": "Developers",
+        "collapsable": false,
+        "children": [
+            "developers/events",
+            "developers/option-providers",
+            "developers/option-data",
+            "developers/graphql",
+            "developers/visual-option",
+            "developers/visual-options",
+            "developers/visual-surface",
+            "developers/position-data",
+            "developers/width-data"
         ]
     }
 ]

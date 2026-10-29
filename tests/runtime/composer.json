@@ -1,0 +1,19 @@
+{
+    "name": "verbb/buttonbox-test-dependencies",
+    "type": "project",
+    "require": {
+        "php": "^8.2",
+        "craftcms/cms": "5.11.5.1",
+        "verbb/base": "^3.0.19"
+    },
+    "config": {
+        "platform": {
+            "php": "8.2.0"
+        },
+        "allow-plugins": {
+            "craftcms/plugin-installer": true,
+            "yiisoft/yii2-composer": true
+        },
+        "sort-packages": true
+    }
+}

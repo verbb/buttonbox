@@ -1,15 +1,13 @@
 <?php
 namespace verbb\buttonbox\fields;
 
-use verbb\buttonbox\web\assets\cp\ButtonBoxAsset;
+use verbb\buttonbox\helpers\Compatibility;
+use verbb\buttonbox\web\assets\cp\LegacyAsset;
 
 use Craft;
 use craft\base\ElementInterface;
 use craft\events\DefineInputOptionsEvent;
 use craft\fields\BaseOptionsField;
-use craft\fields\data\OptionData;
-use craft\fields\data\SingleOptionFieldData;
-use craft\helpers\ArrayHelper;
 use craft\helpers\Cp;
 
 use yii\db\Schema;
@@ -21,7 +19,7 @@ class TextSize extends BaseOptionsField
 
     public static function displayName(): string
     {
-        return Craft::t('buttonbox', 'Button Box - Text Size');
+        return Craft::t('buttonbox', 'Button Box - Text Size (Legacy)');
     }
 
     public static function icon(): string
@@ -58,7 +56,7 @@ class TextSize extends BaseOptionsField
             ];
         }
 
-        return Cp::editableTableFieldHtml([
+        return Compatibility::settingsNotice(Craft::t('buttonbox', 'Visual Choice')) . Cp::editableTableFieldHtml([
             'label' => $this->optionsSettingLabel(),
             'instructions' => Craft::t('buttonbox', 'Pixel Size is optional and should be a single number.'),
             'id' => 'options',
@@ -105,6 +103,8 @@ class TextSize extends BaseOptionsField
 
     protected function inputHtml(mixed $value, ?ElementInterface $element, bool $inline): string
     {
+        Compatibility::logInput($this, $element);
+
         $name = $this->handle;
         $options = $this->translatedOptions(true, $value, $element);
 
@@ -119,7 +119,7 @@ class TextSize extends BaseOptionsField
             }
         }
 
-        Craft::$app->getView()->registerAssetBundle(ButtonBoxAsset::class);
+        Craft::$app->getView()->registerAssetBundle(LegacyAsset::class);
         Craft::$app->getView()->registerJs('new Craft.ButtonBoxFancyOptions("' . Craft::$app->getView()->namespaceInputId($name) . '");');
 
         return Craft::$app->getView()->renderTemplate('buttonbox/_field/textsize/input', [

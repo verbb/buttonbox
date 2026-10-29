@@ -1,0 +1,32 @@
+{% extends 'buttonbox/_layouts/settings' %}
+{% import '_includes/forms' as forms %}
+{% set title = optionSet.uid ? optionSet.name : 'New Option Set' | t('buttonbox') %}
+{% set fullPageForm = not readOnly %}
+{% set selectedTab = 'sets' %}
+{% set crumbs = [{ label: 'Option Sets' | t('buttonbox'), url: url('buttonbox/settings/option-sets') }] %}
+{% if optionSet.uid and not readOnly %}
+    {% set continueEditingUrl = 'buttonbox/settings/option-sets/' ~ optionSet.uid %}
+    {% set saveShortcutRedirect = continueEditingUrl %}
+    {% set formActions = [
+        {
+            label: 'Save and continue editing' | t('app'),
+            redirect: continueEditingUrl | hash,
+            shortcut: true,
+            retainScroll: true,
+        },
+        not usages ? {
+            destructive: true,
+            label: 'Delete option set' | t('buttonbox'),
+            action: 'buttonbox/option-sets/delete',
+            redirect: 'buttonbox/settings/option-sets' | hash,
+            confirm: 'Delete this option set?' | t('buttonbox'),
+        },
+    ] | filter %}
+{% endif %}
+{# Option sets submit their own model, outside the plugin settings namespace. #}
+{% block blockContent %}
+    <h2>{{ title }}</h2>
+    {{ actionInput('buttonbox/option-sets/save') }}
+    {{ redirectInput('buttonbox/settings/option-sets') }}
+    {% include 'buttonbox/settings/option-sets/_edit' %}
+{% endblock %}

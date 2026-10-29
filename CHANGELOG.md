@@ -1,5 +1,30 @@
 # Changelog
 
+## Unreleased
+
+### Added
+- Added Visual Choice and Visual Multi-Choice fields with selection limits, custom options and typed option metadata.
+- Added Buttons, Button group, Chips, List, Tiles, Cards, Swatches and Visual samples presentations, plus Dropdown for single choices.
+- Added option descriptions, icons, images, colours, split colours, foreground/background pairs, gradients, width, aspect-ratio, typography and shape previews.
+- Added Position fields with configurable spatial arrangements, grid columns, presets and keyboard navigation.
+- Added a separate Width field with percentage stops, Bar and Width samples styles, Halves, Thirds, Quarters and Grid columns presets, and configurable labels and tooltips.
+- Added Rating fields with whole-number values, configurable limits, defaults, clearing and four symbol presets.
+- Added reusable Action Links fields with labelled destinations, icons or images, button styles and layout visibility conditions.
+- Added reusable option sets managed in the control panel and project config, with field-level creation, editing and conversion to custom options, plus dynamic PHP option providers.
+- Added customisable presets for visual choices, Position, Width and Rating, shared Appearance controls and live field previews.
+- Added configurable icon and image galleries, with Craft’s asset selector for asset images.
+- Added Button Box value objects and collections for Twig, including visual metadata, position coordinates and width percentages, plus GraphQL access and field-specific previews, search, conditions, sorting and inline editing.
+- Added command-line conversion previews and optional conversions for Buttons, Colours, Text Size, Width, Stars and Triggers.
+
+### Changed
+- Button Box now requires Craft CMS 5.10.11 or greater.
+
+### Fixed
+- Fixed the plugin bootstrap handle used during application configuration.
+
+### Deprecated
+- Deprecated the original Buttons, Colours, Text Size, Width, Stars and Triggers fields. They are labelled Legacy and record a Craft deprecation notice when rendered for an element in the control panel. Existing settings, inputs and stored values are retained; fields are not automatically converted.
+
 ## 5.0.5 - 2026-10-22
 
 ### Changed

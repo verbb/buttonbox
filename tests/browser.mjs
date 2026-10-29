@@ -1,0 +1,101 @@
+async (page) => {
+    const failures = [];
+    let checks = 0;
+    const check = (condition, message) => { checks++; if (!condition) failures.push(message); };
+    const errors = [];
+    const onError = (error) => errors.push(error.message);
+    page.on('pageerror', onError);
+    const data = () => page.evaluate(() => [...new FormData(document.querySelector('#fixture'))]);
+    const settle = () => page.evaluate(() => new Promise((resolve) => requestAnimationFrame(resolve)));
+    const choose = async (id, label) => {
+        await page.locator('#' + id).scrollIntoViewIfNeeded();
+        await settle();
+        const trigger = page.locator('#' + id).getByRole('button');
+        const panelId = await trigger.getAttribute('aria-controls');
+        await trigger.click();
+        const option = page.getByRole('option', { name: label, exact: true }).and(page.locator(`[id^="${panelId}-option-"]`));
+        await option.click();
+        await option.waitFor({ state: 'hidden' });
+    };
+    const radio = (id, label) => page.locator('#' + id).getByRole('radio', { name: label, exact: true }).press('Space');
+    const reset = async () => { await page.getByRole('button', { name: 'Reset', exact: true }).click(); await settle(); };
+    try {
+        await page.reload();
+        await page.evaluate(() => Craft.ButtonBoxReady);
+        await settle();
+        const initial = await data();
+        const originalMarkup = await page.locator('#fields').innerHTML();
+        check(!initial.some(([name]) => name.includes('static')), 'Static inputs submitted a value.');
+        check(await page.locator('#choice').getByRole('radio', { name: 'Disabled', exact: true }).isDisabled(), 'Disabled choice is interactive.');
+        await choose('dropdown', 'Beta');
+        check(await page.evaluate(() => window.events.length) === 2, 'Dropdown selection did not emit exactly one native input/change pair.');
+        check((await data()).filter(([name]) => name === 'fields[nested][dropdown]').length === 1, 'Dropdown submits duplicate values.');
+        check(await page.locator('#dropdown buttonbox-dropdown').evaluate((element) => element.style.getPropertyValue('--buttonbox-dropdown-font')) === '28px', 'Typography selection did not update.');
+        const response = page.waitForResponse((response) => response.request().method() === 'POST' && response.url().endsWith('/submitted.html'));
+        await page.getByRole('button', { name: 'Submit', exact: true }).click();
+        const submitted = await (await response).json();
+        check(JSON.stringify(submitted) === JSON.stringify(await data()), 'Actual browser submission differs from FormData.');
+        check(submitted.find(([name]) => name === 'fields[nested][dropdown]')?.[1] === 'base64:YmV0YSAmICJxdW90ZWQi', 'Quoted option identity did not survive submission.');
+        await choose('dropdown', 'None');
+        check((await data()).find(([name]) => name === 'fields[nested][dropdown]')?.[1] === '', 'Cleared dropdown did not submit empty.');
+        await page.locator('#multi').getByRole('checkbox', { name: 'Alpha', exact: true }).press('Space');
+        check((await data()).some(([name, value]) => name === 'fields[nested][multi]' && value === ''), 'Cleared multi-choice omitted its empty value.');
+        await page.locator('#multi').getByRole('checkbox', { name: 'Beta', exact: true }).press('Space');
+        check((await data()).some(([name, value]) => name === 'fields[nested][multi][]' && value === 'base64:YmV0YSAmICJxdW90ZWQi'), 'Multi-choice selected value was lost.');
+        await radio('choice', 'Beta');
+        for (const id of ['width', 'orphanWidth']) await radio(id, '75%');
+        for (const id of ['position', 'orphanPosition']) await radio(id, 'Bottom right');
+        await radio('rating', '4 of 5');
+        await choose('orphanDropdown', 'Alpha');
+        check(await page.locator('[data-width-invalid]').isHidden() && await page.locator('[data-position-invalid]').isHidden(), 'Recovered choices still show unavailable warnings.');
+        await page.getByRole('checkbox', { name: 'Cancel reset', exact: true }).check();
+        const changed = await data();
+        await reset();
+        check(JSON.stringify(changed) === JSON.stringify(await data()), 'Cancelled reset changed submitted values.');
+        check(await page.locator('#width .buttonbox-width-field__value').textContent() === '75%', 'Cancelled reset changed visible selection.');
+        await page.getByRole('checkbox', { name: 'Cancel reset', exact: true }).uncheck();
+        await reset();
+        check(JSON.stringify(initial) === JSON.stringify(await data()), 'Reset failed to restore original form values, including unavailable identities.');
+        check(await page.locator('#width .buttonbox-width-field__value').textContent() === '50%', 'Reset left the Width label stale.');
+        check(await page.locator('#rating .buttonbox-rating__option.is-selected').count() === 2, 'Reset left Rating styling stale.');
+        check(await page.locator('#position .is-selected input').inputValue() === 'base64:Y2VudGVy', 'Reset left Position styling stale.');
+        check(await page.locator('[data-width-invalid]').isVisible() && await page.locator('[data-position-invalid]').isVisible(), 'Reset lost unavailable warnings.');
+        check(await page.locator('#orphanDropdown pk-select').evaluate((element) => element.invalid), 'Reset lost Dropdown invalid state.');
+        check(await page.locator('#dropdown buttonbox-dropdown').evaluate((element) => element.style.getPropertyValue('--buttonbox-dropdown-font')) === '', 'Reset retained selected typography.');
+        await radio('rating', 'Clear rating');
+        check(await page.locator('#rating .buttonbox-rating__option.is-selected').count() === 0, 'Cleared Rating retained selected stars.');
+        check((await data()).find(([name]) => name === 'fields[nested][rating]')?.[1] === '', 'Cleared Rating did not submit empty.');
+        await reset();
+        await page.locator('#position').getByRole('radio', { name: 'Center', exact: true }).press('ArrowDown');
+        check(await page.locator('#position input:checked').inputValue() === 'base64:Ym90dG9tLWNlbnRlcg==', 'Position keyboard navigation did not move down one grid row.');
+        for (let i = 0; i < 5; i++) await page.getByRole('button', { name: 'Remount', exact: true }).click();
+        await settle();
+        await page.evaluate(() => { window.events = []; });
+        await choose('dropdown', 'Beta');
+        check(await page.evaluate(() => window.events.length) === 2, 'Remount duplicated Dropdown listeners.');
+        await reset();
+        check(JSON.stringify(initial) === JSON.stringify(await data()), 'Remount changed the reset baseline.');
+        // Simulate a host updating the native value while the component is detached.
+        await page.locator('#dropdown buttonbox-dropdown').evaluate(async (element) => {
+            const parent = element.parentElement;
+            element.remove();
+            element.querySelector('input').value = 'base64:YmV0YSAmICJxdW90ZWQi';
+            parent.append(element);
+            await new Promise((resolve) => requestAnimationFrame(resolve));
+        });
+        check(await page.locator('#dropdown pk-select').evaluate((element) => element.value) === 'base64:YmV0YSAmICJxdW90ZWQi', 'Remounted Dropdown ignored the current native value.');
+        // A fresh replacement must initialize independently, without stale callbacks.
+        await page.locator('#fields').evaluate((element, html) => { element.innerHTML = html; }, originalMarkup);
+        await settle();
+        await page.evaluate(() => { window.events = []; });
+        await choose('dropdown', 'Beta');
+        check(await page.evaluate(() => window.events.length) === 2, 'Replaced Dropdown did not initialize exactly once.');
+        await reset();
+        check(JSON.stringify(initial) === JSON.stringify(await data()), 'Replacement changed initial form values.');
+        check(errors.length === 0, 'Browser exceptions: ' + errors.join('; '));
+    } finally {
+        page.off('pageerror', onError);
+    }
+    if (failures.length) throw new Error(failures.join('\n'));
+    return { passed: checks, browser: await page.context().browser().version() };
+}

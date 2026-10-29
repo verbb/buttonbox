@@ -1,0 +1,19 @@
+{% extends 'verbb-base/_layouts/settings' %}
+
+{% requireAdmin false %}
+
+{% set crumbs = [
+    { label: 'Settings' | t('app'), url: url('settings') },
+    { label: 'Plugins' | t('app'), url: url('settings/plugins') },
+    { label: 'Button Box' | t('buttonbox'), url: url('buttonbox/settings') },
+] | merge(crumbs ?? []) %}
+
+{% set pageTabs = {
+    general: { title: 'General Settings' | t('buttonbox'), url: url('buttonbox/settings') },
+    sets: { title: 'Option Sets' | t('buttonbox'), url: url('buttonbox/settings/option-sets') },
+    presets: { heading: 'Presets' | t('buttonbox') },
+    'presets-visual': { title: 'Visual Choice' | t('buttonbox'), url: url('buttonbox/settings/presets/visual') },
+    'presets-position': { title: 'Position' | t('buttonbox'), url: url('buttonbox/settings/presets/position') },
+    'presets-width': { title: 'Width' | t('buttonbox'), url: url('buttonbox/settings/presets/width') },
+    'presets-rating': { title: 'Rating' | t('buttonbox'), url: url('buttonbox/settings/presets/rating') },
+} %}

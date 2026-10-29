@@ -2,13 +2,13 @@
     "name": "buttonbox",
     "private": true,
     "scripts": {
-        "build": "npm run build:css && npm run build:buttonbox && npm run build:settings-triggers",
-        "build:buttonbox": "vite build --mode buttonbox",
-        "build:css": "vite build --mode css",
-        "build:settings-triggers": "vite build --mode settings-triggers"
+        "build": "vite build"
     },
     "devDependencies": {
         "esbuild": "^0.28.2",
-        "vite": "^8.3.4"
+        "vite": "^8.3.5"
+    },
+    "dependencies": {
+        "@verbb/plugin-kit-web": "2.1.0"
     }
 }
