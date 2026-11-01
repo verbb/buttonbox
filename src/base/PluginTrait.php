@@ -25,7 +25,7 @@ trait PluginTrait
 
     public static function config(): array
     {
-        Plugin::bootstrapPlugin('asset-count');
+        Plugin::bootstrapPlugin('buttonbox');
 
         return [];
     }
