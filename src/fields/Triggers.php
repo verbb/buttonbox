@@ -134,7 +134,7 @@ class Triggers extends BaseOptionsField
     protected function inputHtml(mixed $value, ?ElementInterface $element, bool $inline): string
     {
         $name = $this->handle;
-        $options = $this->translatedOptions(true, $value, $element);
+        $options = $this->translatedOptions(false, $value, $element);
 
         if (!$value->valid) {
             Craft::$app->getView()->setInitialDeltaValue($this->handle, $this->encodeValue($value->value));

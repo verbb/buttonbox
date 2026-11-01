@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Fixed
+- Fix Triggers field buttons outputting encoded `base64:` values for their link or JavaScript, and not parsing element tags.
+- Fix Button Box log messages being written to the Asset Count log file.
+
 ## 5.0.5 - 2026-10-22
 
 ### Changed
