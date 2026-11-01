@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 5.0.6 - 2026-11-01
 
 ### Fixed
 - Fix Triggers field buttons outputting encoded `base64:` values for their link or JavaScript, and not parsing element tags.
