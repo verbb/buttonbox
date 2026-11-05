@@ -49,6 +49,14 @@ foreach ([Buttons::class, Colours::class, TextSize::class] as $class) {
     });
 }
 
+$suite->test('Colours conversion normalises hex values and blocks named colours', function() use ($suite) {
+    $plan = fn(string $color) => ButtonBox::$plugin->getConversions()->plan(new Colours(['name' => 'Colours', 'handle' => 'colours' . bin2hex(random_bytes(3)), 'options' => [['label' => 'A', 'value' => 'a', 'cssColour' => $color, 'default' => false]]]));
+    foreach (['#2563EB', '#fff', '#FFF', '#2563eb'] as $color) {
+        $suite->same('ready', $plan($color)['status'], $color);
+    }
+    $suite->same('blocked', $plan('red')['status']);
+});
+
 $suite->test('Stars inventory reads actual layout-keyed content, including empty and invalid rows', function() use ($suite) {
     $field = ButtonBoxFixtures::field(Stars::class, ['totalStars' => 5]);
     $section = ButtonBoxFixtures::section([$field]);

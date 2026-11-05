@@ -88,4 +88,15 @@ $suite->test('Element previews encode stored values and labels', function() use 
         $suite->same('', $rating->getPreviewHtml($raw, $existing), 'Rating previewed a value that is not a rating.');
     }
 });
+$suite->test('Option colours are normalised before validation', function() use ($suite) {
+    foreach (['#2563EB' => '#2563eb', '#fff' => '#ffffff', '#FFF' => '#ffffff', 'transparent' => 'transparent'] as $color => $expected) {
+        $field = new VisualChoice(['name' => 'Colour', 'handle' => 'colour', 'options' => [['label' => 'A', 'value' => 'a', 'color' => $color]]]);
+        $suite->check($field->validate(['options']), 'Rejected colour ' . $color);
+        $suite->same($expected, $field->resolveOptions()[0]['color']);
+    }
+    foreach (['red', '#12', 'rgb(0,0,0)'] as $color) {
+        $field = new VisualChoice(['name' => 'Colour', 'handle' => 'colour', 'options' => [['label' => 'A', 'value' => 'a', 'color' => $color]]]);
+        $suite->check(!$field->validate(['options']), 'Accepted invalid colour ' . $color);
+    }
+});
 $suite->finish();

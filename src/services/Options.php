@@ -199,7 +199,8 @@ class Options extends Component
                 'value' => (string)($option['value'] ?? ''),
                 'description' => (string)($option['description'] ?? ''),
                 'icon' => $option['icon'] ?? null,
-                'color' => $option['color'] ?? null,
+                // Keep unrecognised colours as written, so field validation can report them.
+                'color' => $this->_validColor($option['color'] ?? null) ?? ($option['color'] ?? null),
                 'imageUrl' => $this->resolveImageUrl((string)($option['imageUrl'] ?? '')),
                 'imageAlt' => (string)($option['imageAlt'] ?? ''),
                 'surface' => $surface,
