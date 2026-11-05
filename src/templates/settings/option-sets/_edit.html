@@ -1,5 +1,5 @@
 {% import '_includes/forms' as forms %}
-<div {{ slideout ? 'data-bb-option-set-slideout' }}>
+<div>
     {% if slideout %}<h2>{{ optionSet.uid ? optionSet.name : 'New Option Set' | t('buttonbox') }}</h2>{% endif %}
     {{ hiddenInput('uid', optionSet.uid) }}
     <fieldset {{ readOnly ? 'disabled' }}>

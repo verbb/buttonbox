@@ -1,4 +1,5 @@
 import { applyPresetSettings } from './preset-settings.js';
+import { syncKitValues } from './kit-values.js';
 import '@verbb/plugin-kit-web/components/alert.js';
 import '@verbb/plugin-kit-web/components/dialog.js';
 import '@verbb/plugin-kit-web/components/field.js';
@@ -106,19 +107,6 @@ Craft.ButtonBoxVisualSettings = Garnish.Base.extend({
         this.control('optionSource').trigger('change');
         // The source change hides the link, so return focus to the source selector.
         this.control('optionSource').trigger('focus');
-    },
-
-    syncSlideoutValues: function() {
-        if (!this.$container.closest('[data-bb-option-set-slideout]').length) return;
-        if (!this.$slideoutValues) this.$slideoutValues = $('<div hidden/>').appendTo(this.$container);
-        this.$slideoutValues.empty();
-        // CpScreenSlideout serializes native inputs, excluding form-associated Kit controls.
-        this.$container.find('[data-bb-appearance-key], pk-select[name$="[imageSize]"], pk-select[name$="[imageFit]"]').each((index, control) => {
-            $('<input/>', {
-                type: 'hidden', name: control.name,
-                value: control.localName === 'pk-lightswitch' ? (control.checked ? '1' : '0') : control.value,
-            }).appendTo(this.$slideoutValues);
-        });
     },
 
     updatePresentation: function() {
@@ -269,7 +257,7 @@ Craft.ButtonBoxVisualSettings = Garnish.Base.extend({
     schedulePreview: function() {
         clearTimeout(this.timer);
         this.updateAppearance();
-        this.syncSlideoutValues();
+        syncKitValues(this.$container);
         const version = ++this.request;
         this.timer = setTimeout(() => this.updatePreview(version), 250);
     },

@@ -1,4 +1,5 @@
 import { applyPresetSettings } from './preset-settings.js';
+import { syncKitValues } from './kit-values.js';
 import '@verbb/plugin-kit-web/components/dialog.js';
 import '@verbb/plugin-kit-web/components/field.js';
 import '@verbb/plugin-kit-web/components/button.js';
@@ -129,6 +130,7 @@ Craft.ButtonBoxPositionSettings = Garnish.Base.extend({
         const grid = this.mode() === 'grid';
         this.$container.find('[data-bb-columns]').prop('hidden', !grid);
         this.control('columns').prop('disabled', !grid);
+        syncKitValues(this.$container);
         const version = ++this.request;
         this.timer = setTimeout(() => this.updatePreview(version), 250);
     },

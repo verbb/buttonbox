@@ -1,3 +1,4 @@
+import { syncKitValues } from './kit-values.js';
 import '@verbb/plugin-kit-web/components/dialog.js';
 import '@verbb/plugin-kit-web/components/select.js';
 import '@verbb/plugin-kit-web/components/color-input.js';
@@ -91,6 +92,7 @@ Craft.ButtonBoxRatingSettings = Garnish.Base.extend({
         clearTimeout(this.timer);
         this.updateAppearanceSummary();
         this.control('defaultValue').attr('max', this.control('max').val());
+        syncKitValues(this.$container);
         const version = ++this.request;
         this.timer = setTimeout(() => this.updatePreview(version), 250);
     },

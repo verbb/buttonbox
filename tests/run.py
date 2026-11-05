@@ -115,6 +115,7 @@ def main():
                 php('/plugin/tests/browser.php', '/app')
                 shutil.copytree(root / 'src/web/assets/cp/dist', app / 'web/dist')
                 shutil.copyfile(vendor / 'craftcms/cms/src/web/assets/jquery/dist/jquery.js', app / 'web/jquery.js')
+                shutil.copyfile(vendor / 'craftcms/cms/src/web/assets/garnish/dist/garnish.js', app / 'web/garnish.js')
                 # Serve only this run's generated fixture, bound to loopback.
                 with ThreadingHTTPServer(('127.0.0.1', args.browser_port), partial(BrowserFixtureHandler, directory=str(app / 'web'))) as server:
                     url = f'http://127.0.0.1:{server.server_port}/'

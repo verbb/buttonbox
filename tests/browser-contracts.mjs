@@ -62,6 +62,43 @@ for (const engine of engines.split(',')) {
         const result = await sharedScenario(page);
         console.log(`  ${result.passed} shared assertions; browser ${result.browser}`);
     });
+    await test('field settings serialize the same values as a native form submission', async (page) => {
+        await page.goto(new URL('settings.html', url).href);
+        await page.waitForFunction(() => document.querySelectorAll('[data-bb-kit-values]').length === 5);
+        const values = (name) => page.evaluate((formName) => {
+            const form = document.querySelector(`#settings-${formName}`);
+            // PHP keeps the last repeated scalar, as with lightswitch fallbacks.
+            const lastWins = (entries) => Object.fromEntries(entries.filter(([, value]) => typeof value === 'string'));
+            return { native: lastWins([...new FormData(form)]), serialized: lastWins($(form).serializeArray().map(({ name: key, value }) => [key, value])) };
+        }, name);
+        const change = (name, value) => page.evaluate(([controlName, nextValue]) => {
+            const control = document.querySelector(`pk-select[name="${controlName}"], pk-input[name="${controlName}"], pk-color-input[name="${controlName}"], pk-lightswitch[name="${controlName}"]`);
+            if (control.localName === 'pk-lightswitch') control.checked = nextValue;
+            else control.value = nextValue;
+            control.dispatchEvent(new Event('change', { bubbles: true }));
+        }, [name, value]);
+        const changes = {
+            visual: { 'types[visual][appearance][size]': ['lg', 'lg'], 'types[visual][appearance][textColor]': ['#112233', '#112233'], 'types[visual][imageFit]': ['contain', 'contain'], 'types[visual][appearance][showLabels]': [false, '0'] },
+            width: { 'types[width][labelDisplay]': ['all', 'all'], 'types[width][appearance][radius]': ['4', '4'], 'types[width][showTooltips]': [true, '1'] },
+            position: { 'types[position][appearance][size]': ['lg', 'lg'], 'types[position][appearance][selectionColor]': ['#445566', '#445566'], 'types[position][showTooltips]': [true, '1'] },
+            rating: { 'types[rating][symbol]': ['heart', 'heart'], 'types[rating][activeColor]': ['#778899', '#778899'], 'types[rating][showLabels]': [false, '0'] },
+            actions: { 'types[actions][size]': ['lg', 'lg'], 'types[actions][alignment]': ['end', 'end'], 'types[actions][spacing]': ['relaxed', 'relaxed'] },
+        };
+        for (const [form, controls] of Object.entries(changes)) {
+            let { native, serialized } = await values(form);
+            assert.deepEqual(serialized, native, `${form} initial settings differ`);
+            for (const [name, [value, posted]] of Object.entries(controls)) {
+                await change(name, value);
+                ({ native, serialized } = await values(form));
+                assert.equal(serialized[name], posted, `${name} was not serialized`);
+                assert.deepEqual(serialized, native, `${form} settings differ after changing ${name}`);
+            }
+        }
+        // Rating has no option rows, so mirroring its values must not read as an unsaved edit.
+        await page.reload();
+        await page.waitForFunction(() => document.querySelectorAll('[data-bb-kit-values]').length === 5);
+        assert.ok(await page.evaluate(() => { const form = $('#settings-rating'); return form.data('initialSerializedValue') === form.serialize(); }), 'Mirroring Rating settings marked the form as edited');
+    });
     await test('choice and multi-choice visual selection follows native values and reset', async (page) => {
         await radio(page, 'choice', 'Beta');
         await page.locator('#multi').getByRole('checkbox', { name: 'Beta', exact: true }).press('Space');

@@ -1,3 +1,4 @@
+import { syncKitValues } from './kit-values.js';
 import '@verbb/plugin-kit-web/components/dialog.js';
 import '@verbb/plugin-kit-web/components/field.js';
 import '@verbb/plugin-kit-web/components/button.js';
@@ -202,6 +203,7 @@ Craft.ButtonBoxActionSettings = Garnish.Base.extend({
     schedulePreview: function() {
         clearTimeout(this.timer);
         this.updateAppearanceSummary();
+        syncKitValues(this.$container);
         const version = ++this.request;
         this.timer = setTimeout(() => this.preview(version), 250);
     },

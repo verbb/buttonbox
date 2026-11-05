@@ -1,6 +1,7 @@
 <?php
 
 use craft\elements\Entry;
+use verbb\buttonbox\fields\ActionLinks;
 use verbb\buttonbox\fields\Position;
 use verbb\buttonbox\fields\Rating;
 use verbb\buttonbox\fields\VisualChoice;
@@ -51,4 +52,23 @@ for (const type of ["input", "change"]) document.querySelector("#fixture").addEv
 </script></body></html>';
 file_put_contents('/app/web/index.html', $html);
 file_put_contents('/app/web/submitted.html', '<!doctype html><title>Submitted</title><p>Submitted</p>');
+
+$view = Craft::$app->getView();
+$view->setTemplateMode('cp');
+$settingsHtml = '';
+foreach ([
+    'visual' => new VisualChoice(['options' => $options]),
+    'width' => new WidthChoice(),
+    'position' => new Position(),
+    'rating' => new Rating(['showLabels' => true]),
+    'actions' => new ActionLinks(['actions' => [['label' => 'Go', 'url' => '/go', 'urlType' => 'url']]]),
+] as $handle => $field) {
+    $view->setNamespace('types[' . $handle . ']');
+    $view->startJsBuffer();
+    $settings = $view->namespaceInputs($field->getSettingsHtml());
+    $settingsHtml .= '<form id="settings-' . $handle . '" onsubmit="return false">' . $settings . '</form><script>$("#settings-' . $handle . '").data("initialSerializedValue", $("#settings-' . $handle . '").serialize());</script>' . $view->clearJsBuffer();
+}
+$view->setNamespace(null);
+// Field settings need Craft's real Garnish classes, but no Craft requests.
+file_put_contents('/app/web/settings.html', '<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Button Box settings fixture</title><link rel="stylesheet" href="/dist/settings.css"></head><body><script src="/jquery.js"></script><script src="/garnish.js"></script><script>window.Craft = { t: (category, message) => message, sendActionRequest: async () => ({ data: { html: "", errors: [] } }), getActionUrl: () => "/" }; Craft.ButtonBoxSettingsReady = import("/dist/settings.js");</script>' . $settingsHtml . '</body></html>');
 echo "Rendered browser fixture from Craft field templates.\n";
