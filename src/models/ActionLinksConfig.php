@@ -9,6 +9,9 @@ use craft\base\ElementInterface;
 use craft\base\Model;
 use craft\helpers\Html;
 use craft\helpers\UrlHelper;
+use craft\web\View;
+
+use Twig\Error\Error as TwigError;
 
 class ActionLinksConfig extends Model
 {
@@ -105,6 +108,10 @@ class ActionLinksConfig extends Model
                 $this->addError('actions', Craft::t('buttonbox', 'Action {number} has an invalid icon position.', ['number' => $index + 1]));
             }
 
+            if ($this->_hasInvalidTemplate($label) || $this->_hasInvalidTemplate($url)) {
+                $this->addError('actions', Craft::t('buttonbox', 'Action {number} has invalid template syntax.', ['number' => $index + 1]));
+            }
+
             if (self::hasUnsafeScheme($url)) {
                 $this->addError('actions', Craft::t('buttonbox', 'Action {number} uses an unsafe URL scheme.', ['number' => $index + 1]));
             }
@@ -142,8 +149,16 @@ class ActionLinksConfig extends Model
             return null;
         }
 
-        $label = Craft::$app->getView()->renderObjectTemplate(Craft::t('site', $label), $element);
-        $url = Craft::$app->getView()->renderObjectTemplate($url, $element);
+        try {
+            $label = Craft::$app->getView()->renderObjectTemplate(Craft::t('site', $label), $element);
+            $url = Craft::$app->getView()->renderObjectTemplate($url, $element);
+        } catch (TwigError $e) {
+            // Configuration saved before validation, or a translation, can still reach this.
+            ButtonBox::warning("Skipped an Action Links action with an invalid template: {$e->getMessage()}");
+
+            return null;
+        }
+
         $url = $this->_resolveUrl($url, $action['urlType'] ?? 'url');
 
         if (self::hasUnsafeScheme($url)) {
@@ -186,6 +201,28 @@ class ActionLinksConfig extends Model
         }
 
         return Html::tag('pk-button', $content, $attributes);
+    }
+
+    private function _hasInvalidTemplate(string $template): bool
+    {
+        if (!str_contains($template, '{')) {
+            return false;
+        }
+
+        // Compile only, in the mode used to render, so saving settings doesn't run the template.
+        $view = Craft::$app->getView();
+        $templateMode = $view->getTemplateMode();
+        $view->setTemplateMode(View::TEMPLATE_MODE_SITE);
+
+        try {
+            $view->getTwig()->createTemplate($view->normalizeObjectTemplate($template));
+
+            return false;
+        } catch (TwigError) {
+            return true;
+        } finally {
+            $view->setTemplateMode($templateMode);
+        }
     }
 
     private function _resolveUrl(string $url, string $type): string

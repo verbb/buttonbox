@@ -29,6 +29,22 @@ checkAction(str_contains($html, 'View Example') && str_contains($html, 'https://
 checkAction(str_contains($html, 'slot="end"') && str_contains($html, 'size="xs"') && str_contains($html, 'variant="outline"'), 'Button configuration was lost.');
 checkAction(str_contains($html, 'target="_blank"') && str_contains($html, 'noopener noreferrer'), 'New-window attributes were lost.');
 checkAction(!str_contains($field->getActionConfig()->render(null, true), 'href='), 'Preview buttons must not navigate.');
+foreach (['https://example.com/{{ oops', '{% if %}', '{{ nope() }}'] as $template) {
+    foreach (['url', 'label'] as $key) {
+        $invalid = ['label' => 'Bad', 'url' => '/bad', $key => $template];
+        $invalidField = new ActionLinks(['name' => 'Actions', 'handle' => 'invalidActions', 'actions' => [$invalid]]);
+        checkAction(!$invalidField->validate(['actions']), 'Invalid template passed validation: ' . $template);
+        // Previously saved configuration must not stop the element editor from opening.
+        $saved = (new ActionLinksConfig(['actions' => [$invalid, ['label' => 'Good', 'url' => '/good']]]))->render($entry);
+        checkAction(!str_contains($saved, '/bad') && str_contains($saved, 'href="/good"'), 'Invalid template was not skipped: ' . $template);
+    }
+}
+foreach (['https://example.com/?q={', '/news/{slug}', '{{ object.slug }}', '{% if true %}/yes{% endif %}'] as $template) {
+    checkAction((new ActionLinksConfig(['actions' => [['label' => 'Link', 'url' => $template]]]))->validate(), 'Valid template failed validation: ' . $template);
+}
+$templateMode = Craft::$app->getView()->getTemplateMode();
+(new ActionLinksConfig(['actions' => [['label' => 'Link', 'url' => '/{slug}']]]))->validate();
+checkAction(Craft::$app->getView()->getTemplateMode() === $templateMode, 'Validation changed the template mode.');
 foreach (['/admin/my-page', '/my-page', 'https://example.com/my-page', '/news/{slug}', '//example.com/path', '#details', '?view=full', 'mailto:editor@example.com', 'tel:+61312345678', 'slack://channel'] as $url) {
     $config = new ActionLinksConfig(['actions' => [['label' => 'Link', 'url' => $url]]]);
     checkAction($config->validate(), 'Plain URL configuration was rejected.');
