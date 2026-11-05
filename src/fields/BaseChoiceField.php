@@ -8,6 +8,7 @@ use verbb\buttonbox\fields\data\OptionData;
 use Craft;
 use craft\base\ElementInterface;
 use craft\fields\BaseOptionsField;
+use craft\helpers\Html;
 
 abstract class BaseChoiceField extends BaseOptionsField
 {
@@ -65,6 +66,18 @@ abstract class BaseChoiceField extends BaseOptionsField
         return $value->value === null || $value->value === '';
     }
 
+    public function getPreviewHtml(mixed $value, ElementInterface $element): string
+    {
+        // Core doesn't encode this output, and drafts can store values that haven't been validated.
+        if ($value instanceof OptionData) {
+            $value = $this->_encodedOption($value);
+        } elseif ($value instanceof MultiVisualOptionData) {
+            $value = array_map(fn(OptionData $option) => $this->_encodedOption($option), iterator_to_array($value));
+        }
+
+        return parent::getPreviewHtml($value, $element);
+    }
+
     public function getElementConditionRuleType(): array|string|null
     {
         // Scalar rules accept stringable values; retain their identity for converted fields.
@@ -94,5 +107,20 @@ abstract class BaseChoiceField extends BaseOptionsField
         }
 
         return sprintf('base64:%s', base64_encode($value));
+    }
+
+
+    // Private Methods
+    // =========================================================================
+
+    private function _encodedOption(OptionData $option): OptionData
+    {
+        $option = clone $option;
+
+        // Translate first, as core looks up whichever label it receives.
+        $option->label = $option->label ? Html::encode(Craft::t('site', $option->label)) : $option->label;
+        $option->value = $option->value !== null ? Html::encode($option->value) : null;
+
+        return $option;
     }
 }

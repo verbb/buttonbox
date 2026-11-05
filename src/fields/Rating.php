@@ -201,7 +201,8 @@ class Rating extends Field implements
 
     public function getPreviewHtml(mixed $value, ElementInterface $element): string
     {
-        return $value === null ? '' : Craft::t('buttonbox', '{rating} of {max}', [
+        // Drafts can store values that haven't been validated, which aren't ratings to display.
+        return !is_int($value) ? '' : Craft::t('buttonbox', '{rating} of {max}', [
             'rating' => $value,
             'max' => $this->max,
         ]);
