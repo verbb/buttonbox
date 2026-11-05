@@ -88,6 +88,10 @@ class Conversions extends Component
             $warnings[] = 'Width settings and input presentation will change. Stored values and equal-step geometry are preserved; review the new field before applying.';
         }
 
+        if ($field instanceof Buttons) {
+            $warnings = array_merge($warnings, $this->_buttonsWarnings($field));
+        }
+
         if ($field instanceof Stars) {
             $contentCounts = $this->_starsContentCounts($field);
             $warnings[] = sprintf(
@@ -143,6 +147,7 @@ class Conversions extends Component
         return new VisualChoice(array_merge($config, [
             'presentation' => $presentation,
             'options' => $options,
+            'appearance' => $field instanceof Buttons ? $this->_buttonsAppearance($field) : [],
         ]));
     }
 
@@ -486,6 +491,42 @@ class Conversions extends Component
         };
 
         return [$presentation, $options];
+    }
+
+    private function _buttonsAppearance(Buttons $field): array
+    {
+        // Legacy image-only buttons name themselves with a title, which tooltips replace.
+        if ($this->_imageOptions($field) && !$this->_imageOptions($field, true)) {
+            return ['showLabels' => false, 'labelTooltips' => true];
+        }
+
+        return [];
+    }
+
+    private function _buttonsWarnings(Buttons $field): array
+    {
+        $images = $this->_imageOptions($field);
+        $labelled = $this->_imageOptions($field, true);
+        $warnings = [];
+
+        if ($labelled && count($labelled) < count($images)) {
+            $warnings[] = 'Some image buttons hide their labels, but Visual Choice shows or hides labels for the whole field. All labels will be shown.';
+        }
+
+        if (array_filter($labelled, fn(array $option) => !in_array($option['imageAlign'] ?? '', ['', 'left'], true))) {
+            $warnings[] = 'Image alignment is not copied. Images will appear in their default position.';
+        }
+
+        if ($field->displayFullwidth) {
+            $warnings[] = 'Full-width display is not copied. Review the field’s width after converting.';
+        }
+
+        return $warnings;
+    }
+
+    private function _imageOptions(Buttons $field, bool $labelled = false): array
+    {
+        return array_values(array_filter($field->options, fn(array $option) => !empty($option['imageUrl']) && (!$labelled || !empty($option['showLabel']))));
     }
 
     private function _numericWidth(mixed $value): ?float

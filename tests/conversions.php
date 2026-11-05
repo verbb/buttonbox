@@ -49,6 +49,29 @@ foreach ([Buttons::class, Colours::class, TextSize::class] as $class) {
     });
 }
 
+$suite->test('Buttons conversion carries image-only labels and warns about uncopied settings', function() use ($suite) {
+    $option = fn(string $value, string $imageUrl, bool $showLabel, string $imageAlign = 'left') => ['label' => ucfirst($value), 'value' => $value, 'default' => false, 'imageUrl' => $imageUrl, 'showLabel' => $showLabel, 'imageAlign' => $imageAlign];
+    $plan = fn(array $config) => ButtonBox::$plugin->getConversions()->plan(new Buttons(['name' => 'Buttons', 'handle' => 'buttons' . bin2hex(random_bytes(3))] + $config));
+
+    $imageOnly = $plan(['options' => [$option('left', '/left.png', false), $option('right', '/right.png', false), $option('text', '', true)]]);
+    $suite->same('ready', $imageOnly['status']);
+    $suite->same(['showLabels' => false, 'labelTooltips' => true], $imageOnly['settings']['appearance']);
+    $suite->same([], $imageOnly['warnings']);
+
+    $labelled = $plan(['options' => [$option('left', '/left.png', true), $option('text', '', false)]]);
+    $suite->same([], $labelled['settings']['appearance']);
+    $suite->same([], $labelled['warnings']);
+
+    $mixed = $plan(['displayFullwidth' => true, 'options' => [$option('left', '/left.png', false), $option('right', '/right.png', true, 'right')]]);
+    $suite->same('ready', $mixed['status']);
+    $suite->same([], $mixed['settings']['appearance']);
+    $suite->same(3, count($mixed['warnings']));
+
+    // Hidden labels make alignment irrelevant, so only a shown label warns about it.
+    $hidden = $plan(['options' => [$option('left', '/left.png', false, 'right')]]);
+    $suite->same([], $hidden['warnings']);
+});
+
 $suite->test('Colours conversion normalises hex values and blocks named colours', function() use ($suite) {
     $plan = fn(string $color) => ButtonBox::$plugin->getConversions()->plan(new Colours(['name' => 'Colours', 'handle' => 'colours' . bin2hex(random_bytes(3)), 'options' => [['label' => 'A', 'value' => 'a', 'cssColour' => $color, 'default' => false]]]));
     foreach (['#2563EB', '#fff', '#FFF', '#2563eb'] as $color) {

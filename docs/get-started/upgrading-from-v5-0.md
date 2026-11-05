@@ -34,7 +34,7 @@ Conversion preserves field identity and layout placements, but appearance and re
 
 ### Buttons, Colours and Text Size
 
-Stored string values are preserved. Buttons uses Button group or Tiles, Colours uses Swatches, and Text Size uses List with typography metadata; not all legacy appearance settings are copied.
+Stored string values are preserved. Buttons uses Button group or Tiles, Colours uses Swatches, and Text Size uses List with typography metadata; not all legacy appearance settings are copied. Buttons whose images all hide their labels keep those labels hidden and show them as tooltips. The conversion preview warns about mixed label settings, image alignment and full-width display, which aren’t copied.
 
 Values become [SingleVisualOptionData](../developers/visual-option.md) objects. GraphQL output changes from a string to an object: select properties such as `value` and `label`. Mutation input remains a string.
 
