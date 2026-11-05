@@ -1,7 +1,9 @@
 <?php
 namespace verbb\buttonbox\fields;
 
+use verbb\buttonbox\ButtonBox;
 use verbb\buttonbox\helpers\Compatibility;
+use verbb\buttonbox\models\ActionLinksConfig;
 use verbb\buttonbox\web\assets\cp\LegacyAsset;
 use verbb\buttonbox\web\assets\cp\TriggersSettingsAsset;
 
@@ -11,6 +13,8 @@ use craft\events\DefineInputOptionsEvent;
 use craft\fields\BaseOptionsField;
 use craft\helpers\Cp;
 use craft\helpers\UrlHelper;
+
+use Twig\Error\Error as TwigError;
 
 class Triggers extends BaseOptionsField
 {
@@ -139,7 +143,7 @@ class Triggers extends BaseOptionsField
         Compatibility::logInput($this, $element);
 
         $name = $this->handle;
-        $options = $this->translatedOptions(true, $value, $element);
+        $options = $this->translatedOptions(false, $value, $element);
 
         if (!$value->valid) {
             Craft::$app->getView()->setInitialDeltaValue($this->handle, $this->encodeValue($value->value));
@@ -155,9 +159,11 @@ class Triggers extends BaseOptionsField
         Craft::$app->getView()->registerAssetBundle(LegacyAsset::class);
         Craft::$app->getView()->registerJs('new Craft.ButtonBoxButtons("' . Craft::$app->getView()->namespaceInputId($name) . '");');
 
-        // Parse element tags in links
+        // JavaScript braces aren't templates, and element values can't be safely placed in a script.
         foreach ($options as $i => $opt) {
-            $options[$i]['value'] = Craft::$app->getView()->renderObjectTemplate($opt['value'], $element);
+            if ($opt['type'] !== 'js') {
+                $options[$i]['value'] = $this->_linkUrl($opt['value'], $element);
+            }
         }
 
         return Craft::$app->getView()->renderTemplate('buttonbox/_field/triggers/input', [
@@ -201,5 +207,28 @@ class Triggers extends BaseOptionsField
         }
 
         return $translatedOptions;
+    }
+
+
+    // Private Methods
+    // =========================================================================
+
+    private function _linkUrl(string $url, ?ElementInterface $element): string
+    {
+        try {
+            $url = Craft::$app->getView()->renderObjectTemplate($url, $element);
+        } catch (TwigError $e) {
+            ButtonBox::warning("Skipped a Triggers link with an invalid template: {$e->getMessage()}");
+
+            return '#';
+        }
+
+        if (ActionLinksConfig::hasUnsafeScheme($url)) {
+            ButtonBox::warning("Skipped a Triggers link with an unsafe scheme: {$url}");
+
+            return '#';
+        }
+
+        return $url;
     }
 }

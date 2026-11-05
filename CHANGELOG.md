@@ -19,8 +19,11 @@
 
 ### Changed
 - Button Box now requires Craft CMS 5.10.11 or greater.
+- Triggers field JavaScript values are now output as written, without parsing element tags.
+- Triggers field links no longer output `javascript:`, `data:` or `vbscript:` URLs. Use a JavaScript trigger instead.
 
 ### Fixed
+- Fixed Triggers field buttons outputting encoded `base64:` values for their link or JavaScript, and links not parsing element tags.
 - Fixed the plugin bootstrap handle used during application configuration.
 
 ### Deprecated

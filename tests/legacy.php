@@ -100,4 +100,42 @@ $suite->test('Only element CP inputs emit non-throwing legacy deprecations', fun
         Craft::$app->set('deprecator', $originalDeprecator);
     }
 });
+
+$triggerHtml = function(array $rows, string $title = 'Example'): string {
+    $option = ['default' => false, 'showLabel' => true, 'imageUrl' => '', 'newWindow' => false];
+    $field = new Triggers(['handle' => 'triggers', 'options' => array_map(fn(array $row) => $row + $option, $rows)]);
+    $entry = new Entry(['title' => $title]);
+
+    return $field->getInputHtml($field->normalizeValue(null, $entry), $entry);
+};
+
+$suite->test('Triggers output decoded links with element tags parsed, and JavaScript as written', function() use ($suite, $triggerHtml) {
+    $html = $triggerHtml([
+        ['label' => 'Open', 'value' => '/preview/{title}', 'type' => 'link'],
+        ['label' => 'Run', 'value' => 'runTrigger(1)', 'type' => 'js'],
+        ['label' => 'Block', 'value' => 'if (a) { go(); }', 'type' => 'js'],
+        ['label' => 'Function', 'value' => 'function run() { go(); }', 'type' => 'js'],
+        ['label' => 'Tag', 'value' => "go('{title}')", 'type' => 'js'],
+    ], "x');alert(1);//");
+    $suite->check(!str_contains($html, 'base64:'), 'Triggers output encoded option values.');
+    $suite->check(str_contains($html, 'href="/preview/x&#039;);alert(1);//"'), 'Trigger links did not parse element tags.');
+    $suite->check(str_contains($html, 'onclick="runTrigger(1)"'), 'Trigger JavaScript was not output.');
+    $suite->check(str_contains($html, 'onclick="if (a) { go(); }"'), 'Trigger JavaScript blocks were not output as written.');
+    $suite->check(str_contains($html, 'onclick="function run() { go(); }"'), 'Trigger JavaScript functions were not output as written.');
+    $suite->check(str_contains($html, 'onclick="go(&#039;{title}&#039;)"'), 'Trigger JavaScript received element values.');
+});
+
+$suite->test('Triggers links reject invalid templates and unsafe schemes', function() use ($suite, $triggerHtml) {
+    $suite->check(str_contains($triggerHtml([['label' => 'Open', 'value' => '/x/{{ oops', 'type' => 'link']]), 'href="#"'), 'An invalid link template was not replaced.');
+    $suite->check(str_contains($triggerHtml([['label' => 'Open', 'value' => '{% if %}', 'type' => 'link']]), 'href="#"'), 'An invalid link tag was not replaced.');
+
+    foreach (['javascript:alert(1)', ' JavaScript:alert(1)', "java\tscript:alert(1)", 'data:text/html,x', 'vbscript:x'] as $title) {
+        $html = $triggerHtml([['label' => 'Open', 'value' => '{title}', 'type' => 'link']], $title);
+        $suite->check(str_contains($html, 'href="#"'), 'An unsafe link was not replaced: ' . $title);
+    }
+
+    $suite->check(str_contains($triggerHtml([['label' => 'Open', 'value' => 'javascript:alert(1)', 'type' => 'link']]), 'href="#"'), 'A configured unsafe link was not replaced.');
+    $suite->check(str_contains($triggerHtml([['label' => 'Open', 'value' => 'https://example.test/{title}', 'type' => 'link']]), 'href="https://example.test/Example"'), 'A safe link was replaced.');
+});
+
 $suite->finish();

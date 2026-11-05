@@ -20,6 +20,17 @@ class ActionLinksConfig extends Model
     public const SIZES = ['xxs', 'xs', 'sm', 'default', 'lg', 'xl'];
 
 
+    // Static Methods
+    // =========================================================================
+
+    public static function hasUnsafeScheme(string $url): bool
+    {
+        // Browsers remove tabs/newlines before parsing schemes. Reject controls
+        // outright, including after object-template and alias resolution.
+        return (bool)preg_match('/[\x00-\x1f\x7f]|^\s*(?:javascript|data|vbscript):/i', $url);
+    }
+
+
     // Properties
     // =========================================================================
 
@@ -94,11 +105,11 @@ class ActionLinksConfig extends Model
                 $this->addError('actions', Craft::t('buttonbox', 'Action {number} has an invalid icon position.', ['number' => $index + 1]));
             }
 
-            if ($this->_hasUnsafeScheme($url)) {
+            if (self::hasUnsafeScheme($url)) {
                 $this->addError('actions', Craft::t('buttonbox', 'Action {number} uses an unsafe URL scheme.', ['number' => $index + 1]));
             }
 
-            if ($this->_hasUnsafeScheme($imageUrl)) {
+            if (self::hasUnsafeScheme($imageUrl)) {
                 $this->addError('actions', Craft::t('buttonbox', 'Action {number} uses an unsafe image URL scheme.', ['number' => $index + 1]));
             }
         }
@@ -135,7 +146,7 @@ class ActionLinksConfig extends Model
         $url = Craft::$app->getView()->renderObjectTemplate($url, $element);
         $url = $this->_resolveUrl($url, $action['urlType'] ?? 'url');
 
-        if ($this->_hasUnsafeScheme($url)) {
+        if (self::hasUnsafeScheme($url)) {
             ButtonBox::warning("Skipped an Action Links URL with an unsafe scheme: {$url}");
 
             return null;
@@ -145,7 +156,7 @@ class ActionLinksConfig extends Model
 
         $imageUrl = ButtonBox::$plugin->getOptions()->resolveImageUrl(trim((string)($action['imageUrl'] ?? '')));
 
-        if ($imageUrl !== '' && !$this->_hasUnsafeScheme($imageUrl)) {
+        if ($imageUrl !== '' && !self::hasUnsafeScheme($imageUrl)) {
             $content = Html::img($imageUrl, [
                 'class' => 'buttonbox-action-links__image',
                 'slot' => ($action['iconPosition'] ?? 'start'),
@@ -184,12 +195,5 @@ class ActionLinksConfig extends Model
             'site' => UrlHelper::siteUrl(ltrim($url, '/')),
             default => $url,
         };
-    }
-
-    private function _hasUnsafeScheme(string $url): bool
-    {
-        // Browsers remove tabs/newlines before parsing schemes. Reject controls
-        // outright, including after object-template and alias resolution.
-        return (bool)preg_match('/[\x00-\x1f\x7f]|^\s*(?:javascript|data|vbscript):/i', $url);
     }
 }
