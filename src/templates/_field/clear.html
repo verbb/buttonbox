@@ -1,0 +1,5 @@
+{# Single choices use native radios, which cannot be unchecked; this submits the field's empty fallback instead. #}
+<button type="button" class="buttonbox-clear{% if labelled ?? false %} buttonbox-clear--labelled{% endif %}" data-bb-clear title="{{ 'Clear selection' | t('buttonbox') }}"{% if not visible %} hidden{% endif %}>
+    <span class="delete icon" aria-hidden="true"></span>
+    <span class="buttonbox-clear__label">{{ 'Clear selection' | t('buttonbox') }}</span>
+</button>

@@ -5,10 +5,14 @@
     diamond: '◆',
 } %}
 
+{% set clearable = clearable ?? false %}
+{# An optional rating clears by selecting its current value again, like other single choices. #}
 <div {{ attr({
     class: ['buttonbox-rating', static ? 'buttonbox-rating--static' : false] | filter,
     style: '--buttonbox-rating-active:' ~ activeColor ~ ';--buttonbox-rating-inactive:' ~ inactiveColor,
+    'data-bb-clearable': clearable,
 }) }}>
+    {% if not static %}{{ hiddenInput(name, '') }}{% endif %}
     {% for rating in 1..max %}
         <label class="buttonbox-rating__option{% if rating <= value %} is-selected{% endif %}" title="{{ rating }} {{ 'of' | t('buttonbox') }} {{ max }}">
             <input class="buttonbox-rating__input" type="radio" name="{{ name }}" value="{{ rating }}"{% if rating == value %} checked{% endif %}{% if static %} disabled{% endif %}>
@@ -18,11 +22,5 @@
         </label>
     {% endfor %}
 
-    {% if allowClear and not static %}
-        <label class="buttonbox-rating__clear">
-            <input class="buttonbox-rating__input" type="radio" name="{{ name }}" value=""{% if value is null %} checked{% endif %}>
-            <span class="delete icon" aria-hidden="true"></span>
-            <span class="visually-hidden">{{ 'Clear rating' | t('buttonbox') }}</span>
-        </label>
-    {% endif %}
+    {% if clearable and (showClearButton ?? false) %}{% include 'buttonbox/_field/clear' with { visible: value is not null } only %}{% endif %}
 </div>

@@ -1,3 +1,8 @@
+/* Craft only defines --focus-ring-color when a project customises it; match its own fallback. */
+:root {
+    --buttonbox-focus-color: var(--focus-outline-medium, var(--focus-ring-color, #0284c7));
+}
+
 .buttonbox-visual-settings table.editable {
     display: block;
     max-inline-size: 100%;
@@ -48,7 +53,7 @@
 }
 
 .buttonbox-presentations__choice:has(input:focus-visible) .buttonbox-presentations__sample {
-    outline: 2px solid var(--blue-500);
+    outline: 2px solid var(--buttonbox-focus-color);
     outline-offset: 3px;
 }
 
@@ -161,13 +166,12 @@
     display: none;
 }
 
+/* Contain the panel rather than the choices: inline-size containment gives the choices no
+   intrinsic width, collapsing them beside the shrink-to-fit Clear control. */
 .buttonbox-visual-settings__preview {
+    container-type: inline-size;
     max-inline-size: 100%;
     margin-block-start: 12px;
-}
-
-.buttonbox-visual-settings__preview .buttonbox-visual {
-    container-type: inline-size;
 }
 
 .buttonbox-preset-start {
@@ -233,7 +237,7 @@
 }
 
 .buttonbox-preset-card:has(:focus-visible) {
-    outline: 2px solid var(--pk-color-sky-600);
+    outline: 2px solid var(--buttonbox-focus-color);
     outline-offset: 2px;
 }
 
@@ -248,6 +252,8 @@
 }
 
 .buttonbox-preset-card__preview .buttonbox-visual {
+    /* Gallery previews have no selection, so show their artwork at full strength. */
+    --buttonbox-sample-stroke: var(--gray-500);
     zoom: .85;
     flex-wrap: nowrap;
     justify-content: center;
@@ -255,6 +261,11 @@
 
 .buttonbox-preset-card__preview .buttonbox-visual--chip {
     zoom: .8;
+}
+
+/* A 1px gap scaled below one device pixel can round away, dropping a divider. Scale it back up. */
+.buttonbox-preset-card__preview .buttonbox-visual--segmented {
+    gap: calc(1px / .85);
 }
 
 .buttonbox-preset-card__preview .buttonbox-visual--swatch {
@@ -328,6 +339,9 @@
     .buttonbox-preset-card__preview .buttonbox-visual {
         zoom: .75;
     }
+    .buttonbox-preset-card__preview .buttonbox-visual--segmented {
+        gap: calc(1px / .75);
+    }
     .buttonbox-preset-card__preview .buttonbox-visual--generated {
         zoom: .6;
     }
@@ -365,7 +379,7 @@
 }
 
 .buttonbox-appearance__summary:focus-visible {
-    outline: 2px solid var(--blue-500);
+    outline: 2px solid var(--buttonbox-focus-color);
     outline-offset: 3px;
     border-radius: 3px;
 }

@@ -28,6 +28,7 @@ class PositionController extends Controller
             'mode' => $request->getBodyParam('mode', 'grid'),
             'columns' => (int)$request->getBodyParam('columns', 3),
             'showTooltips' => filter_var($request->getBodyParam('showTooltips', true), FILTER_VALIDATE_BOOLEAN),
+            'showClearButton' => filter_var($request->getBodyParam('showClearButton', false), FILTER_VALIDATE_BOOLEAN),
             'appearance' => (array)$request->getBodyParam('appearance', []),
             'options' => is_array($options) ? $options : [],
         ]);

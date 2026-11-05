@@ -19,13 +19,13 @@ $options = [
 $fields = [
     'dropdown' => [new VisualChoice(['presentation' => 'dropdown', 'options' => $options]), 'alpha'],
     'orphanDropdown' => [new VisualChoice(['presentation' => 'dropdown', 'options' => $options]), 'removed'],
-    'choice' => [new VisualChoice(['options' => $options]), 'alpha'],
+    'choice' => [new VisualChoice(['options' => $options, 'showClearButton' => true]), 'alpha'],
     'multi' => [new VisualMultiChoice(['options' => $options]), ['alpha']],
-    'width' => [new WidthChoice(['showTooltips' => false]), '50'],
-    'orphanWidth' => [new WidthChoice(['showTooltips' => false]), 'removed'],
-    'position' => [new Position(['showTooltips' => false]), 'center'],
-    'orphanPosition' => [new Position(['showTooltips' => false]), 'removed'],
-    'rating' => [new Rating(['allowClear' => true]), 2],
+    'width' => [new WidthChoice(['showTooltips' => false, 'showClearButton' => true]), '50'],
+    'orphanWidth' => [new WidthChoice(['showTooltips' => false, 'showClearButton' => true]), 'removed'],
+    'position' => [new Position(['showTooltips' => false, 'showClearButton' => true]), 'center'],
+    'orphanPosition' => [new Position(['showTooltips' => false, 'showClearButton' => true]), 'removed'],
+    'rating' => [new Rating(['showClearButton' => true]), 2],
 ];
 $entry = new Entry(['id' => 123, 'siteSettingsId' => 123]);
 $entry->setIsFresh(false);

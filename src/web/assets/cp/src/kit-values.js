@@ -1,10 +1,7 @@
 // Craft's slideouts and delta forms submit jQuery serialize(), which skips form-associated Kit controls.
 export function syncKitValues($container) {
     let $values = $container.children('[data-bb-kit-values]');
-    const first = !$values.length;
-    const $form = $container.closest('form');
-    const before = first ? $form.serialize() : null;
-    if (first) $values = $('<div hidden data-bb-kit-values/>').appendTo($container);
+    if (!$values.length) $values = $('<div hidden data-bb-kit-values/>').appendTo($container);
     $values.empty();
     $container.find('[name]').each((index, control) => {
         if (!control.localName.startsWith('pk-') || control.matches(':disabled')) return;
@@ -14,6 +11,17 @@ export function syncKitValues($container) {
             value: control.localName === 'pk-lightswitch' ? (control.checked ? '1' : '0') : control.value,
         }).appendTo($values);
     });
-    // Craft may capture its unsaved-changes baseline before this runs; the mirror itself is not an edit.
-    if (first && $form.data('initialSerializedValue') === before) $form.data('initialSerializedValue', $form.serialize());
+}
+
+// Craft records its unsaved-changes baseline before settings scripts build their submitted inputs
+// (Kit mirrors, ordered option rows). Call before setup and run the result afterwards; the baseline
+// only moves when the form was unchanged beforehand, so real edits still prompt.
+export function trackSetupChanges($container) {
+    const $form = $container.closest('form');
+    // Slideouts may supply their own serializer, matching Craft's dirty check.
+    const serialize = () => ($form.data('serializer') || (() => $form.serialize()))();
+    const pristine = $form.length > 0 && $form.data('initialSerializedValue') === serialize();
+    return () => {
+        if (pristine) $form.data('initialSerializedValue', serialize());
+    };
 }

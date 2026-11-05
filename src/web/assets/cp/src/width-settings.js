@@ -15,6 +15,7 @@ Craft.ButtonBoxWidthSettings = Craft.ButtonBoxPositionSettings.extend({
             displayStyle: this.control('displayStyle').filter(':checked').val(),
             labelDisplay: this.control('labelDisplay').val(),
             showTooltips: this.$container.find('[data-bb-show-tooltips]')[0].checked,
+            showClearButton: this.showClearButton(),
             appearance: this.appearance(),
         };
     },
@@ -27,6 +28,7 @@ Craft.ButtonBoxWidthSettings = Craft.ButtonBoxPositionSettings.extend({
         const labelDisplay = this.control('labelDisplay').val();
         if (labelDisplay !== 'selected') parts.push(labels[labelDisplay]);
         if (!this.$container.find('[data-bb-show-tooltips]')[0].checked) parts.push(labels.tooltipsOff);
+        if (this.showClearButton()) parts.push(labels.clearButton);
         if (appearance.size && appearance.size !== 'default') parts.push(appearance.size.toUpperCase());
         if (['textColor', 'backgroundColor', 'fillColor', 'selectionColor', 'borderColor'].some((key) => appearance[key])) parts.push(labels.colours);
         if (appearance.borderWidth !== '' || appearance.radius !== '') parts.push(labels.borders);

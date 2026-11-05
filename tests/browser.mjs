@@ -62,7 +62,7 @@ async (page) => {
         check(await page.locator('[data-width-invalid]').isVisible() && await page.locator('[data-position-invalid]').isVisible(), 'Reset lost unavailable warnings.');
         check(await page.locator('#orphanDropdown pk-select').evaluate((element) => element.invalid), 'Reset lost Dropdown invalid state.');
         check(await page.locator('#dropdown buttonbox-dropdown').evaluate((element) => element.style.getPropertyValue('--buttonbox-dropdown-font')) === '', 'Reset retained selected typography.');
-        await radio('rating', 'Clear rating');
+        await page.locator('#rating').getByRole('button', { name: 'Clear selection', exact: true }).click();
         check(await page.locator('#rating .buttonbox-rating__option.is-selected').count() === 0, 'Cleared Rating retained selected stars.');
         check((await data()).find(([name]) => name === 'fields[nested][rating]')?.[1] === '', 'Cleared Rating did not submit empty.');
         await reset();

@@ -14,7 +14,7 @@ The Positions table contains each option’s **Label**, stored **Value** and opt
 
 Open **Edit option…** in a row’s menu to disable a position and optionally explain why it is unavailable. A disabled position keeps its cell but cannot be selected. Disabling the default clears it; choosing a disabled position as the default enables it. At least one position must remain enabled. The live preview shows the resulting author input; selecting a position there does not change the field’s default or options.
 
-Defaults apply to new elements. Existing empty values stay empty, and stored values that are removed or disabled remain visible as unavailable rather than being replaced automatically.
+Defaults apply to new elements. Existing empty values stay empty, and stored values that are removed or disabled remain visible as unavailable rather than being replaced automatically. When the field is optional, authors clear a selected or unavailable position by choosing it again or pressing Delete on it. **Show clear button** in Appearance adds a clear button beside the control.
 
 ![Position settings with a horizontal arrangement, Left, Center and Right options, and a live preview](../../screenshots/settings/position-settings.png)
 

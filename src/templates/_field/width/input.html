@@ -1,7 +1,9 @@
 {% set tooltips = [] %}
 {% set remainder = 100 - (options | last).percentage | default(100) %}
-<div class="buttonbox-width-field buttonbox-width-field--{{ displayStyle }} buttonbox-width-field--labels-{{ labelDisplay }}{% if static %} buttonbox-width-field--static{% endif %}" style="{{ appearanceStyle }}">
-    {% if not static %}{{ hiddenInput(name, invalid ? value : '') }}{% endif %}
+{% set clearable = clearable ?? false %}
+<div class="buttonbox-width-field buttonbox-width-field--{{ displayStyle }} buttonbox-width-field--labels-{{ labelDisplay }}{% if static %} buttonbox-width-field--static{% endif %}" style="{{ appearanceStyle }}"{% if clearable %} data-bb-clearable{% endif %}>
+    {# An unavailable stored value submits through the fallback until it is replaced or cleared; reset restores it. #}
+    {% if not static %}{{ hiddenInput(name, invalid ? value : '', { 'data-bb-fallback': invalid ? value : false }) }}{% endif %}
     {% if invalid %}<p class="warning" data-width-invalid>{{ 'Unavailable: {value}' | t('buttonbox', {value: rawValue}) }}</p>{% endif %}
     <div class="buttonbox-width-field__layout">
         <div class="buttonbox-width-field__choices{% if remainder > 0 %} has-tail{% endif %}">
@@ -19,6 +21,7 @@
             {% if displayStyle == 'bar' and remainder > 0 %}<span class="buttonbox-width-field__tail" style="flex-basis:{{ remainder }}%" aria-hidden="true"><span class="buttonbox-width-field__sample"></span></span>{% endif %}
         </div>
         {% if labelDisplay == 'selected' %}<span class="buttonbox-width-field__value">{{ selectedLabel ?? '—' }}</span>{% endif %}
+        {% if clearable and (showClearButton ?? false) %}{% include 'buttonbox/_field/clear' with { visible: invalid or selectedLabel is not null } only %}{% endif %}
     </div>
 </div>
 {% for tooltip in tooltips %}<pk-tooltip class="buttonbox-visual__tooltip" id="{{ tooltip.id }}-tooltip" for="{{ tooltip.id }}" content="{{ tooltip.content }}"></pk-tooltip>{% endfor %}

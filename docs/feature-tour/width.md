@@ -10,7 +10,7 @@ Create a **Button Box - Width** field under **Settings → Fields**, then add it
 
 Choose **Halves**, **Thirds**, **Quarters** or **Grid columns** from [**Browse presets…**](presets.md). Shipped presets copy their width stops and style into the field, preserving Appearance settings. Customised and user-created presets also copy their saved appearance. Grid columns provides twelve stops with values `1` through `12`; the other presets use percentage values. Edit the **Label**, stored **Value**, **Width (%)** and optional **Default** in the Widths table. Percentages must increase in table order, above 0 and up to 100. A stored value such as `wide` can represent 75%; templates decide what that identity means on the frontend.
 
-Open a row's **Edit option…** menu to disable a width and add an unavailable reason. Disabled stops keep their place. Defaults apply to new elements; removed or disabled stored values remain visible as unavailable until another width is selected. The preview changes no defaults or stored content.
+Open a row's **Edit option…** menu to disable a width and add an unavailable reason. Disabled stops keep their place. Defaults apply to new elements; removed or disabled stored values remain visible as unavailable until another width is selected or the value is cleared. When the field is optional, authors clear the selection by choosing the selected width again or pressing Delete on it. **Show clear button** in Appearance adds a clear button beside the control. The preview changes no defaults or stored content.
 
 ![Width settings with Bar selected and editable stops at 25%, 50%, 75% and 100%](../../screenshots/settings/width-settings.png)
 

@@ -94,10 +94,107 @@ for (const engine of engines.split(',')) {
                 assert.deepEqual(serialized, native, `${form} settings differ after changing ${name}`);
             }
         }
-        // Rating has no option rows, so mirroring its values must not read as an unsaved edit.
-        await page.reload();
+        // Mirrored Kit values and generated option rows are setup, not unsaved edits. Navigate
+        // rather than reload: Firefox restores edited form values on reload.
+        await page.goto(new URL('settings.html', url).href);
         await page.waitForFunction(() => document.querySelectorAll('[data-bb-kit-values]').length === 5);
-        assert.ok(await page.evaluate(() => { const form = $('#settings-rating'); return form.data('initialSerializedValue') === form.serialize(); }), 'Mirroring Rating settings marked the form as edited');
+        for (const form of Object.keys(changes)) {
+            assert.ok(await page.evaluate((name) => { const $form = $(`#settings-${name}`); return $form.data('initialSerializedValue') === $form.serialize(); }, form), `Setting up ${form} settings marked the form as edited`);
+        }
+        await change('types[visual][appearance][size]', 'sm');
+        assert.ok(await page.evaluate(() => { const $form = $('#settings-visual'); return $form.data('initialSerializedValue') !== $form.serialize(); }), 'A real settings edit was not detected');
+    });
+    await test('settings previews keep a trial selection until defaults change', async (page) => {
+        await page.goto(new URL('settings.html', url).href);
+        await page.waitForFunction(() => $('#settings-visual .buttonbox-visual-settings').data('buttonboxSettings'));
+        // The fixture makes no Craft requests, so serve a fixed preview with Beta as the default.
+        const serve = (defaultValue) => page.evaluate((value) => {
+            const choice = (key) => `<label class="buttonbox-visual__option"><input class="buttonbox-visual__input" type="radio" name="preview" value="${key}" aria-label="${key}"${key === value ? ' checked' : ''}></label>`;
+            Craft.sendActionRequest = async () => ({ data: { html: `<div class="buttonbox-visual">${choice('alpha')}${choice('beta')}</div>`, errors: [] } });
+            const settings = $('#settings-visual .buttonbox-visual-settings').data('buttonboxSettings');
+            settings.schedulePreview();
+            return new Promise((done) => setTimeout(done, 400));
+        }, defaultValue);
+        const checked = () => page.locator('#settings-visual [data-bb-preview] input:checked').evaluateAll((nodes) => nodes.map((node) => node.value));
+        await serve('beta');
+        assert.deepEqual(await checked(), ['beta']);
+        await page.locator('#settings-visual [data-bb-preview]').getByRole('radio', { name: 'alpha', exact: true }).check();
+        await serve('beta');
+        assert.deepEqual(await checked(), ['alpha'], 'Re-rendering discarded the trial selection');
+        assert.equal(await page.locator('#settings-visual [data-bb-preview] .is-selected input').inputValue(), 'alpha', 'Restored selection was not styled');
+        await serve('');
+        assert.deepEqual(await checked(), [], 'A changed default did not replace the trial selection');
+    });
+    await test('optional single choices clear, and hover previews follow the pointer', async (page) => {
+        const value = (name) => page.evaluate((key) => [...new FormData(document.querySelector('#fixture'))].filter(([field]) => field === key).map(([, entry]) => entry), name);
+        const clear = (id) => page.locator(`#${id}`).getByRole('button', { name: 'Clear selection', exact: true });
+        await clear('choice').click();
+        assert.deepEqual(await value('fields[nested][choice]'), [''], 'Cleared choice did not submit its empty fallback');
+        assert.equal(await page.locator('#choice .is-selected').count(), 0);
+        assert.ok(await clear('choice').isHidden(), 'Clear stayed visible without a selection');
+        assert.ok(await page.locator('#choice').getByRole('radio', { name: 'Alpha', exact: true }).evaluate((node) => node === document.activeElement), 'Focus was lost after clearing');
+        assert.equal(await page.locator('#static-choice [data-bb-clear]').count(), 0, 'Read-only choices offer Clear');
+        // An unavailable stored identity submits through its fallback until cleared, and reset restores it.
+        assert.ok(await clear('orphanPosition').isVisible(), 'Unavailable Position cannot be cleared');
+        await clear('orphanPosition').click();
+        assert.deepEqual(await value('fields[nested][orphanPosition]'), ['']);
+        assert.ok(await page.locator('[data-position-invalid]').isHidden(), 'Cleared Position kept its unavailable warning');
+        await page.getByRole('button', { name: 'Reset', exact: true }).click();
+        await settle(page);
+        assert.deepEqual(await value('fields[nested][orphanPosition]'), ['base64:cmVtb3ZlZA=='], 'Reset lost the unavailable Position value');
+        assert.ok(await page.locator('[data-position-invalid]').isVisible() && await clear('orphanPosition').isVisible() && await clear('choice').isVisible());
+        assert.deepEqual(await value('fields[nested][choice]'), ['', 'base64:YWxwaGE=']);
+        // Clicking, or pressing Space on, the selected option clears it; Delete does too.
+        await page.locator('#choice .buttonbox-visual__option', { hasText: 'Alpha' }).click();
+        await settle(page);
+        assert.deepEqual(await value('fields[nested][choice]'), [''], 'Clicking the selected choice did not clear it');
+        await page.locator('#choice .buttonbox-visual__option', { hasText: 'Beta' }).click();
+        await settle(page);
+        assert.deepEqual(await value('fields[nested][choice]'), ['', 'base64:YmV0YSAmICJxdW90ZWQi'], 'Clicking another choice did not select it');
+        await page.locator('#choice').getByRole('radio', { name: 'Beta', exact: true }).press('Space');
+        await settle(page);
+        assert.deepEqual(await value('fields[nested][choice]'), [''], 'Space on the selected choice did not clear it');
+        assert.ok(await page.locator('#choice').getByRole('radio', { name: 'Beta', exact: true }).evaluate((node) => node === document.activeElement), 'Clearing by keyboard moved focus');
+        await page.locator('#position .buttonbox-position__option').nth(4).click();
+        await settle(page);
+        assert.deepEqual(await value('fields[nested][position]'), [''], 'Clicking the selected position did not clear it');
+        await page.locator('#width').getByRole('radio', { name: '50%', exact: true }).press('Delete');
+        assert.deepEqual(await value('fields[nested][width]'), [''], 'Delete on the selected width did not clear it');
+        await page.getByRole('button', { name: 'Reset', exact: true }).click();
+        await settle(page);
+        // Width's readout follows the hovered stop, then returns to the stored selection.
+        const readout = page.locator('#width .buttonbox-width-field__value');
+        await page.locator('#width .buttonbox-width-field__option').nth(2).hover();
+        assert.equal(await readout.textContent(), '75%', 'Width readout ignored the hovered stop');
+        await page.mouse.move(0, 0);
+        assert.equal(await readout.textContent(), '50%', 'Width readout did not restore the selection');
+        // Clicking the current rating again clears it when clearing is allowed.
+        await page.locator('#rating .buttonbox-rating__option').nth(1).click();
+        await settle(page);
+        assert.deepEqual(await value('fields[nested][rating]'), [''], 'Clicking the current rating did not clear it');
+        assert.equal(await page.locator('#rating .buttonbox-rating__option.is-selected').count(), 0, 'Cleared Rating kept selected stars');
+        await page.getByRole('button', { name: 'Reset', exact: true }).click();
+        await settle(page);
+        await page.mouse.move(0, 0);
+        // Hovering a lower star previews that lower rating.
+        const colours = () => page.locator('#rating .buttonbox-rating__star').evaluateAll((nodes) => nodes.map((node) => getComputedStyle(node).color));
+        const [active, , , , inactive] = await colours();
+        await page.locator('#rating .buttonbox-rating__option').first().hover();
+        // Star colours transition, so wait for the hovered state to settle.
+        await page.waitForTimeout(250);
+        assert.deepEqual(await colours(), [active, inactive, inactive, inactive, inactive], 'Rating hover did not preview a lower value');
+        // Symbols touch, so the seam between two symbols still previews a rating.
+        const [first, second] = await page.locator('#rating .buttonbox-rating__option').evaluateAll((nodes) => nodes.slice(0, 2).map((node) => node.getBoundingClientRect().toJSON()));
+        assert.ok(second.left - first.right <= 0.5, 'Rating symbols have a gap between them');
+        const seam = await page.evaluate(([x, y]) => Boolean(document.elementFromPoint(x, y)?.closest('.buttonbox-rating__option')), [(first.right + second.left) / 2, first.top + first.height / 2]);
+        assert.ok(seam, 'The seam between symbols is outside every rating option');
+    });
+    await test('focus rings resolve without a customised Craft token', async (page) => {
+        // Craft defines --focus-ring-color only when customised; the ring must still resolve to a colour.
+        await page.locator('#position').getByRole('radio', { name: 'Center', exact: true }).focus();
+        await page.keyboard.press('ArrowRight');
+        const ring = await page.locator('#position input:checked + .buttonbox-position__dot').evaluate((node) => getComputedStyle(node).boxShadow);
+        assert.match(ring, /rgb\(2, 132, 199\)/, 'Position focus ring fell back to the text colour');
     });
     await test('choice and multi-choice visual selection follows native values and reset', async (page) => {
         await radio(page, 'choice', 'Beta');
@@ -118,9 +215,10 @@ for (const engine of engines.split(',')) {
         await radio(page, 'rating', '4 of 5');
         await submit(page, { choice: 'beta & "quoted"', multi: ['alpha', 'beta & "quoted"'], dropdown: 'beta & "quoted"', width: '75', position: 'bottom-right', rating: 4 }, 'selected');
         await select(page, 'dropdown', 'None');
-        await radio(page, 'rating', 'Clear rating');
+        await page.locator('#rating').getByRole('button', { name: 'Clear selection', exact: true }).click();
         for (const label of ['Alpha', 'Beta']) await page.locator('#multi').getByRole('checkbox', { name: label, exact: true }).press('Space');
-        await submit(page, { choice: 'beta & "quoted"', multi: null, dropdown: null, width: '75', position: 'bottom-right', rating: null }, 'cleared');
+        for (const id of ['choice', 'width', 'position']) await page.locator(`#${id}`).getByRole('button', { name: 'Clear selection', exact: true }).click();
+        await submit(page, { choice: null, multi: null, dropdown: null, width: null, position: null, rating: null }, 'cleared');
         await page.getByRole('button', { name: 'Reset', exact: true }).click();
         await settle(page);
         await submit(page, initial, 'reset');

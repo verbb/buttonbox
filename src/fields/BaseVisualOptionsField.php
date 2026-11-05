@@ -77,6 +77,7 @@ abstract class BaseVisualOptionsField extends BaseChoiceField
     public string $imageSize = 'auto';
     public string $imageFit = 'cover';
     public array $appearance = [];
+    public bool $showClearButton = false;
 
     protected static bool $optionIcons = true;
     protected static bool $optionColors = true;
@@ -96,6 +97,7 @@ abstract class BaseVisualOptionsField extends BaseChoiceField
             'imageSize',
             'imageFit',
             'appearance',
+            'showClearButton',
         ]);
     }
 
@@ -248,8 +250,8 @@ abstract class BaseVisualOptionsField extends BaseChoiceField
             $value = Json::decodeIfJson($value);
         } elseif ($value === '' && static::$multi) {
             $value = [];
-        } elseif ($value === '' && $this->presentation === 'dropdown') {
-            // Clearing a dropdown is an explicit empty selection, not a missing option or a fresh default.
+        } elseif ($value === '') {
+            // A cleared single choice submits its empty fallback: an explicit empty selection, not a missing option or a fresh default.
             $value = [];
         } elseif (is_string($value) && strtolower($value) === '__blank__') {
             $value = '';
@@ -431,6 +433,7 @@ abstract class BaseVisualOptionsField extends BaseChoiceField
         $rules[] = [['iconSize'], 'in', 'range' => ['small', 'medium', 'large']];
         $rules[] = [['imageSize'], 'in', 'range' => ['auto', 'small', 'medium', 'large']];
         $rules[] = [['imageFit'], 'in', 'range' => ['contain', 'cover']];
+        $rules[] = [['showClearButton'], 'boolean'];
         $rules[] = [['appearance'], 'validateAppearance', 'skipOnEmpty' => false];
         $rules[] = [['projectSet'], 'validateProjectSet'];
         $rules[] = [['options'], 'validateVisualOptions'];

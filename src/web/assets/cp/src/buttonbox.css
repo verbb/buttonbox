@@ -1,5 +1,27 @@
 @import '@verbb/plugin-kit-web/plugin-kit.css';
 
+/* Craft only defines --focus-ring-color when a project customises it; match its own fallback.
+   Choice selection is slate, as in Craft's button group, while Position and Width keep their
+   blue so the spatial selection stands out. Artwork samples are lighter until selected. */
+:root {
+    --buttonbox-focus-color: var(--focus-outline-medium, var(--focus-ring-color, #0284c7));
+    --buttonbox-selected: var(--gray-500);
+}
+
+.buttonbox-visual {
+    --buttonbox-sample-stroke: var(--gray-300);
+}
+
+.buttonbox-visual__option.is-selected,
+.buttonbox-visual--outlined .buttonbox-visual__option:not(.is-disabled, .is-invalid):hover {
+    --buttonbox-sample-stroke: var(--gray-500);
+}
+
+/* Filled presentations draw samples in the text colour, so they stay visible when selected. */
+.buttonbox-visual:is(.buttonbox-visual--buttons, .buttonbox-visual--segmented, .buttonbox-visual--chip) .buttonbox-visual__option {
+    --buttonbox-sample-stroke: currentColor;
+}
+
 .buttonbox-dropdown {
     display: block;
     max-inline-size: 100%;
@@ -109,7 +131,7 @@
 
 .buttonbox-visual__option:focus-visible .buttonbox-visual__control,
 .buttonbox-visual__input:focus-visible + .buttonbox-visual__control {
-    outline: 2px solid var(--blue-500);
+    outline: 2px solid var(--buttonbox-focus-color);
     outline-offset: 2px;
 }
 
@@ -319,7 +341,7 @@
 .buttonbox-visual--generated .buttonbox-visual__surface {
     inline-size: 48px;
     block-size: 24px;
-    border: 2px solid var(--gray-500);
+    border: 2px solid var(--buttonbox-sample-stroke);
     border-radius: var(--buttonbox-visual-radius, 3px);
 }
 
@@ -378,13 +400,73 @@
 }
 
 .buttonbox-position__option:focus-visible {
-    outline: 2px solid var(--focus-ring-color);
+    outline: 2px solid var(--buttonbox-focus-color);
     outline-offset: -2px;
 }
 
 .buttonbox-position-field {
     max-inline-size: 100%;
     overflow-x: auto;
+}
+
+.buttonbox-position-field__layout,
+.buttonbox-clearable {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    max-inline-size: 100%;
+}
+
+.buttonbox-clearable > :not(input, .buttonbox-clear) {
+    flex: 0 1 auto;
+    min-inline-size: 0;
+}
+
+/* Lists, tiles and cards fill the field width, so an enabled Clear button sits beneath them. */
+.buttonbox-clearable--block {
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.buttonbox-clearable--block > :not(input, .buttonbox-clear) {
+    align-self: stretch;
+}
+
+.buttonbox-clear {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: 4px;
+    padding: 4px;
+    border: 0;
+    border-radius: var(--radius-sm, 3px);
+    background: none;
+    color: var(--light-text-color);
+    font: inherit;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.buttonbox-clear[hidden] {
+    display: none;
+}
+
+.buttonbox-clear:hover {
+    color: var(--text-color);
+}
+
+.buttonbox-clear:focus-visible {
+    outline: 2px solid var(--buttonbox-focus-color);
+    outline-offset: 1px;
+}
+
+.buttonbox-clear:not(.buttonbox-clear--labelled) .buttonbox-clear__label {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
 }
 
 .buttonbox-position__input {
@@ -417,7 +499,7 @@
 }
 
 .buttonbox-position__input:focus-visible + .buttonbox-position__dot {
-    box-shadow: 0 0 0 3px var(--focus-ring-color);
+    box-shadow: 0 0 0 3px var(--buttonbox-focus-color);
 }
 
 .buttonbox-position--static .buttonbox-position__option {
@@ -427,13 +509,16 @@
 .buttonbox-rating {
     display: flex;
     align-items: center;
-    gap: 2px;
 }
 
-.buttonbox-rating__option,
-.buttonbox-rating__clear {
+.buttonbox-rating__option {
     position: relative;
     cursor: pointer;
+}
+
+/* Symbols touch so the pointer never falls between them and drops the hover preview; padding keeps the visual spacing. */
+.buttonbox-rating__option {
+    padding-inline: 1px;
 }
 
 .buttonbox-rating__input {
@@ -452,12 +537,16 @@
     transition: color 100ms linear, transform 100ms linear;
 }
 
-.buttonbox-rating__option:hover .buttonbox-rating__star,
-.buttonbox-rating__option:has(~ .buttonbox-rating__option:hover) .buttonbox-rating__star {
+.buttonbox-rating__option.is-selected .buttonbox-rating__star {
     color: var(--buttonbox-rating-active, var(--yellow-500));
 }
 
-.buttonbox-rating__option.is-selected .buttonbox-rating__star {
+/* Hovering previews the rating it would set, including one lower than the current value. */
+.buttonbox-rating:not(.buttonbox-rating--static):has(.buttonbox-rating__option:hover, .buttonbox-clear:hover) .buttonbox-rating__option .buttonbox-rating__star {
+    color: var(--buttonbox-rating-inactive, var(--gray-300));
+}
+
+.buttonbox-rating:not(.buttonbox-rating--static):has(.buttonbox-rating__option:hover) .buttonbox-rating__option:is(:hover, :has(~ .buttonbox-rating__option:hover)) .buttonbox-rating__star {
     color: var(--buttonbox-rating-active, var(--yellow-500));
 }
 
@@ -471,11 +560,11 @@
 
 .buttonbox-rating__input:focus-visible + .buttonbox-rating__star {
     border-radius: 3px;
-    box-shadow: 0 0 0 3px var(--focus-ring-color);
+    box-shadow: 0 0 0 3px var(--buttonbox-focus-color);
 }
 
-.buttonbox-rating__clear {
-    margin-inline-start: 6px;
+.buttonbox-rating .buttonbox-clear {
+    margin-inline-start: 4px;
 }
 
 .buttonbox-rating--static .buttonbox-rating__option {
@@ -519,7 +608,7 @@
 }
 
 .buttonbox-visual__surface--shape {
-    border: 2px solid var(--gray-500);
+    border: 2px solid var(--buttonbox-sample-stroke);
     border-radius: var(--buttonbox-visual-radius, 3px);
 }
 
@@ -568,19 +657,19 @@
     min-inline-size: 0;
     border: 0;
     border-radius: 0;
-    background: var(--gray-500);
+    background: var(--buttonbox-sample-stroke);
 }
 
 .buttonbox-visual__geometry > .buttonbox-visual__surface--ratio {
     inline-size: var(--buttonbox-visual-ratio-width, 100%);
     block-size: var(--buttonbox-visual-ratio-height, 100%);
-    border: 2px solid var(--gray-500);
+    border: 2px solid var(--buttonbox-sample-stroke);
 }
 
 .buttonbox-visual__geometry > .buttonbox-visual__surface--shape {
     inline-size: 100%;
     block-size: var(--buttonbox-visual-shape-height, 50%);
-    border: 2px solid var(--gray-500);
+    border: 2px solid var(--buttonbox-sample-stroke);
 }
 
 .buttonbox-visual:is(.buttonbox-visual--buttons, .buttonbox-visual--segmented, .buttonbox-visual--chip) {
@@ -753,9 +842,15 @@
     inline-size: 16px;
     block-size: 16px;
     border-radius: 50%;
-    background: var(--buttonbox-choice-accent, var(--gray-500));
-    color: var(--white);
+    background: var(--buttonbox-choice-accent, var(--buttonbox-selected));
+    color: var(--buttonbox-choice-accent-text, var(--white));
     visibility: hidden;
+}
+
+.buttonbox-visual__limits {
+    margin-block: 6px 0;
+    color: var(--light-text-color);
+    font-size: 12px;
 }
 
 .buttonbox-visual__check svg {
@@ -974,7 +1069,7 @@
 
 .buttonbox-width-field__option:has(input:focus-visible) .buttonbox-width-field__sample,
 .buttonbox-width-field__option:focus-visible {
-    outline: 2px solid var(--focus-ring-color);
+    outline: 2px solid var(--buttonbox-focus-color);
     outline-offset: 2px;
     z-index: 1;
 }

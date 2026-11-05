@@ -1,7 +1,10 @@
 <?php
 
+use verbb\buttonbox\fields\Position;
+use verbb\buttonbox\fields\Rating;
 use verbb\buttonbox\fields\VisualChoice;
 use verbb\buttonbox\fields\VisualMultiChoice;
+use verbb\buttonbox\models\Appearance;
 use verbb\buttonbox\models\OptionSet;
 
 use craft\elements\Entry;
@@ -78,7 +81,7 @@ $field = new VisualChoice([
 $xpath = elements($field->getInputHtml(null, null));
 check($xpath->query('//pk-tooltip')->item(0)->getAttribute('content') === 'Requires approval', 'Disabling label tooltips suppressed the unavailable reason.');
 check($xpath->query('//label[@tabindex="0"]')->length === 1, 'Disabled tooltip cannot receive keyboard focus.');
-$descriptionId = $xpath->query('//input')->item(0)->getAttribute('aria-describedby');
+$descriptionId = $xpath->query('//input[@type="radio"]')->item(0)->getAttribute('aria-describedby');
 check($xpath->query('//*[@id="' . $descriptionId . '"]')->item(0)->textContent === 'A description — Requires approval', 'Accessible descriptions were lost.');
 $field->appearance['labelTooltips'] = true;
 check(elements($field->getInputHtml(null, null))->query('//pk-tooltip')->item(0)->getAttribute('content') === 'Unavailable icon — Requires approval', 'Label and unavailable reason produced competing tooltips.');
@@ -118,5 +121,37 @@ $width->appearance['labelTooltips'] = '1';
 check(elements($width->getInputHtml($width->normalizeValue('50', null), null))->query('//pk-tooltip')->length === 2, 'Width segments lost their enabled label tooltips.');
 check(!(new VisualMultiChoice(['presentation' => 'width']))->validate(['presentation']), 'Cumulative width was accepted for multi-choice.');
 check(elements($width->getStaticHtml($width->normalizeValue('50', null), new Entry()))->query('//input[@disabled]')->length === 2, 'Static width is interactive.');
+
+// Checkmarks sit on the selection colour, so pale selections need dark marks.
+foreach (['#fde047' => '#1f2933', '#fff' => '#1f2933', '#1d4ed8' => '#fff', '#147d35' => '#fff'] as $selection => $mark) {
+    $appearance = new Appearance(['selectionColor' => $selection]);
+    check(str_contains($appearance->getStyle(), '--buttonbox-choice-accent-text:' . $mark . ';') || str_ends_with($appearance->getStyle(), '--buttonbox-choice-accent-text:' . $mark), 'Selection ' . $selection . ' did not use a legible checkmark.');
+}
+check(!str_contains((new Appearance())->getStyle(), 'accent-text'), 'Default selection gained a checkmark override.');
+
+// Optional single choices always clear by reselecting; the visible Clear button is opt-in.
+$clearCount = fn(string $html): array => [elements($html)->query('//*[@data-bb-clearable]')->length, elements($html)->query('//*[@data-bb-clear]')->length];
+$cards = new VisualChoice(['handle' => 'cards', 'presentation' => 'card', 'options' => [['label' => 'Alpha', 'value' => 'alpha']]]);
+check($clearCount($cards->getInputHtml($cards->normalizeValue('alpha', null), null)) === [1, 0], 'Card choices lost click-to-clear or showed a Clear button by default.');
+$cards->showClearButton = true;
+check(elements($cards->getInputHtml($cards->normalizeValue('alpha', null), null))->query('//button[@data-bb-clear][contains(@class, "buttonbox-clear--labelled")]')->length === 1, 'Enabled card Clear button was not labelled.');
+$cards->required = true;
+check($clearCount($cards->getInputHtml($cards->normalizeValue('alpha', null), null)) === [0, 0], 'Required choices offered clearing.');
+$position = new Position(['handle' => 'clearPosition']);
+check($clearCount($position->getInputHtml($position->normalizeValue('center', null), null)) === [1, 0], 'Position showed a Clear button by default.');
+$rating = new Rating(['handle' => 'clearRating', 'allowClear' => false]);
+$ratingDom = elements($rating->getInputHtml(3, null));
+check($clearCount($rating->getInputHtml(3, null)) === [1, 0] && $ratingDom->query('//input[@type="hidden"][@value=""]')->length === 1, 'Rating lost click-to-clear, its empty fallback, or ignored the retired setting.');
+$rating->showClearButton = true;
+check($clearCount($rating->getInputHtml(3, null)) === [1, 1], 'Enabled Rating Clear button is missing.');
+
+// Multi-choices state any selection limits beneath the choices.
+$limited = new VisualMultiChoice(['handle' => 'limited', 'presentation' => 'chip', 'minSelections' => 1, 'maxSelections' => 2, 'options' => [['label' => 'Alpha', 'value' => 'alpha'], ['label' => 'Beta', 'value' => 'beta']]]);
+$limitedDom = elements($limited->getInputHtml($limited->normalizeValue(['alpha'], null), null));
+check(trim($limitedDom->query('//p[@class="buttonbox-visual__limits"]')->item(0)?->textContent ?? '') === 'Choose 1–2.', 'Selection limits were not described.');
+$limited->minSelections = 0;
+check(trim(elements($limited->getInputHtml(null, null))->query('//p[@class="buttonbox-visual__limits"]')->item(0)?->textContent ?? '') === 'Choose up to 2.', 'Maximum selections were not described.');
+$limited->maxSelections = null;
+check(elements($limited->getInputHtml(null, null))->query('//p[@class="buttonbox-visual__limits"]')->length === 0, 'Unlimited multi-choice described limits.');
 
 echo "Button Box visual label integration tests passed.\n";

@@ -3,10 +3,10 @@
 ## 5.1.0 - 
 
 ### Added
-- Added Visual Choice and Visual Multi-Choice fields for single and multiple selections, with configurable options and selection limits.
-- Added Position fields with configurable spatial arrangements and keyboard navigation.
-- Added a new Width field with explicit percentage stops, Bar and Width samples styles, and configurable labels and tooltips.
-- Added Rating fields with whole-number values, configurable limits and defaults, optional clearing, and star, heart, circle or diamond symbols.
+- Added Visual Choice and Visual Multi-Choice fields for single and multiple selections, with configurable options and selection limits. Optional single choices clear when their selected option is chosen again, with an optional clear button.
+- Added Position fields with configurable spatial arrangements, keyboard navigation, and clearing by reselecting or an optional clear button.
+- Added a new Width field with explicit percentage stops, Bar and Width samples styles, configurable labels and tooltips, and clearing by reselecting or an optional clear button.
+- Added Rating fields with whole-number values, configurable limits and defaults, clearing by reselecting or an optional clear button, and star, heart, circle or diamond symbols.
 - Added reusable Action Links fields for conditional editor links, with configurable labels, icons, images and button styles.
 - Added Buttons, Button group, Chips, List, Tiles, Cards, Swatches and Visual samples presentations for visual choices, plus Dropdown for single choices.
 - Added visual option metadata for descriptions, icons, images, colours, split colours, foreground/background pairs, gradients, width, aspect ratio, typography and shapes.

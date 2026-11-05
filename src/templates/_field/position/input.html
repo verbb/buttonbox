@@ -1,7 +1,10 @@
 {% set tooltips = [] %}
-<div class="buttonbox-position-field">
-    {% if not static %}{{ hiddenInput(name, invalid ? value : '') }}{% endif %}
+{% set clearable = clearable ?? false %}
+<div class="buttonbox-position-field"{% if clearable %} data-bb-clearable{% endif %}>
+    {# An unavailable stored value submits through the fallback until it is replaced or cleared; reset restores it. #}
+    {% if not static %}{{ hiddenInput(name, invalid ? value : '', { 'data-bb-fallback': invalid ? value : false }) }}{% endif %}
     {% if invalid %}<p class="warning" data-position-invalid>{{ 'Unavailable: {value}' | t('buttonbox', { value: rawValue }) }}</p>{% endif %}
+    <div class="buttonbox-position-field__layout">
     <div class="buttonbox-position buttonbox-position--{{ mode }}{% if static %} buttonbox-position--static{% endif %}" data-columns="{{ columns }}" style="--buttonbox-position-columns: {{ columns }};{{ appearanceStyle }}">
         {% for option in options %}
             {% set tooltipId = 'buttonbox-position-option-' ~ random() %}
@@ -12,6 +15,8 @@
                 <span class="buttonbox-position__dot"><span class="visually-hidden">{{ option.label }}</span></span>
             </label>
         {% endfor %}
+    </div>
+    {% if clearable and (showClearButton ?? false) %}{% include 'buttonbox/_field/clear' with { visible: invalid or options | filter(option => option.value == value) | length > 0 } only %}{% endif %}
     </div>
 </div>
 

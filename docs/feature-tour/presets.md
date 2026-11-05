@@ -12,7 +12,7 @@ Visual Choice and Visual Multi-Choice presets copy options, presentation and sav
 
 Position presets copy options, arrangement, grid columns, tooltips and saved appearance settings. Width presets copy percentage stops, display style, labels, tooltips and saved appearance settings.
 
-Rating presets copy the symbol and active/inactive colours. The maximum, default, clearing behaviour and numeric-label setting are preserved.
+Rating presets copy the symbol and active/inactive colours. The maximum, default, numeric-label and clear-button settings are preserved.
 
 For visual choices, Position and Width, built-in presets without saved appearance settings leave the field’s existing appearance overrides in place. Customised and user-created presets copy their saved appearance settings.
 

@@ -59,7 +59,7 @@ if (in_array('--persist', $argv, true)) {
     $starPath = Presets::CONFIG_PATH . '.builtin-rating-star';
     $original = $config->get($starPath);
     $created = [];
-    $unchanged = new Rating(['symbol' => 'star', 'activeColor' => '#f4b638', 'max' => 7, 'allowClear' => false]);
+    $unchanged = new Rating(['symbol' => 'star', 'activeColor' => '#f4b638', 'max' => 7, 'showClearButton' => true]);
     try {
         foreach (['visual', 'position', 'width', 'rating'] as $family) {
             $preset = new Preset(['name' => 'Temporary ' . StringHelper::randomString(8), 'family' => $family]);
@@ -78,7 +78,7 @@ if (in_array('--persist', $argv, true)) {
         $config->flush();
         presetCheck(Rating::getPresets()['star']['activeColor'] === '#112233', 'Override missing from field chooser.');
         presetCheck($service->getById($star->id)->customized, 'Override is not marked customised.');
-        presetCheck($unchanged->activeColor === '#f4b638' && $unchanged->max === 7 && !$unchanged->allowClear, 'Existing field mutated.');
+        presetCheck($unchanged->activeColor === '#f4b638' && $unchanged->max === 7 && $unchanged->showClearButton, 'Existing field mutated.');
         $service->remove($star->id);
         presetCheck(Rating::getPresets()['star']['activeColor'] === Rating::getBuiltInPresets()['star']['activeColor'], 'Original was not restored.');
         foreach ($created as $id) {

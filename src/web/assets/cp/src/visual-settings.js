@@ -1,5 +1,6 @@
 import { applyPresetSettings } from './preset-settings.js';
-import { syncKitValues } from './kit-values.js';
+import { syncKitValues, trackSetupChanges } from './kit-values.js';
+import { restorePreviewSelection } from './preview-selection.js';
 import '@verbb/plugin-kit-web/components/alert.js';
 import '@verbb/plugin-kit-web/components/dialog.js';
 import '@verbb/plugin-kit-web/components/field.js';
@@ -13,8 +14,10 @@ Craft.ButtonBoxVisualSettings = Garnish.Base.extend({
         this.$container = $('#' + id);
         if (!this.$container.length || this.$container.data('buttonboxSettings')) return;
         this.$container.data('buttonboxSettings', this);
+        const setupComplete = trackSetupChanges(this.$container);
         this.config = this.$container.data('config');
         this.request = 0;
+        this.previewSelection = {};
         this.timer = null;
         this.presetDialog = null;
         this.applyingPreset = false;
@@ -28,6 +31,7 @@ Craft.ButtonBoxVisualSettings = Garnish.Base.extend({
         this.updateSource();
         this.updatePresentation();
         this.schedulePreview();
+        setupComplete();
         // Craft field settings can be replaced in slideouts without a page navigation.
         this.observer = new MutationObserver(() => {
             if (!this.$container[0].isConnected) this.destroy();
@@ -144,7 +148,7 @@ Craft.ButtonBoxVisualSettings = Garnish.Base.extend({
         // Keep invalid controls reachable even when their presentation is inactive.
         const dropdown = this.presentation() === 'dropdown';
         const visibleRows = this.appearanceRows.filter((row) => {
-            if (dropdown && ['showLabels', 'labelTooltips', 'imageSize', 'imageFit'].includes(row._id) && this.appearanceTable.dataset.appearanceErrors !== '1' && this.appearanceTable.dataset.imageErrors !== '1') return false;
+            if (dropdown && ['showLabels', 'labelTooltips', 'showClearButton', 'imageSize', 'imageFit'].includes(row._id) && this.appearanceTable.dataset.appearanceErrors !== '1' && this.appearanceTable.dataset.imageErrors !== '1') return false;
             return row.group !== 'image' || images || this.appearanceTable.dataset.imageErrors === '1';
         });
         const rowKeys = visibleRows.map((row) => row._id).join(',');
@@ -163,6 +167,7 @@ Craft.ButtonBoxVisualSettings = Garnish.Base.extend({
         const parts = [];
         if (this.presentation() !== 'dropdown' && appearance.showLabels === '0') parts.push(labels.labels);
         if (this.presentation() !== 'dropdown' && appearance.labelTooltips === '1') parts.push(labels.tooltips);
+        if (this.presentation() !== 'dropdown' && this.$container.find('[data-bb-show-clear]')[0]?.checked) parts.push(labels.clearButton);
         if (appearance.size && appearance.size !== 'default') {
             const option = [...this.$container.find('[data-bb-appearance-key="size"] pk-option')].find((item) => item.value === appearance.size);
             if (option) parts.push(option.textContent.trim());
@@ -277,7 +282,7 @@ Craft.ButtonBoxVisualSettings = Garnish.Base.extend({
             return;
         }
         try {
-            const response = await Craft.sendActionRequest('POST', 'buttonbox/option-sets/preview', { data: { options, presentation: this.presentation(), columns: this.control('columns').val(), appearance: this.appearance(), imageSize: this.control('imageSize').val(), imageFit: this.control('imageFit').val(), multi: this.config.multi ? 1 : 0 } });
+            const response = await Craft.sendActionRequest('POST', 'buttonbox/option-sets/preview', { data: { options, presentation: this.presentation(), columns: this.control('columns').val(), appearance: this.appearance(), showClearButton: this.$container.find('[data-bb-show-clear]')[0]?.checked ? 1 : 0, imageSize: this.control('imageSize').val(), imageFit: this.control('imageFit').val(), multi: this.config.multi ? 1 : 0 } });
             if (version !== this.request || !this.$container[0].isConnected) return;
             $preview.html(response.data.html);
             // Preview inputs are interactive but must never become part of the settings POST.
@@ -286,6 +291,7 @@ Craft.ButtonBoxVisualSettings = Garnish.Base.extend({
                 if (!this.config.multi) $preview.find('input').not($input).prop('checked', false);
                 $preview.find('input').each((index, input) => $(input).closest('.buttonbox-visual__option').toggleClass('is-selected', input.checked));
             });
+            restorePreviewSelection($preview, this.previewSelection);
             this.$container.find('[data-bb-status]').text(response.data.errors.join(' '));
         } catch {
             if (version === this.request) this.status('Preview unavailable. Your options have been preserved.');

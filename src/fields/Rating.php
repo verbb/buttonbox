@@ -103,7 +103,7 @@ class Rating extends Field implements
 
     public int $max = 5;
     public ?int $defaultValue = null;
-    public bool $allowClear = true;
+    public bool $showClearButton = false;
     public string $symbol = 'star';
     public string $activeColor = '#f4b638';
     public string $inactiveColor = '#cdd8e4';
@@ -112,6 +112,15 @@ class Rating extends Field implements
 
     // Public Methods
     // =========================================================================
+
+    public function __construct($config = [])
+    {
+        // Development builds stored a clearing toggle. Optional ratings now always clear by selecting
+        // the current value again, so only the separate clear button remains configurable.
+        unset($config['allowClear']);
+
+        parent::__construct($config);
+    }
 
     public function getSettingsHtml(bool $presetEditor = false): ?string
     {
@@ -231,7 +240,7 @@ class Rating extends Field implements
         $rules = parent::defineRules();
         $rules[] = [['max'], 'integer', 'min' => 2, 'max' => 20];
         $rules[] = [['defaultValue'], 'integer', 'min' => 1, 'max' => $this->max, 'skipOnEmpty' => true];
-        $rules[] = [['allowClear', 'showLabels'], 'boolean'];
+        $rules[] = [['showClearButton', 'showLabels'], 'boolean'];
         $rules[] = [['symbol'], 'in', 'range' => self::SYMBOLS];
         $rules[] = [['activeColor', 'inactiveColor'], ColorValidator::class];
 
@@ -255,7 +264,8 @@ class Rating extends Field implements
             'name' => $this->handle,
             'value' => $value,
             'max' => $this->max,
-            'allowClear' => $this->allowClear,
+            'clearable' => !$static && !$this->required,
+            'showClearButton' => $this->showClearButton,
             'symbol' => $this->symbol,
             'activeColor' => ColorValidator::normalizeColor($this->activeColor),
             'inactiveColor' => ColorValidator::normalizeColor($this->inactiveColor),

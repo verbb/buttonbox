@@ -28,6 +28,7 @@ class WidthController extends Controller
             'displayStyle' => $request->getBodyParam('displayStyle', 'bar'),
             'labelDisplay' => $request->getBodyParam('labelDisplay', 'selected'),
             'showTooltips' => filter_var($request->getBodyParam('showTooltips', true), FILTER_VALIDATE_BOOLEAN),
+            'showClearButton' => filter_var($request->getBodyParam('showClearButton', false), FILTER_VALIDATE_BOOLEAN),
             'appearance' => (array)$request->getBodyParam('appearance', []),
             'options' => is_array($options) ? $options : [],
         ]);

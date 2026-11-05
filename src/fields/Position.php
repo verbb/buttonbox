@@ -91,6 +91,7 @@ class Position extends BaseChoiceField implements InlineEditableFieldInterface, 
     public string $mode = 'grid';
     public int $columns = 3;
     public bool $showTooltips = true;
+    public bool $showClearButton = false;
     public array $appearance = [];
     public array $allowedPositions = [];
     public ?string $defaultPosition = null;
@@ -312,6 +313,7 @@ class Position extends BaseChoiceField implements InlineEditableFieldInterface, 
     {
         $rules = parent::defineRules();
         $rules[] = [['mode'], 'in', 'range' => self::MODES];
+        $rules[] = [['showClearButton'], 'boolean'];
         $rules[] = [['appearance'], 'validateAppearance', 'skipOnEmpty' => false];
         $rules[] = [['columns'], 'integer', 'min' => 1, 'max' => 12, 'when' => fn() => $this->mode === 'grid'];
 
@@ -367,6 +369,8 @@ class Position extends BaseChoiceField implements InlineEditableFieldInterface, 
             'showTooltips' => $this->showTooltips,
             'appearanceStyle' => $this->getAppearanceStyle(),
             'static' => $static,
+            'clearable' => !$static && !$this->required,
+            'showClearButton' => $this->showClearButton,
         ]);
     }
 }

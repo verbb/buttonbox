@@ -48,6 +48,8 @@ class Appearance extends Model
 
         if ($this->selectionColor !== '') {
             $styles[] = '--buttonbox-choice-selected-background:color-mix(in srgb, var(--buttonbox-choice-accent) 12%, var(--buttonbox-choice-background, var(--gray-050)))';
+            // Checkmarks sit on the selection colour, so keep them legible on pale colours.
+            $styles[] = '--buttonbox-choice-accent-text:' . ($this->_prefersDarkText($this->selectionColor) ? '#1f2933' : '#fff');
         }
 
         return implode(';', $styles);
@@ -66,5 +68,28 @@ class Appearance extends Model
             [['borderWidth'], 'integer', 'min' => 0, 'max' => 8],
             [['radius'], 'integer', 'min' => 0, 'max' => 100],
         ];
+    }
+
+
+    // Private Methods
+    // =========================================================================
+
+    private function _prefersDarkText(string $color): bool
+    {
+        $hex = ltrim($color, '#');
+
+        if (strlen($hex) === 3) {
+            $hex = $hex[0] . $hex[0] . $hex[1] . $hex[1] . $hex[2] . $hex[2];
+        }
+
+        // WCAG relative luminance: dark text has the higher contrast above roughly 0.18.
+        $channels = array_map(function(string $channel): float {
+            $value = hexdec($channel) / 255;
+
+            return $value <= 0.04045 ? $value / 12.92 : (($value + 0.055) / 1.055) ** 2.4;
+        }, str_split($hex, 2));
+        $luminance = 0.2126 * $channels[0] + 0.7152 * $channels[1] + 0.0722 * $channels[2];
+
+        return ($luminance + 0.05) / 0.05 > 1.05 / ($luminance + 0.05);
     }
 }

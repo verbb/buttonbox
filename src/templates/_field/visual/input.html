@@ -5,8 +5,11 @@
 {%- set selectedValues = multi ? (value ?? []) : [value] -%}
 {%- set showLabels = field.appearance.showLabels ?? true -%}
 {%- set labelTooltips = field.appearance.labelTooltips ?? false -%}
-{# Submit an explicit empty value when every checkbox is cleared. #}
-{% if multi and not static %}{{ hiddenInput(name, '') }}{% endif %}
+{%- set clearable = not multi and not static and not field.required -%}
+{%- set hasSelection = false -%}
+{% if clearable %}<div class="buttonbox-clearable{% if field.presentation in ['list', 'tile', 'card'] %} buttonbox-clearable--block{% endif %}" data-bb-clearable>{% endif %}
+{# Submit an explicit empty value when every checkbox is cleared, or a single choice is cleared. #}
+{% if not static %}{{ hiddenInput(name, '') }}{% endif %}
 {% if widthBar %}<div class="buttonbox-width-choice" style="{{ field.appearanceStyle }}">{% endif %}
 
 <div {{ attr({
@@ -27,7 +30,7 @@
 }) }}>
     {% for option in options %}
         {% set selected = option.selected ?? (option.value in selectedValues) %}
-        {% if selected %}{% set selectedLabel = option.label %}{% endif %}
+        {% if selected %}{% set selectedLabel = option.label %}{% set hasSelection = true %}{% endif %}
         {% set optionDisabled = option.disabled or static %}
         {% set hasVisual = option.imageUrl or option.iconSvg or option.surfaceStyle or option.color %}
         {% set labelVisible = showLabels or not hasVisual %}
@@ -91,6 +94,20 @@
     {% endfor %}
 </div>
 {% if widthBar %}<span class="buttonbox-width-choice__value" {% if not showLabels %}hidden{% endif %}>{{ selectedLabel ?: '—' }}</span></div>{% endif %}
+{# Every clearable choice clears by selecting its current option again; the button is opt-in. #}
+{% if clearable %}{% if field.showClearButton %}{% include 'buttonbox/_field/clear' with { visible: hasSelection, labelled: field.presentation in ['list', 'tile', 'card'] } only %}{% endif %}</div>{% endif %}
+{% if multi and not static %}
+    {%- set minimum = field.minSelections ?? 0 -%}
+    {%- set maximum = field.maxSelections ?? null -%}
+    {%- if minimum > 0 and maximum is not null -%}
+        {%- set limits = minimum == maximum ? 'Choose {min}.' | t('buttonbox', { min: minimum }) : 'Choose {min}–{max}.' | t('buttonbox', { min: minimum, max: maximum }) -%}
+    {%- elseif minimum > 0 -%}
+        {%- set limits = 'Choose at least {min}.' | t('buttonbox', { min: minimum }) -%}
+    {%- elseif maximum is not null -%}
+        {%- set limits = 'Choose up to {max}.' | t('buttonbox', { max: maximum }) -%}
+    {%- endif -%}
+    {% if limits is defined %}<p class="buttonbox-visual__limits">{{ limits }}</p>{% endif %}
+{% endif %}
 {% for tooltip in optionTooltips %}
     <pk-tooltip class="buttonbox-visual__tooltip" id="{{ tooltip.id }}" for="{{ tooltip.target }}" content="{{ tooltip.content }}"></pk-tooltip>
 {% endfor %}

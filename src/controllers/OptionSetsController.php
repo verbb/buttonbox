@@ -191,6 +191,7 @@ class OptionSetsController extends Controller
             'imageSize' => $request->getBodyParam('imageSize', 'auto'),
             'imageFit' => $request->getBodyParam('imageFit', 'cover'),
             'appearance' => (array)$request->getBodyParam('appearance', []),
+            'showClearButton' => filter_var($request->getBodyParam('showClearButton', false), FILTER_VALIDATE_BOOLEAN),
         ]);
 
         if (!$field->validate(['options', 'presentation', 'columns', 'iconSize', 'imageSize', 'imageFit', 'appearance'])) {

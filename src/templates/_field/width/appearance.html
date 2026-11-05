@@ -4,7 +4,7 @@
     <details class="buttonbox-appearance__disclosure" {% if field.hasErrors('appearance') or field.hasErrors('labelDisplay') %}open{% endif %}>
         <summary class="buttonbox-appearance__summary">
             <span id="{{ settingsId }}-appearance-heading" class="buttonbox-appearance__title">{{ 'Appearance' | t('buttonbox') }}</span>
-            <span class="light buttonbox-appearance__summary-text" data-bb-appearance-summary data-labels="{{ {default: 'Default' | t('buttonbox'), hidden: 'Labels hidden' | t('buttonbox'), all: 'All labels' | t('buttonbox'), tooltipsOff: 'Tooltips off' | t('buttonbox'), colours: 'Custom colours' | t('buttonbox'), borders: 'Custom borders' | t('buttonbox')} | json_encode | e('html_attr') }}">{{ 'Default' | t('buttonbox') }}</span>
+            <span class="light buttonbox-appearance__summary-text" data-bb-appearance-summary data-labels="{{ {default: 'Default' | t('buttonbox'), hidden: 'Labels hidden' | t('buttonbox'), all: 'All labels' | t('buttonbox'), tooltipsOff: 'Tooltips off' | t('buttonbox'), clearButton: 'Clear button' | t('buttonbox'), colours: 'Custom colours' | t('buttonbox'), borders: 'Custom borders' | t('buttonbox')} | json_encode | e('html_attr') }}">{{ 'Default' | t('buttonbox') }}</span>
         </summary>
         <div class="buttonbox-appearance__body">
             {{ forms.errorList(field.getErrors('appearance')) }}
@@ -24,6 +24,7 @@
                         <pk-lightswitch name="showTooltips" data-bb-show-tooltips value="1" size="sm" label="{{ 'Show tooltips' | t('buttonbox') }}" {% if field.showTooltips %}checked{% endif %}></pk-lightswitch>
                     </div>
                 </div>
+                {% if not (presetEditor ?? false) %}{{ appearance.clearButtonRow(field) }}{% endif %}
                 <div data-bb-appearance-row="size">
                     {{ appearance.settingLabel('Size', 'Scales the width control and its labels together.') }}
                     <div data-bb-appearance-control class="buttonbox-appearance__value"><pk-select name="appearance[size]" data-bb-appearance-key="size" value="{{ field.appearance.size ?? 'default' }}" size="sm" aria-label="{{ 'Size' | t('buttonbox') }}">

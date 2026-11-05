@@ -11,6 +11,7 @@
                 circle: 'Circle' | t('buttonbox'),
                 diamond: 'Diamond' | t('buttonbox'),
                 numeric: 'Numeric labels' | t('buttonbox'),
+                clearButton: 'Clear button' | t('buttonbox'),
                 colours: 'Custom colours' | t('buttonbox'),
             } | json_encode | e('html_attr') }}"></span>
         </summary>
@@ -46,6 +47,7 @@
                         {{ forms.errorList(field.getErrors('showLabels')) }}
                     </div>
                 </div>
+                {{ appearance.clearButtonRow(field) }}
                 {% endif %}
             </pk-editable-table>
         </div>

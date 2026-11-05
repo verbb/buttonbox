@@ -1,4 +1,4 @@
-import { syncKitValues } from './kit-values.js';
+import { syncKitValues, trackSetupChanges } from './kit-values.js';
 import '@verbb/plugin-kit-web/components/dialog.js';
 import '@verbb/plugin-kit-web/components/field.js';
 import '@verbb/plugin-kit-web/components/button.js';
@@ -14,6 +14,7 @@ Craft.ButtonBoxActionSettings = Garnish.Base.extend({
         this.$container = $('#' + id);
         if (!this.$container.length || this.$container.data('buttonboxActions')) return;
         this.$container.data('buttonboxActions', this);
+        const setupComplete = trackSetupChanges(this.$container);
         this.name = this.$container.find('[data-actions-name]').attr('name');
         this.table = this.$container.find('[data-actions-table]')[0];
         this.template = this.$container.find('[data-actions-row]').html();
@@ -44,6 +45,7 @@ Craft.ButtonBoxActionSettings = Garnish.Base.extend({
         this.initAppearance();
         this.syncCells();
         this.changed();
+        setupComplete();
         this.observer = new MutationObserver(() => {
             if (!this.$container[0].isConnected) this.destroy();
         });

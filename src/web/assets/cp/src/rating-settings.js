@@ -1,4 +1,5 @@
-import { syncKitValues } from './kit-values.js';
+import { syncKitValues, trackSetupChanges } from './kit-values.js';
+import { restorePreviewSelection } from './preview-selection.js';
 import '@verbb/plugin-kit-web/components/dialog.js';
 import '@verbb/plugin-kit-web/components/select.js';
 import '@verbb/plugin-kit-web/components/color-input.js';
@@ -11,8 +12,10 @@ Craft.ButtonBoxRatingSettings = Garnish.Base.extend({
         this.$container = $('#' + id);
         if (!this.$container.length || this.$container.data('buttonboxRatingSettings')) return;
         this.$container.data('buttonboxRatingSettings', this);
+        const setupComplete = trackSetupChanges(this.$container);
         this.config = this.$container.data('config');
         this.request = 0;
+        this.previewSelection = {};
         this.initAppearance();
         this.addListener(this.$container.find('[data-bb-presets]'), 'click', () => this.openPresets());
         this.addListener(this.$container, 'input change', (event) => {
@@ -23,6 +26,7 @@ Craft.ButtonBoxRatingSettings = Garnish.Base.extend({
         });
         this.observer.observe(document.body, { childList: true, subtree: true });
         this.schedulePreview();
+        setupComplete();
     },
 
     control: function(name) {
@@ -60,6 +64,7 @@ Craft.ButtonBoxRatingSettings = Garnish.Base.extend({
         const preset = this.config.ratingDefaults[symbol];
         const parts = [labels[symbol] || symbol];
         if (this.$container.find('[data-bb-show-labels]')[0]?.checked || false) parts.push(labels.numeric);
+        if (this.$container.find('[data-bb-show-clear]')[0]?.checked) parts.push(labels.clearButton);
         if (preset && ['activeColor', 'inactiveColor'].some((key) => String(this.control(key).val()).toLowerCase() !== preset[key])) parts.push(labels.colours);
         summary.textContent = parts.join(' · ');
     },
@@ -102,16 +107,18 @@ Craft.ButtonBoxRatingSettings = Garnish.Base.extend({
         const $preview = this.$container.find('[data-bb-preview]');
         const $status = this.$container.find('[data-bb-status]');
         const data = {};
-        for (const key of ['max', 'defaultValue', 'allowClear', 'symbol', 'activeColor', 'inactiveColor', 'showLabels']) {
+        for (const key of ['max', 'defaultValue', 'symbol', 'activeColor', 'inactiveColor', 'showLabels']) {
             data[key] = key === 'showLabels' ? Boolean(this.$container.find('[data-bb-show-labels]')[0]?.checked) : this.control(key).val();
         }
-        if (this.config.presetEditor) Object.assign(data, { max: 5, defaultValue: 3, allowClear: true, showLabels: false });
+        data.showClearButton = Boolean(this.$container.find('[data-bb-show-clear]')[0]?.checked);
+        if (this.config.presetEditor) Object.assign(data, { max: 5, defaultValue: 3, showClearButton: false, showLabels: false });
         try {
             const response = await Craft.sendActionRequest('POST', 'buttonbox/rating/preview', { data });
             if (version !== this.request || !this.$container[0].isConnected) return;
             $preview.html(response.data.html);
             // Keep native radio grouping and keyboard behaviour without submitting preview values.
             $preview.find('input').attr('form', this.$container.attr('id') + '-preview-form');
+            restorePreviewSelection($preview, this.previewSelection);
             $status.text(response.data.errors.join(' '));
         } catch (error) {
             if (version === this.request && this.$container[0].isConnected) {

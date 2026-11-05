@@ -1,5 +1,6 @@
 import { applyPresetSettings } from './preset-settings.js';
-import { syncKitValues } from './kit-values.js';
+import { syncKitValues, trackSetupChanges } from './kit-values.js';
+import { restorePreviewSelection } from './preview-selection.js';
 import '@verbb/plugin-kit-web/components/dialog.js';
 import '@verbb/plugin-kit-web/components/field.js';
 import '@verbb/plugin-kit-web/components/button.js';
@@ -12,8 +13,10 @@ Craft.ButtonBoxPositionSettings = Garnish.Base.extend({
         this.$container = $('#' + id);
         if (!this.$container.length || this.$container.data('buttonboxPositionSettings')) return;
         this.$container.data('buttonboxPositionSettings', this);
+        const setupComplete = trackSetupChanges(this.$container);
         this.config = this.$container.data('config');
         this.request = 0;
+        this.previewSelection = {};
         this.initAppearance();
         this.optionTable = new OptionTable(this.$container, this.config, () => this.schedulePreview());
         this.addListener(this.$container.find('[data-bb-presets]'), 'click', () => this.openPresets());
@@ -30,6 +33,7 @@ Craft.ButtonBoxPositionSettings = Garnish.Base.extend({
         });
         this.observer.observe(document.body, { childList: true, subtree: true });
         this.schedulePreview();
+        setupComplete();
     },
 
     control: function(name) {
@@ -78,6 +82,7 @@ Craft.ButtonBoxPositionSettings = Garnish.Base.extend({
         const appearance = this.appearance();
         const parts = [];
         if (!this.$container.find('[data-bb-show-tooltips]')[0].checked) parts.push(labels.tooltipsOff);
+        if (this.showClearButton()) parts.push(labels.clearButton);
         if (appearance.size && appearance.size !== 'default') {
             const option = [...this.$container.find('[data-bb-appearance-key="size"] pk-option')].find((item) => item.value === appearance.size);
             if (option) parts.push(option.textContent.trim());
@@ -119,7 +124,11 @@ Craft.ButtonBoxPositionSettings = Garnish.Base.extend({
     },
 
     previewData: function(options) {
-        return { options, mode: this.mode(), columns: this.control('columns').val(), showTooltips: this.$container.find('[data-bb-show-tooltips]')[0].checked, appearance: this.appearance() };
+        return { options, mode: this.mode(), columns: this.control('columns').val(), showTooltips: this.$container.find('[data-bb-show-tooltips]')[0].checked, showClearButton: this.showClearButton(), appearance: this.appearance() };
+    },
+
+    showClearButton: function() {
+        return Boolean(this.$container.find('[data-bb-show-clear]')[0]?.checked);
     },
 
     previewAction: 'buttonbox/position/preview',
@@ -154,6 +163,7 @@ Craft.ButtonBoxPositionSettings = Garnish.Base.extend({
             // The preview uses real input markup, but owns no submitted settings.
             $preview.find('input[type=hidden]').remove();
             $preview.find('input').removeAttr('name');
+            restorePreviewSelection($preview, this.previewSelection);
             $status.text(response.data.errors.join(' '));
         } catch (error) {
             if (version === this.request) {

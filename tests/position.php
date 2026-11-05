@@ -74,7 +74,7 @@ positionAssert(str_contains($field->getStaticHtml($value, $existing), '--buttonb
 $appearanceRestored = new Position($field->getSettings());
 positionAssert($appearanceRestored->appearance === $field->appearance, 'Position appearance settings did not round-trip.');
 $appearanceSettings = $field->getSettingsHtml();
-positionAssert(substr_count($appearanceSettings, 'data-bb-appearance-row=') === 5 && str_contains($appearanceSettings, 'data-bb-show-tooltips') && !str_contains($appearanceSettings, 'appearance[borderWidth]') && !str_contains($appearanceSettings, 'name="imageFit"'), 'Position must expose its tooltip switch and four appearance controls.');
+positionAssert(substr_count($appearanceSettings, 'data-bb-appearance-row=') === 6 && str_contains($appearanceSettings, 'data-bb-show-tooltips') && str_contains($appearanceSettings, 'data-bb-show-clear') && !str_contains($appearanceSettings, 'appearance[borderWidth]') && !str_contains($appearanceSettings, 'name="imageFit"'), 'Position must expose its tooltip and clear-button switches and four appearance controls.');
 $field->appearance['borderWidth'] = '8';
 positionAssert(!str_contains($field->getAppearanceStyle(), '--buttonbox-choice-border-width'), 'Position applied an unsupported appearance override.');
 $field->appearance['selectionColor'] = 'red;display:none';

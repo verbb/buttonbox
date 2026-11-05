@@ -134,7 +134,8 @@ class Conversions extends Component
         if ($field instanceof Stars) {
             return new Rating(array_merge($config, [
                 'max' => $field->totalStars,
-                'allowClear' => true,
+                // Legacy Stars always showed a clear control.
+                'showClearButton' => true,
             ]));
         }
 

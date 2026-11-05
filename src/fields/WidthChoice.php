@@ -81,6 +81,7 @@ class WidthChoice extends BaseChoiceField implements InlineEditableFieldInterfac
     public string $displayStyle = 'bar';
     public string $labelDisplay = 'selected';
     public bool $showTooltips = true;
+    public bool $showClearButton = false;
     public array $appearance = [];
 
 
@@ -270,6 +271,7 @@ class WidthChoice extends BaseChoiceField implements InlineEditableFieldInterfac
     {
         $rules = parent::defineRules();
         $rules[] = [['displayStyle'], 'in', 'range' => ['bar', 'samples'], 'skipOnEmpty' => false];
+        $rules[] = [['showClearButton'], 'boolean'];
         $rules[] = [['labelDisplay'], 'in', 'range' => ['selected', 'all', 'hidden'], 'skipOnEmpty' => false];
         $rules[] = [['appearance'], 'validateAppearance', 'skipOnEmpty' => false];
         $rules[] = [['options'], 'validateOptions', 'when' => fn() => !$this->options, 'skipOnEmpty' => false];
@@ -360,6 +362,8 @@ class WidthChoice extends BaseChoiceField implements InlineEditableFieldInterfac
             'options' => $options, 'selectedLabel' => $selectedLabel, 'invalid' => $invalid,
             'displayStyle' => $this->displayStyle, 'labelDisplay' => $this->labelDisplay,
             'showTooltips' => $this->showTooltips, 'appearanceStyle' => $this->getAppearanceStyle(), 'static' => $static,
+            'clearable' => !$static && !$this->required,
+            'showClearButton' => $this->showClearButton,
         ]);
     }
 }
