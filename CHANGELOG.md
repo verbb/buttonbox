@@ -3,10 +3,10 @@
 ## 5.1.0 - 
 
 ### Added
-- Added Visual Choice and Visual Multi-Choice fields for single and multiple selections, with configurable options and selection limits. Optional single choices clear when their selected option is chosen again, with an optional clear button.
-- Added Position fields with configurable spatial arrangements, keyboard navigation, and clearing by reselecting or an optional clear button.
-- Added a new Width field with explicit percentage stops, Bar and Width samples styles, configurable labels and tooltips, and clearing by reselecting or an optional clear button.
-- Added Rating fields with whole-number values, configurable limits and defaults, clearing by reselecting or an optional clear button, and star, heart, circle or diamond symbols.
+- Added Visual Choice and Visual Multi-Choice fields for single and multiple selections, with configurable options and selection limits.
+- Added Position fields with configurable spatial arrangements and keyboard navigation.
+- Added a new Width field with explicit percentage stops, Bar and Width samples styles, and configurable labels and tooltips.
+- Added Rating fields with whole-number values, configurable limits and defaults, optional clearing, and star, heart, circle or diamond symbols.
 - Added reusable Action Links fields for conditional editor links, with configurable labels, icons, images and button styles.
 - Added Buttons, Button group, Chips, List, Tiles, Cards, Swatches and Visual samples presentations for visual choices, plus Dropdown for single choices.
 - Added visual option metadata for descriptions, icons, images, colours, split colours, foreground/background pairs, gradients, width, aspect ratio, typography and shapes.
@@ -22,12 +22,14 @@
 - Triggers field JavaScript values are now output as written, without parsing element tags.
 - Triggers field links no longer output `javascript:`, `data:` or `vbscript:` URLs. Use a JavaScript trigger instead.
 
-### Fixed
-- Fixed Triggers field buttons outputting encoded `base64:` values for their link or JavaScript, and links not parsing element tags.
-- Fixed the plugin bootstrap handle used during application configuration.
-
 ### Deprecated
-- Deprecated the original Buttons, Colours, Text Size, Width, Stars and Triggers fields, which now display a Legacy label and log control-panel deprecation notices. Existing fields retain their settings, stored values and template behaviour; conversion is optional.
+- Deprecated the original Buttons, Colours, Text Size, Width, Stars and Triggers fields, which now display a Legacy label and log control-panel deprecation notices. Existing fields retain their settings and stored values; conversion is optional.
+
+## 5.0.6 - 2026-11-01
+
+### Fixed
+- Fix Triggers field buttons outputting encoded `base64:` values for their link or JavaScript, and not parsing element tags.
+- Fix Button Box log messages being written to the Asset Count log file.
 
 ## 5.0.5 - 2026-10-22
 
