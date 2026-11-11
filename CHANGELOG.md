@@ -1,6 +1,6 @@
 # Changelog
 
-## 5.1.0 - 
+## 5.1.0 - 2026-11-12
 
 ### Added
 - Added Visual Choice and Visual Multi-Choice fields for single and multiple selections, with configurable options and selection limits.
