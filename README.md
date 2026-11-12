@@ -12,20 +12,20 @@ The plugin styles the Craft control panel only. Your templates remain in charge 
 - Create and customise presets for visual choices, Position, Width and Rating, then copy their settings into independent fields.
 - Manage shared option sets in the control panel and project config, convert a reference to local options, or supply options at runtime through PHP events.
 - Configure width stops with Bar or Width samples, useful presets and optional labels.
-- Capture named positions with spatial metadata and whole-number ratings as nullable integers.
+- Capture named positions with spatial metadata and whole-number ratings.
 - Reuse conditional Action Links across field layouts with shared button settings.
 - Use stored choices in element indexes, cards, search, conditions, sorting and inline editing, with numeric queries for Rating.
-- Read typed option and position objects in Twig and GraphQL while Width and legacy fields retain their scalar contracts.
+- Read typed option and position objects in Twig and GraphQL.
 - Preview explicit conversions from Buttons, Colours, Text Size, Width, Stars and Triggers before choosing whether to apply them.
 
 ## Field Types
 
+- Action Links
+- Position
+- Rating
 - Visual Choice
 - Visual Multi-Choice
-- Position
 - Width
-- Rating
-- Action Links
 
 ## Documentation
 
@@ -37,11 +37,11 @@ Originally created by the team at [Supercool Ltd](http://www.supercooldesign.co.
 
 ## Support
 
-Get in touch with us via the [Button Box Support page](https://verbb.io/craft-plugins/button-box/support) or by [creating a Github issue](https://github.com/verbb/buttonbox/issues)
+Get in touch with us via the [Button Box Support page](https://verbb.io/craft-plugins/button-box/support) or by [creating a GitHub issue](https://github.com/verbb/buttonbox/issues).
 
 ## Sponsor
 
-Button Box is licensed under the MIT license, meaning it will always be free and open source - we love free stuff! If you'd like to show your support to the plugin regardless, [Sponsor](https://github.com/sponsors/verbb) development.
+Button Box is licensed under the MIT license, so it will always be free and open source. If you'd like to support it anyway, you can [sponsor its development](https://github.com/sponsors/verbb).
 
 <h2></h2>
 

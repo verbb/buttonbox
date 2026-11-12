@@ -15,7 +15,7 @@ Present a set of approved values as buttons, button groups, chips, dropdowns, li
 
 Each one shows authors what they’re choosing and hands your templates a value they can rely on.
 
-### Show the shape, not just the name
+### Draw ratios, corners and spacing in the field
 
 Some choices are far easier to see than describe. Visual samples draw aspect ratios, corner styles, spacing and type sizes right in the field, so authors can tell Widescreen from Landscape, or Pill from Rounded, before they pick one.
 
@@ -51,7 +51,7 @@ Give reviews, recommendations and editorial scores a familiar scale of stars, he
 
 ![An editorial rating of four out of five stars beside a reader appeal rating of three out of five hearts](../screenshots/fields/ratings.png)
 
-### Put the next step within reach
+### Add shortcut buttons to the entry editor
 
 Give editors a one-click route to what they need while they work, such as a preview of the story, the brand guidelines or a related report. Links can include details from the entry they appear on, so one shared field can send every entry to its own preview page. Set up the buttons once with labels, icons and styles, add them to any field layout, and show them only to the people and entries that need them.
 
@@ -59,7 +59,7 @@ Give editors a one-click route to what they need while they work, such as a prev
 <!-- feature-cards-end -->
 
 <!-- feature-section -->
-## Configure it once, reuse it everywhere
+## Field settings, option sets and presets
 <!-- feature-section-end -->
 
 <!-- feature-media copy-position="sticky" media-shadow="false" -->
@@ -91,5 +91,5 @@ Begin with an alignment picker, a typography scale, a set of shape samples or on
 - :icon[ban] **Retire options gracefully** Disable an option and explain why it’s unavailable. It keeps its place, and entries still using it are asked to choose again rather than quietly switching to something else.
 - :icon[code] **Choices from your own code** When the options come from your application, such as a list of regions or publishing channels, supply them with PHP instead of maintaining them by hand.
 - :icon[photo] **Your own icons and images** Browse the built-in icon library, pick images from your asset volumes, or add folders of your own icons and images to the galleries.
-- :icon[brackets-angle] **Your site, your markup** Button Box only styles the control panel. Twig and GraphQL give you the selected values plus details like colours and coordinates, and you decide what they become on your site.
+- :icon[brackets-angle] **Front-end output stays in your hands** Button Box only styles the control panel. Twig and GraphQL give you the selected values plus details like colours and coordinates, and you decide what they become on your site.
 <!-- feature-grid-end -->
