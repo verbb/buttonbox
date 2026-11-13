@@ -1,6 +1,6 @@
 # Option Data
 
-Custom field settings, option sets and PHP providers use arrays to define choices. This page covers those definitions. For values returned to templates, see [Visual Option](visual-option.md), [Visual Options](visual-options.md) and [Visual Surface](visual-surface.md).
+Custom field settings, option sets and PHP providers use arrays to define choices. This page covers those definitions. For values returned to templates, see [Visual Option](../reference/visual-option.md), [Visual Options](../reference/visual-options.md) and [Visual Surface](../reference/visual-surface.md).
 
 ## Defining Options
 
@@ -42,7 +42,7 @@ return [
 ];
 ```
 
-Choose **Option set → Brand surfaces** in a Visual Choice field. Its content stores `ocean` or `ink-paper`; it does not duplicate the surface definition into each entry. A [Dynamic (PHP) provider](option-providers.md) assigns the same option arrays to the event's `options` property.
+Choose **Option set → Brand surfaces** in a Visual Choice field. Its content stores `ocean` or `ink-paper`; it does not duplicate the surface definition into each entry. A [Dynamic (PHP) provider](custom-option-providers.md) assigns the same option arrays to the event's `options` property.
 
 ## Surface Definitions
 

@@ -17,7 +17,7 @@ A Visual Multi-Choice field returns a `verbb\buttonbox\fields\data\MultiVisualOp
 {% endfor %}
 ```
 
-Selections are a set of identities, not a ranking. Saved configured choices follow option order. Removed identities follow those choices and remain available for diagnostics. Treat the returned collection as read-only; update the entry’s field value to save a different selection.
+Selections are a set of identities, not a ranking. Saved configured choices follow option order. Removed identities follow those choices and remain available for diagnostics. Treat the returned collection as read-only. Update the entry’s field value to save a different selection.
 
 ## Available Choices
 
@@ -36,7 +36,7 @@ The `options` property is an array of every configured [VisualOptionData](visual
 
 **Argument:** Stored identity · **Returns:** `bool`
 
-Checks whether the selected collection contains the identity, converting the argument to a string. It includes unavailable selections; check the matching option’s `valid` property when availability matters.
+Checks whether the selected collection contains the identity, converting the argument to a string. It includes unavailable selections. Check the matching option’s `valid` property when availability matters.
 
 ```twig
 {% if entry.features.contains('analytics') %}

@@ -35,14 +35,29 @@
         "collapsable": false,
         "children": [
             "developers/events",
-            "developers/option-providers",
+            "developers/custom-option-providers",
             "developers/option-data",
-            "developers/graphql",
-            "developers/visual-option",
-            "developers/visual-options",
-            "developers/visual-surface",
-            "developers/position-data",
-            "developers/width-data"
+            "developers/console-commands"
+        ]
+    },
+    {
+        "title": "GraphQL",
+        "collapsable": false,
+        "children": [
+            "graphql/queries",
+            "graphql/mutations",
+            "graphql/interfaces-types"
+        ]
+    },
+    {
+        "title": "Reference",
+        "collapsable": false,
+        "children": [
+            "reference/visual-option",
+            "reference/visual-options",
+            "reference/visual-surface",
+            "reference/position-data",
+            "reference/width-data"
         ]
     }
 ]

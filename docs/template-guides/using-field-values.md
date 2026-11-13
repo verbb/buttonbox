@@ -4,7 +4,7 @@ These examples belong in the Twig template for an entry whose layout contains th
 
 ## Visual Choice
 
-A Visual Choice field returns a [SingleVisualOptionData](../developers/visual-option.md) object. Use `.value` for the stored identity and `.label` for its display label. Check `.valid` before rendering a choice that might have been removed or disabled.
+A Visual Choice field returns a [SingleVisualOptionData](../reference/visual-option.md) object. Use `.value` for the stored identity and `.label` for its display label. Check `.valid` before rendering a choice that might have been removed or disabled.
 
 ```twig
 {% set option = entry.cardTreatment %}
@@ -17,11 +17,11 @@ A Visual Choice field returns a [SingleVisualOptionData](../developers/visual-op
 {% endif %}
 ```
 
-Printing `{{ entry.cardTreatment }}` outputs its stored identity. The [visual option reference](../developers/visual-option.md) describes additional metadata, including images, icons and [surfaces](../developers/visual-surface.md).
+Printing `{{ entry.cardTreatment }}` outputs its stored identity. The [visual option reference](../reference/visual-option.md) describes additional metadata, including images, icons and [surfaces](../reference/visual-surface.md).
 
 ## Visual Multi-Choice
 
-Visual Multi-Choice returns a [MultiVisualOptionData](../developers/visual-options.md) collection. Loop over it to render selected choices, or use `contains()` to check for a stored identity. Each item is a [VisualOptionData](../developers/visual-option.md) object with the same label and visual metadata as a single choice:
+Visual Multi-Choice returns a [MultiVisualOptionData](../reference/visual-options.md) collection. Loop over it to render selected choices, or use `contains()` to check for a stored identity. Each item is a [VisualOptionData](../reference/visual-option.md) object with the same label and visual metadata as a single choice:
 
 ```twig
 {% if entry.features.contains('analytics') %}
@@ -39,7 +39,7 @@ Visual Multi-Choice returns a [MultiVisualOptionData](../developers/visual-optio
 
 ## Position
 
-Position returns a [PositionData](../developers/position-data.md) object. Use `.horizontal` and `.vertical` to position an image when your options use standard names such as `bottom-right`. Custom position values need your own mapping.
+Position returns a [PositionData](../reference/position-data.md) object. Use `.horizontal` and `.vertical` to position an image when your options use standard names such as `bottom-right`. Custom position values need your own mapping.
 
 For this example, use a Position field with handle `focalPosition`. Add an Assets field with handle `heroImage`, limit it to images, and select an image on the entry. Your stylesheet must give the image a constrained box with `object-fit` for `object-position` to affect cropping.
 
@@ -53,7 +53,7 @@ For this example, use a Position field with handle `focalPosition`. Add an Asset
 
 ## Width
 
-Width returns a [WidthData](../developers/width-data.md) object. Use `.value` to choose your project’s layout class and `.label` for display text. Check `.valid` before using the selection. This example uses a field with handle `layoutWidth`:
+Width returns a [WidthData](../reference/width-data.md) object. Use `.value` to choose your project’s layout class and `.label` for display text. Check `.valid` before using the selection. This example uses a field with handle `layoutWidth`:
 
 ```twig
 {% set width = entry.layoutWidth %}

@@ -1,4 +1,4 @@
-# Option Providers
+# Custom Option Providers
 
 Use a PHP option provider when a Visual Choice or Visual Multi-Choice field’s choices come from application code. For example, a project module can supply a list of publishing channels from its own configuration. Use an [option set](../feature-tour/option-sets.md) when administrators should manage the shared choices in the control panel.
 
@@ -6,7 +6,7 @@ Use a PHP option provider when a Visual Choice or Visual Multi-Choice field’s 
 
 Create or edit a Visual Choice or Visual Multi-Choice field and set **Options Type** to **Dynamic (PHP)**. Choose its presentation and appearance, then save the field and add it to the relevant field layout.
 
-Register a listener in an existing module or plugin using the [`defineVisualOptions` example](events.md#the-definevisualoptions-event). Change `publishingChannel` to your field’s handle and replace the example choices with the options your application supplies. Registering on `BaseVisualOptionsField` covers both visual field types; checking the handle limits the listener to the intended field.
+Register a listener in an existing module or plugin using the [`defineVisualOptions` example](events.md#the-definevisualoptions-event). Change `publishingChannel` to your field’s handle and replace the example choices with the options your application supplies. Registering on `BaseVisualOptionsField` covers both visual field types. Checking the handle limits the listener to the intended field.
 
 The listener assigns its choices to `$event->options`. It runs only for fields using Dynamic (PHP). Craft’s inherited [`defineOptions` event](events.md#the-defineoptions-event) can make a further adjustment after the provider has returned its choices.
 

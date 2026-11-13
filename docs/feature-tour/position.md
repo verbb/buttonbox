@@ -26,7 +26,7 @@ The **Appearance** table controls **Size**, **Background**, **Dot colour** and *
 
 ## Using the Value
 
-Twig receives a typed object containing the stored identity, label, validity and arrangement metadata. Standard named positions also provide alignment coordinates; custom identities use your own template mapping. See the [PositionData reference](../developers/position-data.md) for types, coordinate meanings and null handling.
+Twig receives a typed object containing the stored identity, label, validity and arrangement metadata. Standard named positions also provide alignment coordinates; custom identities use your own template mapping. See the [PositionData reference](../reference/position-data.md) for types, coordinate meanings and null handling.
 
 For a Position field with handle `focalPoint`, use this in the entry’s Twig template:
 

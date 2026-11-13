@@ -30,13 +30,13 @@ php craft buttonbox/convert/field layoutStyle
 php craft buttonbox/convert/field layoutStyle --apply=1
 ```
 
-Conversion preserves field identity and layout placements, but appearance and returned values can change. Templates and application code are not updated automatically. See [Using Field Values](../template-guides/using-field-values.md) for Twig examples and [GraphQL](../developers/graphql.md) for queries. PHP integrations that target legacy field classes or Craft’s option-data classes need updating.
+Conversion preserves field identity and layout placements, but appearance and returned values can change. Templates and application code are not updated automatically. See [Using Field Values](../template-guides/using-field-values.md) for Twig examples and [GraphQL](../graphql/queries.md) for queries. PHP integrations that target legacy field classes or Craft’s option-data classes need updating.
 
 ### Buttons, Colours and Text Size
 
 Stored string values are preserved. Buttons uses Button group or Tiles, Colours uses Swatches, and Text Size uses List with typography metadata; not all legacy appearance settings are copied. Buttons whose images all hide their labels keep those labels hidden and show them as tooltips. The conversion preview warns about mixed label settings, image alignment and full-width display, which aren’t copied.
 
-Values become [SingleVisualOptionData](../developers/visual-option.md) objects. GraphQL output changes from a string to an object: select properties such as `value` and `label`. Mutation input remains a string.
+Values become [SingleVisualOptionData](../reference/visual-option.md) objects. GraphQL output changes from a string to an object: select properties such as `value` and `label`. Mutation input remains a string.
 
 ### Stars to Rating
 
@@ -50,4 +50,4 @@ Action Links has no content value or GraphQL field. Remove any template or Graph
 
 ### Width
 
-Stored strings and scalar GraphQL output are preserved; equally spaced options become explicit percentages. Values become [WidthData](../developers/width-data.md) objects, retaining `.value`, `.label`, `.valid` and string output while adding percentage metadata. The field class changes from `Width` to `WidthChoice`.
+Stored strings and scalar GraphQL output are preserved; equally spaced options become explicit percentages. Values become [WidthData](../reference/width-data.md) objects, retaining `.value`, `.label`, `.valid` and string output while adding percentage metadata. The field class changes from `Width` to `WidthChoice`.

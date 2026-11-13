@@ -85,11 +85,11 @@ Field settings use an editable table for labels, stored values, visuals and defa
 
 Drag the row handle to reorder options, or use the row menu to move or insert rows. Each row has a delete control. Choose **Edit option…** from the row menu for descriptions, visual details and availability. The dialog shows controls for the selected type, such as image alternative text, gradient or split directions, and custom shape dimensions. Direction choices include arrows and a custom angle; foreground/background options offer **Swap colours**. Changing presentation preserves these details. Use the live preview to check the result.
 
-See [Option Data](../developers/option-data.md) for PHP definitions and surface bounds, and [Visual Option](../developers/visual-option.md) for the properties returned to templates.
+See [Option Data](../developers/option-data.md) for PHP definitions and surface bounds, and [Visual Option](../reference/visual-option.md) for the properties returned to templates.
 
 ## Option Sources
 
-Choose **Custom** to edit options within the field, **Option set** to reference [reusable options](option-sets.md), or **Dynamic (PHP)** to supply options through a [PHP provider](../developers/option-providers.md). An option set shares its choices across fields while each field keeps its own presentation and appearance. Choose **Convert to Custom** beneath the selector when a field needs an independent copy.
+Choose **Custom** to edit options within the field, **Option set** to reference [reusable options](option-sets.md), or **Dynamic (PHP)** to supply options through a [PHP provider](../developers/custom-option-providers.md). An option set shares its choices across fields while each field keeps its own presentation and appearance. Choose **Convert to Custom** beneath the selector when a field needs an independent copy.
 
 Choose **Browse presets…** in the **Start with a preset** panel above Presentation to browse visual starting points for both presentation and options. Selecting a preset immediately copies its options and presentation into the editor and closes the chooser. Changes are only stored when you save the field or option set. Create and customise your own [presets](presets.md). Saved presets also copy their appearance settings. Applying one leaves the field with an independent copy.
 

@@ -20,7 +20,7 @@ In **Appearance**, **Labels** can show the selected value beside the control, sh
 
 ## Using the Value
 
-Width uses the `WidthChoice` PHP class and exposes scalar content and GraphQL output. Twig receives a [WidthData](../developers/width-data.md) object with the stored identity, label, percentage and availability metadata; printing it returns the stored value. The configured percentage describes the control-panel geometry and does not inject public CSS.
+Width uses the `WidthChoice` PHP class and exposes scalar content and GraphQL output. Twig receives a [WidthData](../reference/width-data.md) object with the stored identity, label, percentage and availability metadata; printing it returns the stored value. The configured percentage describes the control-panel geometry and does not inject public CSS.
 
 For a Width field with handle `layoutWidth`, use this in the entry’s Twig template:
 
