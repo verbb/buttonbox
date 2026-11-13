@@ -4,7 +4,7 @@ You can install Button Box via the plugin store, or through Composer.
 
 ## Craft Plugin Store
 
-To install **Button Box**, navigate to the _Plugin Store_ section of your Craft control panel, search for `Button Box`, and click the _Try_ button.
+To install **Button Box**, navigate to the _Plugin Store_ section of your Craft control panel, search for `Button Box`, and click the _Install_ button.
 
 ## Composer
 
