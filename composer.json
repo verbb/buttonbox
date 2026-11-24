@@ -2,7 +2,7 @@
     "name": "verbb/buttonbox",
     "description": "Visual choice, position, width, rating and editor action fields for Craft CMS.",
     "type": "craft-plugin",
-    "version": "5.1.0",
+    "version": "5.1.1",
     "keywords": [
         "craft",
         "cms",
