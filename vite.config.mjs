@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import { defineConfig } from 'vite';
 
 const root = resolve(import.meta.dirname, 'src/web/assets/cp');
-const entries = ['input.js', 'settings.js', 'legacy.js', 'settings-triggers.js', 'buttonbox.css', 'settings.css', 'legacy.css'];
+const entries = ['input.js', 'settings.js', 'option-sets.js', 'legacy.js', 'settings-triggers.js', 'buttonbox.css', 'settings.css', 'legacy.css'];
 
 export default defineConfig({
     root,

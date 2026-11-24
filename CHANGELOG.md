@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+- Changed the empty Option Sets page to explain what an option set is, with a button to create the first one.
+
 ## 5.1.0 - 2026-11-12
 
 ### Added

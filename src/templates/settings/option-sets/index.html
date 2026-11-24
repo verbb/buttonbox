@@ -1,18 +1,29 @@
 {% extends 'buttonbox/_layouts/settings' %}
 {% set title = 'Option Sets' | t('buttonbox') %}
 {% set selectedTab = 'sets' %}
+{% set isEmpty = not sets and not configuredSets %}
 {% block actionButton %}
-    {% if not readOnly %}<a class="btn submit add icon" href="{{ url('buttonbox/settings/option-sets/new') }}">{{ 'New option set' | t('buttonbox') }}</a>{% endif %}
+    {# The empty state carries the only New option set button while it shows. #}
+    {% if not readOnly and not isEmpty %}<a class="btn submit add icon" href="{{ url('buttonbox/settings/option-sets/new') }}">{{ 'New option set' | t('buttonbox') }}</a>{% endif %}
 {% endblock %}
 {% block settingsContent %}
-    <div id="option-sets-admin-table"></div>
+    {% if isEmpty %}
+        {% do view.registerAssetBundle('verbb\\buttonbox\\web\\assets\\cp\\OptionSetsAsset') %}
+        <pk-state-panel heading="{{ 'No option sets yet' | t('buttonbox') }}">
+            {{ 'Option sets let Visual Choice and Visual Multi-Choice fields share the same choices, so editing a set updates every field that uses it.' | t('buttonbox') }}
+            {% if not readOnly %}
+                <a slot="actions" class="btn submit add icon" href="{{ url('buttonbox/settings/option-sets/new') }}">{{ 'New option set' | t('buttonbox') }}</a>
+            {% endif %}
+        </pk-state-panel>
+    {% else %}
+        <div id="option-sets-admin-table"></div>
+    {% endif %}
 {% endblock %}
 
+{# A Vue admin table can't hold the empty state, so the table only renders with rows. #}
+{% if not isEmpty %}
 {% do view.registerAssetBundle('craft\\web\\assets\\admintable\\AdminTableAsset') %}
 {% set tableData = [] %}
-{% macro duplicateLink(url, name) %}
-    <a class="cp-icon" href="{{ url }}" title="{{ 'Duplicate' | t('app') }}" aria-label="{{ 'Duplicate {name}' | t('buttonbox', {name: name}) }}"><span class="cp-icon puny" style="--icon-color: var(--ui-control-color)">{{ iconSvg('clone') }}</span></a>
-{% endmacro %}
 {% for uid, set in sets %}
     {% set tableData = tableData | merge([{
         id: uid,
@@ -37,6 +48,8 @@
     }]) %}
 {% endfor %}
 {% js %}
+    let remainingOptionSets = {{ tableData | length }};
+
     new Craft.VueAdminTable({
         container: '#{{ 'option-sets-admin-table' | namespaceInputId('settings') }}',
         columns: [
@@ -47,7 +60,18 @@
             {% if not readOnly %}{name: 'duplicate', title: '', titleClass: 'thin', dataClass: 'thin'}{% endif %}
         ],
         deleteAction: {{ (readOnly ? null : 'buttonbox/option-sets/delete') | json_encode | raw }},
+        // Show the empty state once the last set is deleted.
+        deleteCallback: () => {
+            if (--remainingOptionSets === 0) {
+                window.location.reload();
+            }
+        },
         emptyMessage: {{ 'No option sets yet.' | t('buttonbox') | json_encode | raw }},
         tableData: {{ tableData | json_encode(15) | raw }},
     });
 {% endjs %}
+{% endif %}
+
+{% macro duplicateLink(url, name) %}
+    <a class="cp-icon" href="{{ url }}" title="{{ 'Duplicate' | t('app') }}" aria-label="{{ 'Duplicate {name}' | t('buttonbox', {name: name}) }}"><span class="cp-icon puny" style="--icon-color: var(--ui-control-color)">{{ iconSvg('clone') }}</span></a>
+{% endmacro %}
